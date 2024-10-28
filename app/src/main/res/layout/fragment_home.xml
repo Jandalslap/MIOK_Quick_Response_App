@@ -15,36 +15,44 @@
         android:text="Hi,How are you today?"
         android:fontFamily="@font/opensans_regular"
         android:textColor="@color/Blue"
-        android:textSize="16sp"
+        android:textSize="24sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-    <Button
-        android:id="@+id/button_login"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_quiz"
         android:layout_width="260dp"
         android:layout_height="100dp"
-        android:backgroundTint="@color/lightblue"
+        android:background="@drawable/edit_button_homefragment"
         android:fontFamily="@font/lalezar_regular"
-        android:textSize="22dp"
-        android:text="Take Quiz"
-        android:drawableLeft="@drawable/miok_copy3"/>
+        android:textSize="14sp"
+        android:textColor="#ffffff"
+        android:text="@string/button_take_quiz"
+        android:drawableLeft="@drawable/miok_copy3"
+        android:paddingLeft="20dp"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_contact"
         android:layout_width="260dp"
         android:layout_height="60dp"
         android:layout_marginTop="70dp"
-        android:backgroundTint="@color/mustard"
+        android:background="@drawable/mustard_button_homefragment"
         android:fontFamily="@font/lalezar_regular"
         android:text="Contacts"
-        android:drawableLeft="@drawable/ic_contact_wbg_copy"/>
+        android:textSize="14sp"
+        android:textColor="#ffffff"
+        android:drawableLeft="@drawable/ic_contact_wbg_copy"
+        android:paddingLeft="20dp"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_message"
         android:layout_width="260dp"
         android:layout_height="60dp"
-        android:backgroundTint="@color/mustard"
+        android:layout_margin="10dp"
+        android:background="@drawable/mustard_button_homefragment"
         android:text="Message Everyone"
+        android:textColor="#ffffff"
         android:fontFamily="@font/lalezar_regular"
-        android:drawableLeft="@drawable/ic_message_wbg_copy"/>
+        android:drawableLeft="@drawable/ic_message_wbg_copy"
+        android:paddingLeft="20dp"/>
     <!-- Add more UI elements here -->
 </LinearLayout>
