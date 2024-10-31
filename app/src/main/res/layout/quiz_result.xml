@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#E5EDF3"
+    android:gravity="center">
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/kiwi_result"
+        android:layout_marginBottom="16dp"/>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="14dp"
+        android:text="Thanks for answering! \nResult have been sent to your contacts."
+        android:gravity="center"
+        android:fontFamily="@font/opensans_regular"
+        android:textColor="@color/Blue"
+        android:textSize="24sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+
+
+</LinearLayout>
