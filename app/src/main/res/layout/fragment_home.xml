@@ -8,15 +8,13 @@
     android:gravity="center">
 
     <TextView
+        android:id="@+id/homeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-90dp"
-        android:layout_marginBottom="14dp"
-        android:text="Hi,How are you today?"
-        android:fontFamily="@font/opensans_regular"
-        android:textColor="@color/Blue"
+        android:text="Hi, how are you today?"
+        android:textColor="#004B8C"
         android:textSize="24sp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:layout_marginBottom="24dp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_quiz"
@@ -24,16 +22,18 @@
         android:layout_height="100dp"
         android:background="@drawable/edit_button_homefragment"
         android:fontFamily="@font/lalezar_regular"
-        android:textSize="14sp"
-        android:textColor="#ffffff"
-        android:text="@string/button_take_quiz"
+        android:textSize="16sp"
+        android:text="TAKE QUIZ"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:drawablePadding="20dp"
         android:drawableLeft="@drawable/miok_copy3"
-        android:paddingLeft="20dp"/>
+        android:padding="10dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_contact"
         android:layout_width="260dp"
-        android:layout_height="60dp"
+        android:layout_height="80dp"
         android:layout_marginTop="70dp"
         android:background="@drawable/mustard_button_homefragment"
         android:fontFamily="@font/lalezar_regular"
@@ -46,7 +46,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_message"
         android:layout_width="260dp"
-        android:layout_height="60dp"
+        android:layout_height="80dp"
         android:layout_margin="10dp"
         android:background="@drawable/mustard_button_homefragment"
         android:text="Message Everyone"

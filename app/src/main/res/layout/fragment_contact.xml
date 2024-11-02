@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#E5EDF3"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:layout_width="270dp"
+        android:layout_height="130dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/edit_button_homefragment"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="20dp">
+
+            <!-- Image on the left side -->
+            <ImageView
+                android:id="@+id/image_contact1"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_contact_wbg_copy"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="Contact Image1"
+                android:layout_marginEnd="16dp" /> <!-- Space between image and text -->
+
+            <!-- Container for Name and Relationship -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical">
+
+                <!-- Name Text -->
+                <TextView
+                    android:id="@+id/text_name1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:fontFamily="@font/lalezar_regular"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"/>
+
+                <!-- Relationship Text -->
+                <TextView
+                    android:id="@+id/text_relationship1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Grandmother"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Container for Message and Call Buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp">
+
+            <ImageButton
+                android:id="@+id/button_phone1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_call_copy"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Phone1"/>
+            <!-- Message Button -->
+            <ImageButton
+                android:id="@+id/button_message1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_message_wbg_copy"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Message1"
+                android:layout_marginEnd="1dp"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="270dp"
+        android:layout_height="130dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/edit_button_homefragment"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="20dp">
+
+            <!-- Image on the left side -->
+            <ImageView
+                android:id="@+id/image_contact2"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_contact_wbg_copy"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="Contact Image"
+                android:layout_marginEnd="16dp" /> <!-- Space between image and text -->
+
+            <!-- Container for Name and Relationship -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical">
+
+                <!-- Name Text -->
+                <TextView
+                    android:id="@+id/text_name2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:fontFamily="@font/lalezar_regular"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"/>
+
+                <!-- Relationship Text -->
+                <TextView
+                    android:id="@+id/text_relationship2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mother"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Container for Message and Call Buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp">
+
+            <ImageButton
+                android:id="@+id/button_phone2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_call_copy"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Phone2"/>
+            <!-- Message Button -->
+            <ImageButton
+                android:id="@+id/button_message2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_message_wbg_copy"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Message2"
+                android:layout_marginEnd="1dp"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="270dp"
+        android:layout_height="130dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/edit_button_homefragment"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="20dp">
+
+            <!-- Image on the left side -->
+            <ImageView
+                android:id="@+id/image_contact3"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_contact_wbg_copy"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="Contact Image3"
+                android:layout_marginEnd="16dp" /> <!-- Space between image and text -->
+
+            <!-- Container for Name and Relationship -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical">
+
+                <!-- Name Text -->
+                <TextView
+                    android:id="@+id/text_name3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:fontFamily="@font/lalezar_regular"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"/>
+
+                <!-- Relationship Text -->
+                <TextView
+                    android:id="@+id/text_relationship3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Police"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Container for Message and Call Buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp">
+
+            <ImageButton
+                android:id="@+id/button_phone3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_call_copy"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Phone"/>
+            <!-- Message Button -->
+            <ImageButton
+                android:id="@+id/button_message3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_message_wbg_copy"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Message3"
+                android:layout_marginEnd="1dp"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>
