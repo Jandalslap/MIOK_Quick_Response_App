@@ -2,4 +2,9 @@
     <string name="app_name">MIOK_Quick_Response_App</string>
     <string name="language_switch">Language</string>
     <string name="button_take_quiz">Take Quiz</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="birthday">Birthday</string>
+    <string name="address">Address</string>
+    <string name="contacts">Contacts</string>
+
 </resources>
