@@ -23,6 +23,31 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.miok_quick_response_app.ui.HomeFragment"
-        android:label="HomeFragment" />
+        android:name="com.example.miok_quick_response_app.HomeFragment"
+        android:label="HomeFragment">
+        <action
+            android:id="@+id/action_homeFragment_to_quizFragment"
+            app:destination="@id/quizFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_messageFragment"
+            app:destination="@id/messageFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_contactFragment"
+            app:destination="@id/contactFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/contactFragment"
+        android:name="com.example.miok_quick_response_app.ContactFragment"
+        android:label="ContactFragment" />
+
+    <fragment
+        android:id="@+id/messageFragment"
+        android:name="com.example.miok_quick_response_app.MessageFragment"
+        android:label="MessageFragment" />
+
+    <fragment
+        android:id="@+id/quizFragment"
+        android:name="com.example.miok_quick_response_app.QuizFragment"
+        android:label="QuizFragment" />
 </navigation>
