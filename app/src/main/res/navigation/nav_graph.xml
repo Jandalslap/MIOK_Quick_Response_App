@@ -39,7 +39,11 @@
     <fragment
         android:id="@+id/contactFragment"
         android:name="com.example.miok_quick_response_app.ContactFragment"
-        android:label="ContactFragment" />
+        android:label="ContactFragment" >
+        <action
+            android:id="@+id/action_contactFragment_to_addContactFragment"
+            app:destination="@id/addContactFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/messageFragment"
@@ -50,4 +54,8 @@
         android:id="@+id/quizFragment"
         android:name="com.example.miok_quick_response_app.QuizFragment"
         android:label="QuizFragment" />
+    <fragment
+        android:id="@+id/addContactFragment"
+        android:name="com.example.miok_quick_response_app.data.AddContactFragment"
+        android:label="AddContactFragment" />
 </navigation>
