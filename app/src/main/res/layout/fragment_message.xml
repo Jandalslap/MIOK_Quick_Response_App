@@ -6,10 +6,10 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/textContact"
+        android:id="@+id/textMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This is the Contact Fragment"
+        android:text="This is the Message Fragment"
         android:textSize="18sp" />
 
 </LinearLayout>
