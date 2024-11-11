@@ -47,12 +47,25 @@
         android:id="@+id/button_message"
         android:layout_width="260dp"
         android:layout_height="60dp"
-        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/mustard_button_homefragment"
         android:text="Message Everyone"
         android:textColor="#ffffff"
         android:fontFamily="@font/lalezar_regular"
         android:drawableLeft="@drawable/ic_message_wbg_copy"
         android:paddingLeft="20dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_profile"
+        android:layout_width="260dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/mustard_button_homefragment"
+        android:text="Profile"
+        android:textColor="#ffffff"
+        android:fontFamily="@font/lalezar_regular"
+        android:drawableLeft="@drawable/ic_contact_wbg_copy"
+        android:paddingLeft="20dp"/>
+
     <!-- Add more UI elements here -->
 </LinearLayout>
