@@ -14,27 +14,29 @@
         android:text="Hi, how are you today?"
         android:textColor="#004B8C"
         android:textSize="24sp"
-        android:layout_marginBottom="24dp" />
+        android:layout_marginBottom="80dp"
+        android:layout_marginTop="-60dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_quiz"
         android:layout_width="260dp"
         android:layout_height="100dp"
         android:background="@drawable/edit_button_homefragment"
-        android:fontFamily="@font/lalezar_regular"
-        android:textSize="16sp"
-        android:text="TAKE QUIZ"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
-        android:drawablePadding="20dp"
         android:drawableLeft="@drawable/miok_copy3"
-        android:padding="10dp"/>
+        android:drawablePadding="20dp"
+        android:fontFamily="@font/lalezar_regular"
+        android:padding="10dp"
+        android:text="TAKE QUIZ"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="-60dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_contact"
         android:layout_width="260dp"
         android:layout_height="80dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/mustard_button_homefragment"
         android:fontFamily="@font/lalezar_regular"
         android:text="Contacts"
