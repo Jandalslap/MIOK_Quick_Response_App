@@ -1,25 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools" >
+    android:layout_height="match_parent">
+
     <!-- after creating .ProfileContacts file
     tools:context=".ui.tasks.ProfileContacts"> -->
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_tasks"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <ImageButton
-        android:id="@+id/prifile_add_task"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="end"
-        android:layout_margin="16dp"
-        android:padding="5dp"
-        android:src="@drawable/ic_add_contacts"
-        android:scaleType="centerInside"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/profile_add_task"
+            android:layout_width="260dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:background="@drawable/mustard_fragment_profile_contacts"
+            android:contentDescription="Add contact"
+            android:fontFamily="@font/lalezar_regular"
+            android:padding="5dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_add_contacts"
+            android:text="ADD CONTACT"
+            android:textColor="#ffffff" />
 
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_tasks"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
