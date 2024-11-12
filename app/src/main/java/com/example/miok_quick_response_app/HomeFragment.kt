@@ -38,6 +38,9 @@ class HomeFragment : Fragment() {
         binding.buttonMessage.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_messageFragment)
         }
+        binding.buttonProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+        }
     }
 
     override fun onDestroyView() {

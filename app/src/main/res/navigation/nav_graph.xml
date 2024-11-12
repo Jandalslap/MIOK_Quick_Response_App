@@ -34,12 +34,19 @@
         <action
             android:id="@+id/action_homeFragment_to_contactFragment"
             app:destination="@id/contactFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.miok_quick_response_app.ProfileFragment"
+        android:label="ProfileFragment" />
 
     <fragment
         android:id="@+id/contactFragment"
         android:name="com.example.miok_quick_response_app.ContactFragment"
-        android:label="ContactFragment" >
+        android:label="ContactFragment">
         <action
             android:id="@+id/action_contactFragment_to_addContactFragment"
             app:destination="@id/addContactFragment" />
