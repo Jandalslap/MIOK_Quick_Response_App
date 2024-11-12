@@ -3,6 +3,7 @@ package com.example.miok_quick_response_app
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Switch
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -53,6 +54,23 @@ class MainActivity : AppCompatActivity() {
                     header.isVisible = true // Show header
                     bottomNav.isVisible = true // Show bottom navigation
                 }
+            }
+        }
+
+        // Find the Switch by its ID
+        val languageSwitch = findViewById<Switch>(R.id.languageswitch)
+
+        // Set initial text to English
+        languageSwitch.text = "English"
+
+        // Set up the toggle listener
+        languageSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                // When toggled on, set text to "Maori"
+                languageSwitch.text = "Māori"
+            } else {
+                // When toggled off, set text back to "English"
+                languageSwitch.text = "English"
             }
         }
     }
