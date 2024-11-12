@@ -5,16 +5,23 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Switch
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var sharedViewModel: SharedViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Initialize the shared ViewModel
+        sharedViewModel = ViewModelProvider(this)[SharedViewModel::class.java]
 
         // Setup the NavHostFragment
         val navHostFragment = supportFragmentManager
@@ -59,19 +66,22 @@ class MainActivity : AppCompatActivity() {
 
         // Find the Switch by its ID
         val languageSwitch = findViewById<Switch>(R.id.languageswitch)
+        var language = "English"
 
         // Set initial text to English
         languageSwitch.text = "English"
 
         // Set up the toggle listener
         languageSwitch.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                // When toggled on, set text to "Maori"
+            language = if (isChecked) {
                 languageSwitch.text = "Māori"
+                "Māori"
             } else {
-                // When toggled off, set text back to "English"
                 languageSwitch.text = "English"
+                "English"
             }
+            // Update language in the shared ViewModel
+            sharedViewModel.updateLanguage(language)
         }
     }
 
