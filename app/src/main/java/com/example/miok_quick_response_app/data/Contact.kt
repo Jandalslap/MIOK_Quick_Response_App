@@ -1,32 +1,24 @@
 import android.os.Parcel
 import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Contact(
     val name: String,
-    val dob: String // Date of Birth as String (or use a Date object if needed)
+    val dob: String, // Date of Birth
+    val relationship: Relationship
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",
-        parcel.readString() ?: ""
+        parcel.readString() ?: "",
+        Relationship.valueOf(parcel.readString() ?: Relationship.OTHER.name)
     )
+}
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(name)
-        parcel.writeString(dob)
-    }
-
-    override fun describeContents(): Int = 0
-
-    companion object {
-        @JvmField
-        val CREATOR = object : Parcelable.Creator<Contact> {
-            override fun createFromParcel(parcel: Parcel): Contact {
-                return Contact(parcel)
-            }
-
-            override fun newArray(size: Int): Array<Contact?> {
-                return arrayOfNulls(size)
-            }
-        }
-    }
+enum class Relationship {
+    PARENT_GUARDIAN,
+    CAREGIVER,
+    AUNT_UNCLE,
+    GRANDPARENT,
+    OTHER
 }
