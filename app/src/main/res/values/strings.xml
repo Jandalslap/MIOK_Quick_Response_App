@@ -7,4 +7,12 @@
     <string name="address">Address</string>
     <string name="contacts">Contacts</string>
 
+        <string-array name="relationship_options">
+            <item>Parent/Guardian</item>
+            <item>Caregiver</item>
+            <item>Aunt/Uncle</item>
+            <item>Grandparent</item>
+            <item>Other</item>
+        </string-array>
+
 </resources>

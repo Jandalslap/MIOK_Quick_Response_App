@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -33,3 +34,51 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </LinearLayout>
+=======
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/question_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        android:layout_margin="20dp"
+        android:textSize="24dp"
+        ></TextView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/question_button_yes"
+            android:layout_width="40pt"
+            android:layout_height="60dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/mustard_button_homefragment"
+            android:fontFamily="@font/lalezar_regular"
+            android:text="Yes"
+            android:textColor="#ffffff"
+            android:textSize="14sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/question_button_no"
+            android:layout_width="40pt"
+            android:layout_height="60dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/mustard_button_homefragment"
+            android:fontFamily="@font/lalezar_regular"
+            android:text="No"
+            android:textColor="#ffffff" />
+
+    </LinearLayout>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+>>>>>>> origin/master
