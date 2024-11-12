@@ -6,44 +6,50 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.miok_quick_response_app.R
-class ContactAdapter(
-    private val contacts: MutableList<Contact>,
-    private val onRemove: (Int) -> Unit
-) : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
 
-    class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val nameTextView: TextView = itemView.findViewById(R.id.contact_name)
-        val dobTextView: TextView = itemView.findViewById(R.id.contact_dob)
-        val removeButton: ImageButton = itemView.findViewById(R.id.remove_button)
-    }
+class ContactAdapter(
+    private val onRemoveClick: (Int) -> Unit
+) : ListAdapter<Contact, ContactAdapter.ContactViewHolder>(ContactDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_contact, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_contact, parent, false)
         return ContactViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
-        val contact = contacts[position]
+        val contact = getItem(position)
         holder.nameTextView.text = contact.name
-        holder.dobTextView.text = contact.dob  // Display DOB
+        holder.dobTextView.text = contact.dob
+        holder.relationshipTextView.text = contact.relationship.name.replace("_", " ")
+
         holder.removeButton.setOnClickListener {
-            onRemove(position)  // Callback to remove the contact
+            onRemoveClick(position)
         }
     }
 
-    override fun getItemCount() = contacts.size
+    override fun getItemCount(): Int = currentList.size
 
-    fun addContact(contact: Contact) {
-        contacts.add(contact)
-        notifyItemInserted(contacts.size - 1)
+    class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val nameTextView: TextView = itemView.findViewById(R.id.contact_name)
+        val dobTextView: TextView = itemView.findViewById(R.id.contact_dob)
+        val relationshipTextView: TextView = itemView.findViewById(R.id.contact_relationship)
+        val removeButton: ImageButton = itemView.findViewById(R.id.remove_button)
     }
 
-    fun removeContact(position: Int) {
-        contacts.removeAt(position)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position, contacts.size)
+    // DiffUtil callback to compare lists efficiently
+    class ContactDiffCallback : DiffUtil.ItemCallback<Contact>() {
+        override fun areItemsTheSame(oldItem: Contact, newItem: Contact): Boolean {
+            // Compare based on name, dob, and relationship instead of id
+            return oldItem.name == newItem.name && oldItem.dob == newItem.dob && oldItem.relationship == newItem.relationship
+        }
+
+        override fun areContentsTheSame(oldItem: Contact, newItem: Contact): Boolean {
+            return oldItem == newItem // Compare by all fields
+        }
     }
+
 }

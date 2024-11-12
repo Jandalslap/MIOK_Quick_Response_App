@@ -9,7 +9,8 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import com.example.miok_quick_response_app.R
-
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 
 class AddContactFragment : Fragment() {
 
@@ -17,27 +18,42 @@ class AddContactFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add_contact, container, false)
 
-        // Get references to the EditText fields
         val nameInput = view.findViewById<EditText>(R.id.contact_name_input)
         val dobInput = view.findViewById<EditText>(R.id.contact_dob_input)
+        val relationshipSpinner = view.findViewById<Spinner>(R.id.contact_relationship_spinner)
 
-        // Add Contact button listener
+        // Set up the spinner
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.relationship_options,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            relationshipSpinner.adapter = adapter
+        }
+
         view.findViewById<Button>(R.id.add_contact_button).setOnClickListener {
             val name = nameInput.text.toString()
             val dob = dobInput.text.toString()
 
-            // Create a new Contact object (assuming Contact is Parcelable or Serializable)
-            val newContact = Contact(name, dob)
+            // Get selected relationship
+            val relationship = when (relationshipSpinner.selectedItem.toString()) {
+                "Parent/Guardian" -> Relationship.PARENT_GUARDIAN
+                "Caregiver" -> Relationship.CAREGIVER
+                "Aunt/Uncle" -> Relationship.AUNT_UNCLE
+                "Grandparent" -> Relationship.GRANDPARENT
+                else -> Relationship.OTHER
+            }
 
-            // Use a NavController to return the result back to the calling fragment
+            val newContact = Contact(name, dob, relationship)
+
             val resultBundle = Bundle().apply {
                 putParcelable("new_contact", newContact)
             }
             parentFragmentManager.setFragmentResult("newContactKey", resultBundle)
-            parentFragmentManager.popBackStack()  // Close the fragment
+            parentFragmentManager.popBackStack()
         }
 
         return view

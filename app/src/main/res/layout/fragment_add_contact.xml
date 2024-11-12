@@ -26,6 +26,12 @@
             android:layout_height="wrap_content"
             android:hint="Enter DOB (YYYY-MM-DD)"
             android:textSize="16sp" />
+        <Spinner
+            android:id="@+id/contact_relationship_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:entries="@array/relationship_options" />
 
         <Button
             android:id="@+id/add_contact_button"
