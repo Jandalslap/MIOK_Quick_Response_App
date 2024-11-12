@@ -5,39 +5,52 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class ProfileViewModel : ViewModel() {
-
-    // Profile image URL
-    private val _profileImageUrl = MutableLiveData<String>()
-    val profileImageUrl: LiveData<String> get() = _profileImageUrl
-
-    // User name
     private val _userName = MutableLiveData<String>()
     val userName: LiveData<String> get() = _userName
 
-    // User email
     private val _userEmail = MutableLiveData<String>()
     val userEmail: LiveData<String> get() = _userEmail
 
-    // User birthday
     private val _userBirthday = MutableLiveData<String>()
     val userBirthday: LiveData<String> get() = _userBirthday
 
-    // User address
     private val _userAddress = MutableLiveData<String>()
     val userAddress: LiveData<String> get() = _userAddress
 
-    // Parent information (name and relationship)
-    private val _userParents = MutableLiveData<List<Parent>>()
-    val userParents: LiveData<List<Parent>> get() = _userParents
+    private val _profileImageUrl = MutableLiveData<String>()
+    val profileImageUrl: LiveData<String> get() = _profileImageUrl
+
+    // Add fatherName and motherName as LiveData properties
+    private val _fatherName = MutableLiveData<String>()
+    val fatherName: LiveData<String> get() = _fatherName
+
+    private val _motherName = MutableLiveData<String>()
+    val motherName: LiveData<String> get() = _motherName
 
     // Initialize user profile data
-    fun initUserProfile(imageUrl: String, name: String, email: String, birthday: String, address: String, parents: List<Parent>) {
+    fun initUserProfile(
+        imageUrl: String,
+        name: String,
+        email: String,
+        birthday: String,
+        address: String,
+        fatherName: String,
+        motherName: String
+    ) {
         _profileImageUrl.value = imageUrl
         _userName.value = name
         _userEmail.value = email
         _userBirthday.value = birthday
         _userAddress.value = address
-        _userParents.value = parents
+        _fatherName.value = fatherName
+        _motherName.value = motherName
+    }
+    // Function to update profile data
+    fun updateUserProfile(name: String, email: String, birthday: String, address: String) {
+        _userName.value = name
+        _userEmail.value = email
+        _userBirthday.value = birthday
+        _userAddress.value = address
     }
 }
 
