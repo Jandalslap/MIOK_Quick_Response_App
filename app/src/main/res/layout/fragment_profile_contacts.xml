@@ -25,7 +25,7 @@
             android:padding="5dp"
             android:scaleType="centerInside"
             android:src="@drawable/ic_add_contacts"
-            android:text="ADD CONTACT"
+            android:text="@string/profile_add_task"
             android:textColor="#ffffff" />
 
 

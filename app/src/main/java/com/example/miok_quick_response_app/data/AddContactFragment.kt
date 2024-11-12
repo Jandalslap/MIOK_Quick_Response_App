@@ -11,8 +11,13 @@ import androidx.fragment.app.Fragment
 import com.example.miok_quick_response_app.R
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.fragment.app.activityViewModels
+import com.example.miok_info_app.viewmodel.SharedViewModel
 
 class AddContactFragment : Fragment() {
+
+    // Access the shared ViewModel scoped to the activity
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +37,12 @@ class AddContactFragment : Fragment() {
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             relationshipSpinner.adapter = adapter
+        }
+
+        // Observe the currentLanguage LiveData from SharedViewModel
+        sharedViewModel.currentLanguage.observe(viewLifecycleOwner) { language ->
+            // Update the UI or perform actions based on the new language value
+            updateLanguageUI(language)
         }
 
         view.findViewById<Button>(R.id.add_contact_button).setOnClickListener {
@@ -57,5 +68,16 @@ class AddContactFragment : Fragment() {
         }
 
         return view
+    }
+
+    // Function to update UI based on the language
+    private fun updateLanguageUI(language: String) {
+        // Update TextView text based on language
+        if (language == "Māori") {
+
+        } else {
+            // Default to English
+
+        }
     }
 }

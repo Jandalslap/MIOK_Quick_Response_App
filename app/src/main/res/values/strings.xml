@@ -16,13 +16,29 @@
     <string name="button_message_mr">TĀRONGO KI TE KATOA</string>
     <string name="button_profile">PROFILE</string>
     <string name="button_profile_mr">PŪRONGO</string>
+    <string name="profile_add_task">ADD CONTACT</string>
+    <string name="profile_add_task_mr">TĀPIRI PŪRONGO WHAKAPĀ</string>
+    <string name="contact_name_input">Enter contact name</string>
+    <string name="contact_name_input_mr">Tāuru i te ingoa o te pūrongo whakapā</string>
+    <string name="contact_dob_input">Enter DOB (YYYY-MM-DD)</string>
+    <string name="contact_dob_input_mr">Tāuru i te Rā Whānau (YYYY-MM-DD)</string>
+    <string name="add_contact_button">Add Contact</string>
+    <string name="add_contact_button_mr">Tāpiri Pūrongo Whakapā</string>
 
-        <string-array name="relationship_options">
-            <item>Parent/Guardian</item>
-            <item>Caregiver</item>
-            <item>Aunt/Uncle</item>
-            <item>Grandparent</item>
-            <item>Other</item>
-        </string-array>
+    <string-array name="relationship_options">
+        <item>Parent/Guardian</item>
+        <item>Caregiver</item>
+        <item>Aunt/Uncle</item>
+        <item>Grandparent</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="relationship_options_mr">
+        <item>Matua/Kaika</item> <!-- Parent/Guardian -->
+        <item>Kaiāwhina</item> <!-- Caregiver -->
+        <item>Whaea/Tīpuna</item> <!-- Aunt/Uncle (Whaea for Aunt, Tīpuna for Uncles can be generalized as a family term) -->
+        <item>Koroua/Koro</item> <!-- Grandparent (Koroua for Grandfather, Koro for Grandmother) -->
+        <item>Ētahi Atu</item> <!-- Other -->
+    </string-array>
 
 </resources>
