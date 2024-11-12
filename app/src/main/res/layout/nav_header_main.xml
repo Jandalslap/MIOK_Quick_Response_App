@@ -12,6 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="English"
+        android:textColor="#004B8D"
+        android:fontFamily="@font/lalezar_regular"
         android:thumbTint="@color/white"
         android:trackTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
