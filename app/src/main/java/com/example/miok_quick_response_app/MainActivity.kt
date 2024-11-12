@@ -6,6 +6,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class MainActivity : AppCompatActivity() {
@@ -18,6 +19,22 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         NavigationUI.setupActionBarWithNavController(this, navHostFragment.navController)
+
+        // Setup BottomNavigationView
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.homeFragment -> {
+                    navHostFragment.navController.navigate(R.id.homeFragment)
+                    true
+                }
+                R.id.contactFragment -> {
+                    navHostFragment.navController.navigate(R.id.contactFragment)
+                    true
+                }
+                else -> false
+            }
+        }
 
         // Hide the header and bottom navigation for specific fragments
         navHostFragment.navController.addOnDestinationChangedListener { _, destination, _ ->
