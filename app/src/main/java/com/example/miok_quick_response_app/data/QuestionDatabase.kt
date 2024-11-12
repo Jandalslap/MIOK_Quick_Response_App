@@ -29,7 +29,11 @@ abstract class QuestionDatabase : RoomDatabase() {
 
             // Use the injected CoroutineScope to perform background tasks
             applicationScope.launch {
-                dao.insert(Question("Question text 1, Question text 2, Question text 3"))
+                dao.insert(Question("Question text 1, Question text 1, Question text 1"))
+                dao.insert(Question("Question text 2, Question text 2, Question text 2"))
+                dao.insert(Question("Question text 3, Question text 3, Question text 3"))
+                dao.insert(Question("Question text 4, Question text 4, Question text 4"))
+
             }
         }
     }
