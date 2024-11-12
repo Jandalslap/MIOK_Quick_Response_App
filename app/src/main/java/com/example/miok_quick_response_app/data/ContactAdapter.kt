@@ -1,5 +1,6 @@
 package com.example.miok_quick_response_app.data
 
+import Contact
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,7 +8,6 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.miok_quick_response_app.R
-
 class ContactAdapter(
     private val contacts: MutableList<Contact>,
     private val onRemove: (Int) -> Unit
@@ -15,6 +15,7 @@ class ContactAdapter(
 
     class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameTextView: TextView = itemView.findViewById(R.id.contact_name)
+        val dobTextView: TextView = itemView.findViewById(R.id.contact_dob)
         val removeButton: ImageButton = itemView.findViewById(R.id.remove_button)
     }
 
@@ -27,6 +28,7 @@ class ContactAdapter(
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
         val contact = contacts[position]
         holder.nameTextView.text = contact.name
+        holder.dobTextView.text = contact.dob  // Display DOB
         holder.removeButton.setOnClickListener {
             onRemove(position)  // Callback to remove the contact
         }
