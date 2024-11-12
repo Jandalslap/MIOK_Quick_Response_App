@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:layout_marginBottom="14dp"
-        android:text="Thanks for answering! \nResult have been sent to your contacts."
+        android:text="Thanks for answering! \nResults have been sent to your contacts."
         android:gravity="center"
         android:textStyle="bold"
         android:fontFamily="@font/opensans_regular"

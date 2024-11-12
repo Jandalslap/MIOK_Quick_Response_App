@@ -6,17 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.example.miok_quick_response_app.ViewModel.ContactViewModel
 import com.example.miok_quick_response_app.data.ContactAdapter
 class ContactFragment : Fragment() {
 
     private lateinit var contactViewModel: ContactViewModel
     private lateinit var contactAdapter: ContactAdapter
+
+    // Access the shared ViewModel scoped to the activity
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,7 +62,21 @@ class ContactFragment : Fragment() {
             }
         }
 
+        // Observe the currentLanguage LiveData in the SharedViewModel
+        sharedViewModel.currentLanguage.observe(viewLifecycleOwner) { language ->
+            // This block will be triggered whenever currentLanguage changes
+            // Update UI or perform actions based on the new language value
+            updateLanguageUI(language)
+        }
+
         return view
+    }
+
+    // Function to update UI based on the language
+    private fun updateLanguageUI(language: String) {
+        // Update any UI elements or perform other actions based on the new language
+        // For example:
+        // textViewLanguage.text = language
     }
 }
 
