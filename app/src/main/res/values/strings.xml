@@ -69,6 +69,7 @@
         <item>Aunt/Uncle</item>
         <item>Grandparent</item>
         <item>Iwi Social Worker</item>
+        <item>Police</item>
         <item>Other</item>
 
     </string-array>
@@ -79,6 +80,7 @@
         <item>Whaea/Tīpuna</item> <!-- Aunt/Uncle (Whaea for Aunt, Tīpuna for Uncles can be generalized as a family term) -->
         <item>Koroua/Koro</item> <!-- Grandparent (Koroua for Grandfather, Koro for Grandmother) -->
         <item>Kaiāwhina pāpori iwi</item> <!-- iwi social worker -->
+        <item>Pirihimana</item> <!-- police -->
         <item>Ētahi Atu</item> <!-- Other -->
     </string-array>
 
