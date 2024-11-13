@@ -8,14 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.example.miok_quick_response_app.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
-    // Initialize ViewModel
     private val profileViewModel: ProfileViewModel by activityViewModels()
-
-    // Use view binding
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
@@ -30,7 +29,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.editButton.setOnClickListener {
+        // Observe current language and update the UI
+        sharedViewModel.currentLanguage.observe(viewLifecycleOwner) { language ->
+            updateLanguageUI(language)
+        }
+        binding.editProfileButton.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
         }
 
@@ -45,7 +48,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             motherName = "Lara Doe"
         )
 
-        // Observe LiveData to update UI
+        // Set up the Edit Button to navigate to EditProfileFragment
+        binding.editProfileButton.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
+        }
+
+        // Observe and update the profile details
         profileViewModel.userName.observe(viewLifecycleOwner, Observer { name ->
             binding.userName.text = name
         })
@@ -62,9 +70,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             binding.userAddress.text = address
         })
 
-        // Observing fatherName and motherName
         profileViewModel.fatherName.observe(viewLifecycleOwner, Observer { fatherName ->
-                binding.userFatherName.text = fatherName
+            binding.userFatherName.text = fatherName
         })
 
         profileViewModel.motherName.observe(viewLifecycleOwner, Observer { motherName ->
@@ -72,13 +79,24 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         })
 
         profileViewModel.profileImageUrl.observe(viewLifecycleOwner, Observer { imageUrl ->
-            // Load image using an image loading library (e.g., Glide)
+            // Optionally load profile image (e.g., using Glide)
             // Glide.with(this).load(imageUrl).into(binding.profileImage)
         })
     }
 
+    private fun updateLanguageUI(language: String) {
+        if (language == "Māori") {
+            // Update the text views with Māori text
+
+            binding.editProfileButton.text = getString(R.string.edit_profile_button_mr)
+        } else {
+            // Default to English
+            binding.editProfileButton.text = getString(R.string.edit_profile_button)
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null // Clean up binding
+        _binding = null // Clean up the binding to avoid memory leaks
     }
 }

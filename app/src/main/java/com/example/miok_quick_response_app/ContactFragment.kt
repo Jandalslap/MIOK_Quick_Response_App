@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.example.miok_quick_response_app.ViewModel.ContactViewModel
 import com.example.miok_quick_response_app.data.ContactAdapter
+
 class ContactFragment : Fragment() {
 
     private lateinit var contactViewModel: ContactViewModel
@@ -55,7 +57,10 @@ class ContactFragment : Fragment() {
         }
 
         // Set up the listener for fragment result
-        parentFragmentManager.setFragmentResultListener("newContactKey", viewLifecycleOwner) { _, bundle ->
+        parentFragmentManager.setFragmentResultListener(
+            "newContactKey",
+            viewLifecycleOwner
+        ) { _, bundle ->
             val newContact = bundle.getParcelable<Contact>("new_contact")
             newContact?.let {
                 contactViewModel.addContact(it)
@@ -64,19 +69,23 @@ class ContactFragment : Fragment() {
 
         // Observe the currentLanguage LiveData in the SharedViewModel
         sharedViewModel.currentLanguage.observe(viewLifecycleOwner) { language ->
-            // This block will be triggered whenever currentLanguage changes
-            // Update UI or perform actions based on the new language value
+            // Update UI based on the language
             updateLanguageUI(language)
         }
+
 
         return view
     }
 
-    // Function to update UI based on the language
+
     private fun updateLanguageUI(language: String) {
-        // Update any UI elements or perform other actions based on the new language
-        // For example:
-        // textViewLanguage.text = language
+        val button = view?.findViewById<AppCompatButton>(R.id.profile_add_task)
+
+        if (language == "Māori") {
+            button?.text = getString(R.string.profile_add_task_mr)
+        } else {
+            button?.text = getString(R.string.profile_add_task)
+        }
     }
 }
 

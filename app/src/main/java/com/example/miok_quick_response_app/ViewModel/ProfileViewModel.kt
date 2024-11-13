@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class ProfileViewModel : ViewModel() {
+
+
     private val _userName = MutableLiveData<String>()
     val userName: LiveData<String> get() = _userName
 
@@ -45,13 +47,24 @@ class ProfileViewModel : ViewModel() {
         _fatherName.value = fatherName
         _motherName.value = motherName
     }
-    // Function to update profile data
-    fun updateUserProfile(name: String, email: String, birthday: String, address: String) {
-        _userName.value = name
-        _userEmail.value = email
-        _userBirthday.value = birthday
-        _userAddress.value = address
+
+    // Inside ProfileViewModel
+    fun updateUserProfile(
+        newName: String,
+        newEmail: String,
+        newBirthday: String,
+        newAddress: String,
+        newFatherName: String,
+        newMotherName: String
+    ) {
+        _userName.value = newName
+        _userEmail.value = newEmail
+        _userBirthday.value = newBirthday
+        _userAddress.value = newAddress
+        _fatherName.value = newFatherName
+        _motherName.value = newMotherName
     }
+
 }
 
 // Data class for parent information (name and relationship)
