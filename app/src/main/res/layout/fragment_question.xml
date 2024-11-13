@@ -1,40 +1,3 @@
-<<<<<<< HEAD
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#E5EDF3"
-    android:gravity="center"
-    android:orientation="vertical">
-
-    <!-- Title Text -->
-    <TextView
-        android:id="@+id/titleText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/lalezar_regular"
-        android:textSize="24sp"
-        android:paddingBottom="10dp"
-        android:textStyle="bold"/>
-
-    <!-- Content Text -->
-    <TextView
-        android:id="@+id/contentText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"/>
-
-    <!-- RecyclerView for displaying a list of items -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-</LinearLayout>
-=======
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -48,8 +11,7 @@
         android:layout_height="wrap_content"
         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         android:layout_margin="20dp"
-        android:textSize="24dp"
-        ></TextView>
+        android:textSize="24dp"></TextView>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -82,4 +44,3 @@
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>
->>>>>>> origin/master

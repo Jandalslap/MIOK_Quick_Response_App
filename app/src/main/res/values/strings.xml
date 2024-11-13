@@ -4,6 +4,7 @@
     <string name="button_take_quiz">Take Quiz</string>
     <string name="profile_picture">Profile Picture</string>
     <string name="birthday">Birthday</string>
+    <string name="dob">DOB</string>
     <string name="address">Address</string>
     <string name="contacts">Contacts</string>
     <string name="homeTextView">Hi, how are you today?</string>
@@ -32,6 +33,8 @@
     <string name="birthday_label">Birthday</string>
     <string name="address_label">Address</string>
     <string name="father_name_label">Fathers Name</string>
+    <string name="Caregiver1_label">Caregiver1</string>
+    <string name="Caregiver2_label">Caregiver2</string>
     <string name="mother_name_label">Mothers Name</string>
     <string name="save_button">Save</string>
     <string name="edit_profile_button">Edit Profile</string>
