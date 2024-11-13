@@ -25,6 +25,7 @@ class ContactAdapter(
         holder.nameTextView.text = contact.name
         holder.phone_numberTextView.text = contact.phone_number
         holder.relationshipTextView.text = contact.relationship.name.replace("_", " ")
+        holder.statusTextView.text = if (contact.status) "Yes" else "No"
 /*
         holder.removeButton.setOnClickListener {
             onRemoveClick(position)
@@ -38,6 +39,7 @@ class ContactAdapter(
         val phone_numberTextView: TextView = itemView.findViewById(R.id.contact_phone_number)
         val relationshipTextView: TextView = itemView.findViewById(R.id.contact_relationship)
         //val removeButton: ImageButton = itemView.findViewById(R.id.remove_button)
+        val statusTextView: TextView = itemView.findViewById(R.id.contact_status)
     }
 
     // DiffUtil callback to compare lists efficiently

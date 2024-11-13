@@ -6,12 +6,14 @@ import kotlinx.android.parcel.Parcelize
 data class Contact(
     val name: String,
     val phone_number: String,
-    val relationship: Relationship
+    val relationship: Relationship,
+    val status: Boolean
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",
         parcel.readString() ?: "",
-        Relationship.valueOf(parcel.readString() ?: Relationship.OTHER.name)
+        Relationship.valueOf(parcel.readString() ?: Relationship.OTHER.name),
+        parcel.readByte() != 0.toByte()
     )
 }
 
