@@ -33,7 +33,39 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:entries="@array/relationship_options" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/contact_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@string/contact_status"
+                android:textSize="14sp" />
+
+            <RadioGroup
+                android:id="@+id/contact_status_radio_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/status_yes" />
+
+                <RadioButton
+                    android:id="@+id/radio_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/status_no" />
+            </RadioGroup>
+        </LinearLayout>
         <Button
             android:id="@+id/add_contact_button"
             android:layout_width="match_parent"

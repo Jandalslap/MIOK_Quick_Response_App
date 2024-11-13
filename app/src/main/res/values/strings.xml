@@ -27,7 +27,7 @@
     <string name="add_contact_button">Add Contact</string>
     <string name="add_contact_button_mr">Tāpiri Pūrongo Whakapā</string>
 
-    <string name="name_label">Name</string>
+    <string name="name_label">Name: </string>
     <string name="email_label">Email</string>
     <string name="birthday_label">Birthday</string>
     <string name="address_label">Address</string>
@@ -36,11 +36,17 @@
     <string name="save_button">Save</string>
     <string name="edit_profile_button">Edit Profile</string>
     <string name="phone_number">Phone Number</string>
+    <string name="phone_label">Phone:  </string>
+    <string name="relationship_label">Relationship:  </string>
+    <string name="status_label">Status: </string>
+    <string name="contact_status">Status</string>
+    <string name="status_yes">Yes</string>
+    <string name="status_no">No</string>
 
 
 
     <!-- Māori Language -->
-    <string name="name_label_mr">Ingoa</string>
+    <string name="name_label_mr">Ingoa:</string>
     <string name="email_label_mr">Īmēra</string>
     <string name="birthday_label_mr">Rā Whānau</string>
     <string name="address_label_mr">Wāhi Noho</string>
@@ -48,6 +54,12 @@
     <string name="mother_name_label_mr">Ingoa o te Matua Wahine</string>
     <string name="save_button_mr">Tāpiri</string>
     <string name="edit_profile_button_mr">Whakauru Rata</string>
+    <string name="contact_status_mr">Tūnga</string>
+    <string name="status_yes_mr">Āe</string>
+    <string name="status_no_mr">Aua</string>
+    <string name="phone_label_mr">Waea: </string>
+    <string name="relationship_label_mr">Tūāhua: </string>
+    <string name="status_label_mr">Tūnga: </string>
 
 
 
