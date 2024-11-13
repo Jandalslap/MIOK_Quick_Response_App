@@ -1,11 +1,16 @@
 package com.example.miok_quick_response_app
 
+import android.app.Application
+import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.example.miok_quick_response_app.database.ProfileDatabaseHelper
+import com.example.miok_quick_response_app.model.Profile
 
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel(application: Application) : AndroidViewModel(application) {
 
+    private val dbHelper = ProfileDatabaseHelper(application)
 
     private val _userName = MutableLiveData<String>()
     val userName: LiveData<String> get() = _userName
@@ -19,36 +24,28 @@ class ProfileViewModel : ViewModel() {
     private val _userAddress = MutableLiveData<String>()
     val userAddress: LiveData<String> get() = _userAddress
 
-    private val _profileImageUrl = MutableLiveData<String>()
-    val profileImageUrl: LiveData<String> get() = _profileImageUrl
-
-    // Add fatherName and motherName as LiveData properties
     private val _fatherName = MutableLiveData<String>()
     val fatherName: LiveData<String> get() = _fatherName
 
     private val _motherName = MutableLiveData<String>()
     val motherName: LiveData<String> get() = _motherName
 
-    // Initialize user profile data
-    fun initUserProfile(
-        imageUrl: String,
-        name: String,
-        email: String,
-        birthday: String,
-        address: String,
-        fatherName: String,
-        motherName: String
-    ) {
-        _profileImageUrl.value = imageUrl
-        _userName.value = name
-        _userEmail.value = email
-        _userBirthday.value = birthday
-        _userAddress.value = address
-        _fatherName.value = fatherName
-        _motherName.value = motherName
+    init {
+        loadProfile()
     }
 
-    // Inside ProfileViewModel
+    fun loadProfile() {
+        val profile = dbHelper.getProfile()
+        profile?.let {
+            _userName.value = it.name
+            _userEmail.value = it.email
+            _userBirthday.value = it.birthday
+            _userAddress.value = it.address
+            _fatherName.value = it.fatherName
+            _motherName.value = it.motherName
+        }
+    }
+
     fun updateUserProfile(
         newName: String,
         newEmail: String,
@@ -63,12 +60,26 @@ class ProfileViewModel : ViewModel() {
         _userAddress.value = newAddress
         _fatherName.value = newFatherName
         _motherName.value = newMotherName
+
+        // Create Profile object
+        val profile = Profile(
+            name = newName,
+            email = newEmail,
+            birthday = newBirthday,
+            address = newAddress,
+            fatherName = newFatherName,
+            motherName = newMotherName,
+            imageUrl = "" // Add image URL if needed
+        )
+
+        // Insert if not exists, otherwise update
+        val existingProfile = dbHelper.getProfile()
+        if (existingProfile == null) {
+            dbHelper.insertProfile(profile) // Insert a new profile if it doesn't exist
+        } else {
+            dbHelper.updateProfile(profile) // Update the existing profile
+        }
     }
 
-}
 
-// Data class for parent information (name and relationship)
-data class Parent(
-    val name: String,
-    val relationship: String
-)
+}

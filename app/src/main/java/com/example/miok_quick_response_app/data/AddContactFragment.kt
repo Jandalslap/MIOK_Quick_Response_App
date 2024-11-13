@@ -1,6 +1,7 @@
 package com.example.miok_quick_response_app.data
 
 import Contact
+import Relationship
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -60,10 +61,11 @@ class AddContactFragment : Fragment() {
 
             // Get selected relationship
             val relationship = when (relationshipSpinner.selectedItem.toString()) {
-                "Parent/Guardian" -> Relationship.PARENT_GUARDIAN
-                "Caregiver" -> Relationship.CAREGIVER
-                "Aunt/Uncle" -> Relationship.AUNT_UNCLE
-                "Grandparent" -> Relationship.GRANDPARENT
+                "Parent/Guardian", "Matua/Kaika" -> Relationship.PARENT_GUARDIAN
+                "Caregiver", "Kaiāwhina" -> Relationship.CAREGIVER
+                "Aunt/Uncle", "Whaea/Tipuna" -> Relationship.AUNT_UNCLE
+                "Grandparent", "Koroua/Koro" -> Relationship.GRANDPARENT
+                "Ētahi Atu" -> Relationship.OTHER  // Māori translation for "Other"
                 else -> Relationship.OTHER
             }
 

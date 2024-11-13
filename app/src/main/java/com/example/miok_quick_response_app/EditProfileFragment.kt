@@ -96,6 +96,13 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             binding.parentNameLabel1.text = getString(R.string.father_name_label_mr)
             binding.parentNameLabel2.text = getString(R.string.mother_name_label_mr)
             binding.saveButton.text = getString(R.string.save_button_mr)
+            binding.editName.hint = getString(R.string.name_label_mr)
+            binding.editEmail.hint = getString(R.string.email_label_mr)
+            binding.editBirthday.hint = getString(R.string.birthday_label_mr)
+            binding.editAddress.hint = getString(R.string.address_label_mr)
+            binding.editParentName1.hint = getString(R.string.father_name_label_mr)
+            binding.editParentName2.hint = getString(R.string.mother_name_label_mr)
+            binding.saveButton.hint = getString(R.string.save_button_mr)
         } else {
             // Default to English
             binding.nameLabel.text = getString(R.string.name_label)
@@ -105,6 +112,13 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             binding.parentNameLabel1.text = getString(R.string.father_name_label)
             binding.parentNameLabel2.text = getString(R.string.mother_name_label)
             binding.saveButton.text = getString(R.string.save_button)
+            binding.editName.hint = getString(R.string.name_label)
+            binding.editEmail.hint = getString(R.string.email_label)
+            binding.editBirthday.hint = getString(R.string.birthday_label)
+            binding.editAddress.hint = getString(R.string.address_label)
+            binding.editParentName1.hint = getString(R.string.father_name_label)
+            binding.editParentName2.hint = getString(R.string.mother_name_label)
+            binding.saveButton.hint = getString(R.string.save_button)
         }
     }
 

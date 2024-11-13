@@ -138,7 +138,7 @@
             android:contentDescription="mother_name" />
 
         <TextView
-            android:id="@+id/user_mother_name"
+            android:id="@+id/motherName"
             android:layout_width="211dp"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
@@ -166,7 +166,7 @@
             android:contentDescription="father_name" />
 
         <TextView
-            android:id="@+id/user_father_name"
+            android:id="@+id/fatherName"
             android:layout_width="211dp"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"

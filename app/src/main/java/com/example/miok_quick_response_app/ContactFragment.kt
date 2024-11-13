@@ -34,16 +34,15 @@ class ContactFragment : Fragment() {
         // Get the ViewModel
         contactViewModel = ViewModelProvider(this).get(ContactViewModel::class.java)
 
-        // Initialize the adapter with a remove action callback
-        contactAdapter = ContactAdapter { position ->
-            // Handle the remove contact action
-            contactViewModel.removeContact(position)
+        // Initialize the RecyclerView
+        contactAdapter = ContactAdapter {
+            // Handle contact removal if needed, for now, no removal functionality
         }
 
-        // Observe the contacts list
-        contactViewModel.contactsList.observe(viewLifecycleOwner, Observer { contacts ->
-            contactAdapter.submitList(contacts)  // Submit new list to the adapter
-        })
+        // Observe the contacts data from the ViewModel
+        contactViewModel.contacts.observe(viewLifecycleOwner) { contacts ->
+            contactAdapter.submitList(contacts)
+        }
 
         // Set up RecyclerView
         view.findViewById<RecyclerView>(R.id.recycler_view_tasks).apply {
@@ -51,12 +50,12 @@ class ContactFragment : Fragment() {
             adapter = contactAdapter
         }
 
-        // Set up add task button
+        // Set up add contact button
         view.findViewById<View>(R.id.profile_add_task).setOnClickListener {
             findNavController().navigate(R.id.action_contactFragment_to_addContactFragment)
         }
 
-        // Set up the listener for fragment result
+        // Handle the result from AddContactFragment
         parentFragmentManager.setFragmentResultListener(
             "newContactKey",
             viewLifecycleOwner
@@ -69,23 +68,20 @@ class ContactFragment : Fragment() {
 
         // Observe the currentLanguage LiveData in the SharedViewModel
         sharedViewModel.currentLanguage.observe(viewLifecycleOwner) { language ->
-            // Update UI based on the language
+            // Update UI based on the language, e.g., changing text on buttons
             updateLanguageUI(language)
         }
-
 
         return view
     }
 
-
     private fun updateLanguageUI(language: String) {
         val button = view?.findViewById<AppCompatButton>(R.id.profile_add_task)
-
+        // Depending on the current language, update UI elements here
         if (language == "Māori") {
-            button?.text = getString(R.string.profile_add_task_mr)
+            button?.text = "Tāpiri Rārangi"  // Example text change
         } else {
-            button?.text = getString(R.string.profile_add_task)
+            button?.text = "Add Contact"  // Default English text
         }
     }
 }
-

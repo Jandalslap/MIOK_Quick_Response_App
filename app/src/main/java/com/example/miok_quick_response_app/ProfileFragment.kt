@@ -29,6 +29,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Load the profile from the database when the fragment is created
+        profileViewModel.loadProfile() // Ensure this is called to load data into the ViewModel
+
         // Observe current language and update the UI
         sharedViewModel.currentLanguage.observe(viewLifecycleOwner) { language ->
             updateLanguageUI(language)
@@ -37,51 +40,36 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
         }
 
-        // Initialize user profile with sample data
-        profileViewModel.initUserProfile(
-            imageUrl = "https://example.com/profile.jpg",
-            name = "Lily Doe",
-            email = "IamSafeAtHome@Gmail.com",
-            birthday = "Sept 05, 2010",
-            address = "A Block, Gate 3, Tristram Street, Hamilton",
-            fatherName = "John Doe",
-            motherName = "Lara Doe"
-        )
 
         // Set up the Edit Button to navigate to EditProfileFragment
         binding.editProfileButton.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
         }
 
-        // Observe and update the profile details
-        profileViewModel.userName.observe(viewLifecycleOwner, Observer { name ->
+        // Observe profile data from ViewModel and update UI
+        profileViewModel.userName.observe(viewLifecycleOwner) { name ->
             binding.userName.text = name
-        })
+        }
 
-        profileViewModel.userEmail.observe(viewLifecycleOwner, Observer { email ->
+        profileViewModel.userEmail.observe(viewLifecycleOwner) { email ->
             binding.userEmail.text = email
-        })
+        }
 
-        profileViewModel.userBirthday.observe(viewLifecycleOwner, Observer { birthday ->
+        profileViewModel.userBirthday.observe(viewLifecycleOwner) { birthday ->
             binding.userBirthday.text = birthday
-        })
+        }
 
-        profileViewModel.userAddress.observe(viewLifecycleOwner, Observer { address ->
+        profileViewModel.userAddress.observe(viewLifecycleOwner) { address ->
             binding.userAddress.text = address
-        })
+        }
 
-        profileViewModel.fatherName.observe(viewLifecycleOwner, Observer { fatherName ->
-            binding.userFatherName.text = fatherName
-        })
+        profileViewModel.fatherName.observe(viewLifecycleOwner) { fatherName ->
+            binding.fatherName.text = fatherName
+        }
 
-        profileViewModel.motherName.observe(viewLifecycleOwner, Observer { motherName ->
-            binding.userMotherName.text = motherName
-        })
-
-        profileViewModel.profileImageUrl.observe(viewLifecycleOwner, Observer { imageUrl ->
-            // Optionally load profile image (e.g., using Glide)
-            // Glide.with(this).load(imageUrl).into(binding.profileImage)
-        })
+        profileViewModel.motherName.observe(viewLifecycleOwner) { motherName ->
+            binding.motherName.text = motherName
+        }
     }
 
     private fun updateLanguageUI(language: String) {
@@ -89,9 +77,18 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             // Update the text views with Māori text
 
             binding.editProfileButton.text = getString(R.string.edit_profile_button_mr)
+            binding.userBirthday.text = "Rā Whānau"  // Birthday
+            binding.userAddress.text = "Wāhitau"  // Address
+            binding.motherName.text = "Ingoa o te Māmā"  // Mother's Name
+            binding.fatherName.text = "Ingoa o te Pāpā"  // Father's Name
+
         } else {
             // Default to English
             binding.editProfileButton.text = getString(R.string.edit_profile_button)
+            binding.userBirthday.text = "Birthday"
+            binding.userAddress.text = "Address"
+            binding.motherName.text = "Mother's Name"
+            binding.fatherName.text = "Father's Name"
         }
     }
 
