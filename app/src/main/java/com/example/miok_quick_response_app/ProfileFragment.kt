@@ -71,6 +71,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             binding.userMotherName.text = motherName
         })
 
+
         profileViewModel.profileImageUrl.observe(viewLifecycleOwner, Observer { imageUrl ->
             // Load image using an image loading library (e.g., Glide)
             // Glide.with(this).load(imageUrl).into(binding.profileImage)
