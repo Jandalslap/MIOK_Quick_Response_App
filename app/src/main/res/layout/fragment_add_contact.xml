@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#E5EDF3"
     android:padding="16dp">
 
     <!-- Content area -->
@@ -17,14 +18,14 @@
             android:id="@+id/contact_name_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter contact name"
+            android:hint="@string/contact_name_input"
             android:textSize="16sp" />
 
         <EditText
             android:id="@+id/contact_dob_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter DOB (YYYY-MM-DD)"
+            android:hint="@string/contact_dob_input"
             android:textSize="16sp" />
         <Spinner
             android:id="@+id/contact_relationship_spinner"
@@ -37,7 +38,8 @@
             android:id="@+id/add_contact_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Contact" />
+            android:text="@string/add_contact_button"
+            />
     </LinearLayout>
 
     <!-- Optional Footer with navigation (if needed) -->
