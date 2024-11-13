@@ -66,7 +66,9 @@
         <item>Caregiver</item>
         <item>Aunt/Uncle</item>
         <item>Grandparent</item>
+        <item>Iwi Social Worker</item>
         <item>Other</item>
+
     </string-array>
 
     <string-array name="relationship_options_mr">
@@ -74,6 +76,7 @@
         <item>Kaiāwhina</item> <!-- Caregiver -->
         <item>Whaea/Tīpuna</item> <!-- Aunt/Uncle (Whaea for Aunt, Tīpuna for Uncles can be generalized as a family term) -->
         <item>Koroua/Koro</item> <!-- Grandparent (Koroua for Grandfather, Koro for Grandmother) -->
+        <item>Kaiāwhina pāpori iwi</item> <!-- iwi social worker -->
         <item>Ētahi Atu</item> <!-- Other -->
     </string-array>
 

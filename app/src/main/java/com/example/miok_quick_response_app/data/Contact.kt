@@ -22,5 +22,6 @@ enum class Relationship {
     CAREGIVER,
     AUNT_UNCLE,
     GRANDPARENT,
+    IWI_SOCIAL_WORKER,
     OTHER
 }
