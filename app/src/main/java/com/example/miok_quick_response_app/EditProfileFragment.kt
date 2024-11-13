@@ -121,12 +121,6 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
     private fun updateLanguageUI(language: String) {
         if (language == "Māori") {
             // Update TextViews to display Māori text
-            binding.nameLabel.text = getString(R.string.name_label_mr)
-            binding.emailLabel.text = getString(R.string.email_label_mr)
-            binding.birthdayLabel.text = getString(R.string.birthday_label_mr)
-            binding.addressLabel.text = getString(R.string.address_label_mr)
-            binding.parentNameLabel1.text = getString(R.string.father_name_label_mr)
-            binding.parentNameLabel2.text = getString(R.string.mother_name_label_mr)
             binding.saveButton.text = getString(R.string.save_button_mr)
             binding.editName.hint = getString(R.string.name_label_mr)
             binding.editEmail.hint = getString(R.string.email_label_mr)
@@ -137,12 +131,6 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             binding.saveButton.hint = getString(R.string.save_button_mr)
         } else {
             // Default to English
-            binding.nameLabel.text = getString(R.string.name_label)
-            binding.emailLabel.text = getString(R.string.email_label)
-            binding.birthdayLabel.text = getString(R.string.birthday_label)
-            binding.addressLabel.text = getString(R.string.address_label)
-            binding.parentNameLabel1.text = getString(R.string.father_name_label)
-            binding.parentNameLabel2.text = getString(R.string.mother_name_label)
             binding.saveButton.text = getString(R.string.save_button)
             binding.editName.hint = getString(R.string.name_label)
             binding.editEmail.hint = getString(R.string.email_label)
