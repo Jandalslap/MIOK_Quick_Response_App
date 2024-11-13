@@ -1,162 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E5EDF3"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="40dp">
 
-    <!-- Name Section -->
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <!-- Profile Picture -->
+    <ImageView
+        android:id="@+id/profile_image"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_user_girl"
+        android:contentDescription="@string/profile_picture"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="30dp" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/profile_imagepick"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1"
-        android:layout_marginTop="80dp"
+        app:fabCustomSize="35dp"
+        android:src="@drawable/edit_photo"
+        android:backgroundTint="@color/mustard"
+        android:contentDescription="editimage"
+        app:layout_constraintEnd_toEndOf="@id/profile_image"
+        app:layout_constraintTop_toTopOf="@id/profile_image"
+        android:layout_marginEnd="-10dp"
+        android:layout_marginTop="4dp" />
 
-        >
-
-        <TextView
-            android:id="@+id/name_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.15"
-            android:text="Name"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/edit_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.85"
-            android:hint="Name"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <!-- Email Section -->
-    <LinearLayout
+    <EditText
+        android:id="@+id/edit_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:layout_height="50dp"
+        android:layout_marginTop="106dp"
+        android:drawableStart="@drawable/person_icon"
+        android:drawablePadding="12dp"
+        android:ems="15"
+        android:hint="@string/name_label"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/profile_image" />
 
-        <TextView
-            android:id="@+id/email_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.15"
-            android:text="Email"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/edit_email"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.85"
-            android:hint="Email"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <!-- Birthday Section -->
-    <LinearLayout
+    <EditText
+        android:id="@+id/edit_email"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:layout_height="50dp"
+        android:layout_marginTop="60dp"
+        android:drawableStart="@drawable/email_icon"
+        android:drawablePadding="12dp"
+        android:ems="20"
+        android:hint="@string/email_label"
+        android:inputType="textEmailAddress"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/edit_name" />
 
-        <TextView
-            android:id="@+id/birthday_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.15"
-            android:text="Birthday"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/edit_birthday"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.85"
-            android:hint="Birthday"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <!-- Address Section -->
-    <LinearLayout
+    <EditText
+        android:id="@+id/edit_birthday"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:layout_height="50dp"
+        android:layout_marginTop="60dp"
+        android:drawableStart="@drawable/birthday_calender"
+        android:drawablePadding="12dp"
+        android:ems="10"
+        android:hint="@string/dob"
+        android:inputType="none"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/edit_email" />
 
-        <TextView
-            android:id="@+id/address_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.15"
-            android:text="Address"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/edit_address"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.85"
-            android:hint="Address"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <!-- Parent Name 1 Section -->
-    <LinearLayout
+    <EditText
+        android:id="@+id/edit_address"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:layout_height="50dp"
+        android:layout_marginTop="60dp"
+        android:drawableStart="@drawable/address"
+        android:drawablePadding="12dp"
+        android:hint="@string/address_label"
+        android:inputType="textPostalAddress"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/edit_birthday" />
 
-        <TextView
-            android:id="@+id/parent_name_label_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.25"
-            android:text="Father's Name"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/edit_parent_name_1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.75"
-            android:hint="Father's Name"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <!-- Parent Name 2 Section -->
-    <LinearLayout
+    <EditText
+        android:id="@+id/edit_parent_name_1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:layout_height="50dp"
+        android:layout_marginTop="60dp"
+        android:drawableStart="@drawable/person_icon"
+        android:drawablePadding="12dp"
+        android:ems="15"
+        android:hint="@string/Caregiver1_label"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/edit_address" />
 
-        <TextView
-            android:id="@+id/parent_name_label_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:text="Mother's Name"
-            android:textSize="16sp" />
 
-        <EditText
-            android:id="@+id/edit_parent_name_2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.75"
-            android:hint="Mother's Name"
-            android:textSize="16sp" />
-    </LinearLayout>
+    <EditText
+        android:id="@+id/edit_parent_name_2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="60dp"
+        android:drawableStart="@drawable/person_icon"
+        android:drawablePadding="12dp"
+        android:ems="15"
+        android:hint="@string/Caregiver2_label"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/edit_parent_name_1" />
+
 
     <!-- Save Button -->
     <Button
@@ -164,7 +137,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="32dp"
-        android:text="Save" />
+        android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_parent_name_2"
+        app:layout_constraintVertical_bias="0.238" />
 
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
