@@ -1,16 +1,15 @@
 package com.example.miok_quick_response_app.ViewModel
 
 import Contact
-import ContactDatabaseHelper
+import ContactDatabase
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 
 class ContactViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val dbHelper = ContactDatabaseHelper(application)
+    private val dbHelper = ContactDatabase(application)
 
     private val _contacts = MutableLiveData<List<Contact>>()
     val contacts: LiveData<List<Contact>> get() = _contacts

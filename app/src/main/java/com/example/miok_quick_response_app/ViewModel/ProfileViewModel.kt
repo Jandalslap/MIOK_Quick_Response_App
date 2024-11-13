@@ -1,16 +1,15 @@
 package com.example.miok_quick_response_app
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.miok_quick_response_app.database.ProfileDatabaseHelper
+import com.example.miok_quick_response_app.database.ProfileDatabase
 import com.example.miok_quick_response_app.model.Profile
 
 class ProfileViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val dbHelper = ProfileDatabaseHelper(application)
+    private val dbHelper = ProfileDatabase(application)
 
     private val _userName = MutableLiveData<String>()
     val userName: LiveData<String> get() = _userName
