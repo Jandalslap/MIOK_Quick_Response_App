@@ -1,6 +1,7 @@
 package com.example.miok_quick_response_app
 
 import android.os.Bundle
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.example.miok_quick_response_app.databinding.FragmentEditProfileBinding
+import java.util.regex.Pattern
 
 class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
@@ -68,6 +70,36 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             val newFatherName = binding.editParentName1.text.toString()  // Get father's name
             val newMotherName = binding.editParentName2.text.toString()  // Get mother's name
 
+            // Perform validation
+            if (newName.isBlank() || !isValidName(newName)) {
+                Toast.makeText(requireContext(), "Please enter a valid name (letters only)", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (newEmail.isBlank() || !isValidEmail(newEmail)) {
+                Toast.makeText(requireContext(), "Please enter a valid email", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (newBirthday.isBlank() || !isValidDate(newBirthday)) {
+                Toast.makeText(requireContext(), "Please enter a valid birthday DD/MM/YYYY", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (newAddress.isBlank()) {
+                Toast.makeText(requireContext(), "Address cannot be empty", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (newFatherName.isBlank()) {
+                Toast.makeText(requireContext(), "Please enter the father's name", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (newMotherName.isBlank()) {
+                Toast.makeText(requireContext(), "Please enter the mother's name", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             profileViewModel.updateUserProfile(
                 newName,
@@ -120,6 +152,22 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             binding.editParentName2.hint = getString(R.string.mother_name_label)
             binding.saveButton.hint = getString(R.string.save_button)
         }
+    }
+
+    // Helper method to validate name (letters only)
+    private fun isValidName(name: String): Boolean {
+        return name.matches("^[A-Za-z\\s]+$".toRegex())
+    }
+
+    // Helper method to validate email format
+    private fun isValidEmail(email: String): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    // Helper method to validate date (basic format check for DD/MM/YYYY)
+    private fun isValidDate(date: String): Boolean {
+        val datePattern = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(\\d{4})$"
+        return Pattern.matches(datePattern, date)
     }
 
 

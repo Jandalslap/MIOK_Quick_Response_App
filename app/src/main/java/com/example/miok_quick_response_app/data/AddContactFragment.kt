@@ -31,6 +31,9 @@ class AddContactFragment : Fragment() {
         val statusYesButton = view.findViewById<RadioButton>(R.id.radio_yes)
         val statusNoButton = view.findViewById<RadioButton>(R.id.radio_no)
 
+        // Set default values: make sure the radio button defaults to 'Yes'
+        statusYesButton.isChecked = true
+
         // Set up the spinner with default English values
         updateLanguageUI(
             sharedViewModel.currentLanguage.value,
@@ -82,6 +85,29 @@ class AddContactFragment : Fragment() {
                 "Pirihimana" -> Relationship.POLICE
                 "Other", "Ētahi Atu" -> Relationship.OTHER
                 else -> Relationship.OTHER
+            }
+
+            // Validate all fields
+            if (name.isEmpty()) {
+                nameInput.error = "Please enter a name"
+                return@setOnClickListener
+            }
+
+            // Validate name for letters only
+            if (!name.matches("^[A-Za-z\\s]+$".toRegex())) {
+                nameInput.error = "Name should only contain letters"
+                return@setOnClickListener
+            }
+
+            if (number.isEmpty()) {
+                numberInput.error = "Please enter a phone number"
+                return@setOnClickListener
+            }
+
+            // Validate phone number for numbers only
+            if (!number.matches("^[0-9]+$".toRegex())) {
+                numberInput.error = "Phone number should only contain digits"
+                return@setOnClickListener
             }
 
 

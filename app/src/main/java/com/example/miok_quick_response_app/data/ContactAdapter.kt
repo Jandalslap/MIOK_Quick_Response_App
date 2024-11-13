@@ -25,7 +25,7 @@ class ContactAdapter(
         holder.nameTextView.text = contact.name
         holder.phone_numberTextView.text = contact.phone_number
         holder.relationshipTextView.text = contact.relationship.name.replace("_", " ")
-        holder.statusTextView.text = if (contact.status) "Yes" else "No"
+        holder.statusTextView.text = if (contact.status) "Approved" else "Not Approved"
 /*
         holder.removeButton.setOnClickListener {
             onRemoveClick(position)
