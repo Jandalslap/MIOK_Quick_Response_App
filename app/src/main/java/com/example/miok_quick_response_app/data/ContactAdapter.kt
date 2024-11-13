@@ -23,28 +23,28 @@ class ContactAdapter(
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
         val contact = getItem(position)
         holder.nameTextView.text = contact.name
-        holder.dobTextView.text = contact.dob
+        holder.phone_numberTextView.text = contact.phone_number
         holder.relationshipTextView.text = contact.relationship.name.replace("_", " ")
-
+/*
         holder.removeButton.setOnClickListener {
             onRemoveClick(position)
-        }
+        }*/
     }
 
     override fun getItemCount(): Int = currentList.size
 
     class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameTextView: TextView = itemView.findViewById(R.id.contact_name)
-        val dobTextView: TextView = itemView.findViewById(R.id.contact_dob)
+        val phone_numberTextView: TextView = itemView.findViewById(R.id.contact_phone_number)
         val relationshipTextView: TextView = itemView.findViewById(R.id.contact_relationship)
-        val removeButton: ImageButton = itemView.findViewById(R.id.remove_button)
+        //val removeButton: ImageButton = itemView.findViewById(R.id.remove_button)
     }
 
     // DiffUtil callback to compare lists efficiently
     class ContactDiffCallback : DiffUtil.ItemCallback<Contact>() {
         override fun areItemsTheSame(oldItem: Contact, newItem: Contact): Boolean {
             // Compare based on name, dob, and relationship instead of id
-            return oldItem.name == newItem.name && oldItem.dob == newItem.dob && oldItem.relationship == newItem.relationship
+            return oldItem.name == newItem.name && oldItem.phone_number == newItem.phone_number && oldItem.relationship == newItem.relationship
         }
 
         override fun areContentsTheSame(oldItem: Contact, newItem: Contact): Boolean {

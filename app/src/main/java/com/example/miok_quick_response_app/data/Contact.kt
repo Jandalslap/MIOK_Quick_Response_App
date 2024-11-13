@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Contact(
     val name: String,
-    val dob: String, // Date of Birth
+    val phone_number: String,
     val relationship: Relationship
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
