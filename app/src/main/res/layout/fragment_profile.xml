@@ -34,19 +34,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="4dp" />
 
-    <!-- User Email -->
-    <TextView
-        android:id="@+id/user_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email"
-        android:textSize="16sp"
-        android:textColor="@color/Blue"
-        android:fontFamily="@font/opensans_regular"
-        app:layout_constraintTop_toBottomOf="@id/user_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="4dp" />
 
     <!-- Edit Button -->
     <Button
@@ -58,7 +45,7 @@
         android:textSize="16sp"
         android:background="@drawable/mustard_button_homefragment"
         app:backgroundTint="@null"
-        app:layout_constraintTop_toBottomOf="@id/user_email"
+        app:layout_constraintTop_toBottomOf="@id/user_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="12dp"

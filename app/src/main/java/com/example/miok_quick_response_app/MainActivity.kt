@@ -48,6 +48,11 @@ class MainActivity : AppCompatActivity() {
                     header.isVisible = false // Hide header
                     bottomNav.isVisible = false // Hide bottom navigation
                 }
+                R.id.editProfileFragment -> {
+                    supportActionBar?.show() // Show the action bar
+                    header.isVisible = true // Show header
+                    bottomNav.isVisible = false // Hide bottom navigation
+                }
                 else -> {
                     supportActionBar?.show() // Show the action bar for other fragments
                     header.isVisible = true // Show header
