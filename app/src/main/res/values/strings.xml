@@ -32,6 +32,7 @@
     <string name="father_name_label">Fathers Name</string>
     <string name="mother_name_label">Mothers Name</string>
     <string name="save_button">Save</string>
+    <string name="edit_profile_button">Edit Profile</string>
 
     <!-- Māori Language -->
     <string name="name_label_mr">Ingoa</string>
@@ -41,7 +42,7 @@
     <string name="father_name_label_mr">Ingoa o te Matua Tāne</string>
     <string name="mother_name_label_mr">Ingoa o te Matua Wahine</string>
     <string name="save_button_mr">Tāpiri</string>
-
+    <string name="edit_profile_button_mr">Whakauru Rata</string>
 
 
     <string-array name="relationship_options">
