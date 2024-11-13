@@ -13,6 +13,7 @@ class ContactDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         private const val COLUMN_NAME = "name"
         private const val COLUMN_PHONE_NUMBER = "phone_number"
         private const val COLUMN_RELATIONSHIP = "relationship"
+        private const val COLUMN_STATUS = "status"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
@@ -21,7 +22,8 @@ class ContactDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
                 $COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                 $COLUMN_NAME TEXT NOT NULL,
                 $COLUMN_PHONE_NUMBER TEXT NOT NULL,
-                $COLUMN_RELATIONSHIP TEXT NOT NULL
+                $COLUMN_RELATIONSHIP TEXT NOT NULL,
+                $COLUMN_STATUS Boolean NOT NULL
             );
         """
         db.execSQL(createTableSQL)
@@ -41,6 +43,7 @@ class ContactDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
             put(COLUMN_NAME, contact.name)
             put(COLUMN_PHONE_NUMBER, contact.phone_number)
             put(COLUMN_RELATIONSHIP, contact.relationship.name)
+            put(COLUMN_STATUS, contact.status)
         }
         db.insert(TABLE_CONTACTS, null, values)
         db.close()
@@ -54,16 +57,29 @@ class ContactDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
         if (cursor.moveToFirst()) {
             do {
+                val name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME))
+                val phoneNumber = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PHONE_NUMBER))
+                val relationship = Relationship.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_RELATIONSHIP)))
+                val status = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_STATUS)) == 1  // 1 = true, 0 = false
+
                 val contact = Contact(
-                    name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME)),
-                    phone_number = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PHONE_NUMBER)),
-                    relationship = Relationship.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_RELATIONSHIP)))
+                    name = name,
+                    phone_number = phoneNumber,
+                    relationship = relationship,
+                    status = status
                 )
+
                 contacts.add(contact)
+
+                // Log or display the status text if needed
+                println(contact.statusText)  // This will print "Status: Approved" or "Status: Not Approved"
             } while (cursor.moveToNext())
         }
+
         cursor.close()
         db.close()
         return contacts
     }
+
+
 }

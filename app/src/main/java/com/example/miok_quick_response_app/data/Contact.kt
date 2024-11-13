@@ -9,6 +9,9 @@ data class Contact(
     val relationship: Relationship,
     val status: Boolean
 ) : Parcelable {
+    val statusText: String
+        get() = if (status) "Status: Approved" else "Status: Not Approved"
+
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",
         parcel.readString() ?: "",
@@ -16,6 +19,7 @@ data class Contact(
         parcel.readByte() != 0.toByte()
     )
 }
+
 
 enum class Relationship {
     PARENT_GUARDIAN,
