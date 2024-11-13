@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.miok_info_app.viewmodel.SharedViewModel
+import com.example.miok_quick_response_app.database.ProfileDatabase
 import com.example.miok_quick_response_app.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
@@ -73,24 +74,34 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
     private fun updateLanguageUI(language: String) {
-        if (language == "Māori") {
-            // Update the text views with Māori text
+        val profileDatabase = ProfileDatabase(requireContext())
 
-            binding.editProfileButton.text = getString(R.string.edit_profile_button_mr)
-            binding.userBirthday.text = "Rā Whānau"  // Birthday
-            binding.userAddress.text = "Wāhitau"  // Address
-            binding.motherName.text = "Ingoa o te Māmā"  // Mother's Name
-            binding.fatherName.text = "Ingoa o te Pāpā"  // Father's Name
-
+        // Update the button text regardless of stored profile
+        binding.editProfileButton.text = if (language == "Māori") {
+            getString(R.string.edit_profile_button_mr)
         } else {
-            // Default to English
-            binding.editProfileButton.text = getString(R.string.edit_profile_button)
-            binding.userBirthday.text = "Birthday"
-            binding.userAddress.text = "Address"
-            binding.motherName.text = "Mother's Name"
-            binding.fatherName.text = "Father's Name"
+            getString(R.string.edit_profile_button)
+        }
+
+        // Only change other UI elements if there is no stored profile
+        if (!profileDatabase.hasProfile()) {
+            if (language == "Māori") {
+                // Update the text views with Māori text
+                binding.userBirthday.text = "Rā Whānau"  // Birthday
+                binding.userAddress.text = "Wāhitau"  // Address
+                binding.motherName.text = "Ingoa o te Māmā"  // Mother's Name
+                binding.fatherName.text = "Ingoa o te Pāpā"  // Father's Name
+            } else {
+                // Default to English
+                binding.userBirthday.text = "Birthday"
+                binding.userAddress.text = "Address"
+                binding.motherName.text = "Mother's Name"
+                binding.fatherName.text = "Father's Name"
+            }
         }
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

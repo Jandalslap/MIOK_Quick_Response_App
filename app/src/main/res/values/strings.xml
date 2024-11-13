@@ -22,6 +22,8 @@
     <string name="contact_name_input_mr">Tāuru i te ingoa o te pūrongo whakapā</string>
     <string name="contact_dob_input">Enter DOB (YYYY-MM-DD)</string>
     <string name="contact_dob_input_mr">Tāuru i te Rā Whānau (YYYY-MM-DD)</string>
+    <string name="contact_phone_input">Enter contact number</string>
+    <string name="contact_phone_input_mr">Tāuru tau whakapā</string>
     <string name="add_contact_button">Add Contact</string>
     <string name="add_contact_button_mr">Tāpiri Pūrongo Whakapā</string>
 

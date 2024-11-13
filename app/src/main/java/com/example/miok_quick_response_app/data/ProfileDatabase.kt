@@ -8,7 +8,7 @@ import android.database.Cursor
 import android.util.Log
 import com.example.miok_quick_response_app.model.Profile
 
-class ProfileDatabaseHelper(context: Context) :
+class ProfileDatabase(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
@@ -118,4 +118,14 @@ class ProfileDatabaseHelper(context: Context) :
         db.update(TABLE_PROFILE, values, "$COLUMN_ID = ?", arrayOf("1"))
         db.close()
     }
+
+    fun hasProfile(): Boolean {
+        val db = this.readableDatabase
+        val cursor: Cursor = db.rawQuery("SELECT COUNT(*) FROM $TABLE_PROFILE", null)
+        return cursor.use {
+            it.moveToFirst()
+            it.getInt(0) > 0 // Returns true if there is at least one profile
+        }
+    }
+
 }

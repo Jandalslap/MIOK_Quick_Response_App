@@ -27,7 +27,7 @@ class AddContactFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_add_contact, container, false)
 
         val nameInput = view.findViewById<EditText>(R.id.contact_name_input)
-        val dobInput = view.findViewById<EditText>(R.id.contact_phone_number)
+        val numberInput = view.findViewById<EditText>(R.id.contact_phone_number)
         val relationshipSpinner = view.findViewById<Spinner>(R.id.contact_relationship_spinner)
         val addContactButton = view.findViewById<Button>(R.id.add_contact_button)
 
@@ -36,12 +36,12 @@ class AddContactFragment : Fragment() {
             sharedViewModel.currentLanguage.value,
             relationshipSpinner,
             nameInput,
-            dobInput,
+            numberInput,
             addContactButton
         )
         sharedViewModel.currentLanguage.observe(viewLifecycleOwner) { language ->
             // Update the UI or perform actions based on the new language value
-            updateLanguageUI(language, relationshipSpinner, nameInput, dobInput, addContactButton)
+            updateLanguageUI(language, relationshipSpinner, nameInput, numberInput, addContactButton)
         }
         // Set up the spinner
         ArrayAdapter.createFromResource(
@@ -57,7 +57,7 @@ class AddContactFragment : Fragment() {
 
         view.findViewById<Button>(R.id.add_contact_button).setOnClickListener {
             val name = nameInput.text.toString()
-            val dob = dobInput.text.toString()
+            val number = numberInput.text.toString()
 
             // Get selected relationship
             val relationship = when (relationshipSpinner.selectedItem.toString()) {
@@ -69,7 +69,7 @@ class AddContactFragment : Fragment() {
                 else -> Relationship.OTHER
             }
 
-            val newContact = Contact(name, dob, relationship)
+            val newContact = Contact(name, number, relationship)
 
             val resultBundle = Bundle().apply {
                 putParcelable("new_contact", newContact)
@@ -86,13 +86,13 @@ class AddContactFragment : Fragment() {
         language: String?,
         relationshipSpinner: Spinner,
         nameInput: EditText,
-        dobInput: EditText,
+        numberInput: EditText,
         addContactButton: Button
     ) {
         // Update TextView text based on language
         if (language == "Māori") {
             nameInput.hint = getString(R.string.contact_name_input_mr)
-            dobInput.hint = getString(R.string.contact_dob_input_mr)
+            numberInput.hint = getString(R.string.contact_phone_input_mr)
             addContactButton.text = getString(R.string.add_contact_button_mr)
 
             // Set the spinner entries to Māori
@@ -107,7 +107,7 @@ class AddContactFragment : Fragment() {
         } else {
             // Default to English
             nameInput.hint = getString(R.string.contact_name_input)
-            dobInput.hint = getString(R.string.contact_dob_input)
+            numberInput.hint = getString(R.string.contact_phone_input)
             addContactButton.text = getString(R.string.add_contact_button)
 
             // Set the spinner entries to English
