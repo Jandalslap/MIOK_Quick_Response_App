@@ -6,12 +6,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.miok_quick_response_app.R
-import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.fragment.app.activityViewModels
 import com.example.miok_info_app.viewmodel.SharedViewModel
 
@@ -30,6 +27,9 @@ class AddContactFragment : Fragment() {
         val numberInput = view.findViewById<EditText>(R.id.contact_phone_number)
         val relationshipSpinner = view.findViewById<Spinner>(R.id.contact_relationship_spinner)
         val addContactButton = view.findViewById<Button>(R.id.add_contact_button)
+        val statusRadioGroup = view.findViewById<RadioGroup>(R.id.contact_status_radio_group)
+        val statusYesButton = view.findViewById<RadioButton>(R.id.radio_yes)
+        val statusNoButton = view.findViewById<RadioButton>(R.id.radio_no)
 
         // Set up the spinner with default English values
         updateLanguageUI(
@@ -59,17 +59,33 @@ class AddContactFragment : Fragment() {
             val name = nameInput.text.toString()
             val number = numberInput.text.toString()
 
-            // Get selected relationship
+            // Capture the selected status (Yes or No)
+            val status = when (statusRadioGroup.checkedRadioButtonId) {
+                R.id.radio_yes -> true  // Status is "Yes"
+                R.id.radio_no -> false  // Status is "No"
+                else -> false  // Default to "No" if no selection
+            }
+
+            // Define each relationship with its own enum constant, including Māori translations
             val relationship = when (relationshipSpinner.selectedItem.toString()) {
-                "Parent/Guardian", "Matua/Kaika" -> Relationship.PARENT_GUARDIAN
-                "Caregiver", "Kaiāwhina" -> Relationship.CAREGIVER
-                "Aunt/Uncle", "Whaea/Tipuna" -> Relationship.AUNT_UNCLE
-                "Grandparent", "Koroua/Koro" -> Relationship.GRANDPARENT
-                "Ētahi Atu" -> Relationship.OTHER  // Māori translation for "Other"
+                "Parent/Guardian" -> Relationship.PARENT_GUARDIAN
+                "Matua/Kaika" -> Relationship.PARENT_GUARDIAN
+                "Caregiver" -> Relationship.CAREGIVER
+                "Kaiāwhina" -> Relationship.CAREGIVER
+                "Aunt/Uncle" -> Relationship.AUNT_UNCLE
+                "Whaea/Tipuna" -> Relationship.AUNT_UNCLE
+                "Grandparent" -> Relationship.GRANDPARENT
+                "Koroua/Koro" -> Relationship.GRANDPARENT
+                "Social Worker" -> Relationship.SOCIAL_WORKER
+                "Kaimahi Tokanga" -> Relationship.SOCIAL_WORKER
+                "Police" -> Relationship.POLICE
+                "Pirihimana" -> Relationship.POLICE
+                "Other", "Ētahi Atu" -> Relationship.OTHER
                 else -> Relationship.OTHER
             }
 
-            val newContact = Contact(name, number, relationship)
+
+            val newContact = Contact(name, number, relationship, status)
 
             val resultBundle = Bundle().apply {
                 putParcelable("new_contact", newContact)
@@ -121,4 +137,5 @@ class AddContactFragment : Fragment() {
             }
         }
     }
+
 }
