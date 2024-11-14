@@ -1,25 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/fragment_quiz.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#E5EDF3"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:gravity="center">
 
+    <!-- Display the question text -->
     <TextView
-        android:id="@+id/textQuiz"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Quiz"
-        android:textSize="32sp"
-        android:textAlignment="center"
-        android:layout_margin="20dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/questionsRecyclerView"
+        android:id="@+id/questionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        />
+        android:text="Question"
+        android:textSize="18sp"
+        android:layout_marginBottom="32dp"
+        android:textAlignment="center"/>
 
+    <!-- Button for True -->
+    <Button
+        android:id="@+id/trueButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="True"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Button for False -->
+    <Button
+        android:id="@+id/falseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="False"/>
 </LinearLayout>

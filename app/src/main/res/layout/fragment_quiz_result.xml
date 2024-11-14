@@ -8,14 +8,14 @@
     android:gravity="center">
 
     <ImageView
+        android:id="@+id/quizResultImageView"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:src="@drawable/kiwi_result"
         android:layout_marginBottom="16dp"/>
 
-
-
     <TextView
+        android:id="@+id/quizResultTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
@@ -27,7 +27,4 @@
         android:textColor="@color/Blue"
         android:textSize="22sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-
-
 </LinearLayout>

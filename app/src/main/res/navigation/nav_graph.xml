@@ -67,10 +67,18 @@
     <fragment
         android:id="@+id/quizFragment"
         android:name="com.example.miok_quick_response_app.questions.QuizFragment"
-        android:label="Quiz" />
+        android:label="Quiz" >
+        <action
+            android:id="@+id/action_quizFragment_to_quizResultFragment"
+            app:destination="@id/quizResultFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/addContactFragment"
         android:name="com.example.miok_quick_response_app.data.AddContactFragment"
         android:label="Add Contact" />
+    <fragment
+        android:id="@+id/quizResultFragment"
+        android:name="com.example.miok_quick_response_app.questions.QuizResultFragment"
+        android:label="QuizResultFragment" />
 </navigation>
