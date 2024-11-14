@@ -1,17 +1,42 @@
 package com.example.miok_quick_response_app
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.miok_quick_response_app.ViewModel.MessageViewModel
+import com.example.miok_quick_response_app.data.MessageAdapter
 
-class MessageFragment: Fragment() {
+
+class MessageFragment : Fragment() {
+
+    private lateinit var messageViewModel: MessageViewModel
+    private lateinit var messageAdapter: MessageAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_message, container, false)
+        val view = inflater.inflate(R.layout.fragment_message, container, false)
+
+        messageViewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
+        messageAdapter = MessageAdapter()
+
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_message)
+        recyclerView.adapter = messageAdapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
+
+        // Observe and update adapter with new list
+        messageViewModel.messageContacts.observe(viewLifecycleOwner, { contacts ->
+            messageAdapter.submitList(contacts)
+        })
+
+        return view
     }
 }
