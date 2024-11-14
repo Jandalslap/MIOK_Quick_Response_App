@@ -68,6 +68,9 @@
 
     <EditText
         android:id="@+id/edit_birthday"
+        android:focusable="false"
+        android:clickable="true"
+        android:importantForAccessibility="yes"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="60dp"

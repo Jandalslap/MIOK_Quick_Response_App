@@ -19,4 +19,32 @@
         <item name="itemTextColor">@android:color/white</item>
         <item name="itemIconTint">@android:color/white</item>
     </style>
+    <style name="CustomDatePickerDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <!-- Set the background color of the entire DatePickerDialog -->
+        <item name="android:background">#E5EDF3</item>
+
+        <!-- Set the primary text color (used for dates and text inside the dialog) -->
+        <item name="android:textColorPrimary">#004B8C</item>
+
+        <!-- Set the header background color (month/year selection area) -->
+        <item name="android:colorAccent">#004B8C</item>
+
+        <!-- Set the footer background color (buttons like OK/Cancel) -->
+        <item name="android:colorPrimaryDark">#E4A824</item>
+
+        <!-- Set the text color for the header (month/year picker), making it white -->
+        <item name="android:textColorPrimaryInverse">#004B8C</item>
+
+        <!-- Set the color for the selected date background -->
+        <item name="android:colorControlActivated">#E4A824</item>
+
+        <!-- Set the color for unselected days in the date grid -->
+        <item name="android:colorControlNormal">@android:color/darker_gray</item>
+
+        <!-- Set the text color for date picker buttons (OK, Cancel) -->
+        <item name="android:textColorSecondary">#004B8C</item>
+
+        <!-- Set the spinner style for DatePicker's spinner controls (used for selecting date) -->
+        <item name="android:spinnerStyle">@android:style/Widget.DeviceDefault.Spinner</item>
+    </style>
 </resources>

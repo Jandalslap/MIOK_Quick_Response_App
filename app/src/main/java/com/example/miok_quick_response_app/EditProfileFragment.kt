@@ -1,5 +1,6 @@
 package com.example.miok_quick_response_app
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Patterns
 import android.view.LayoutInflater
@@ -11,6 +12,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.example.miok_quick_response_app.databinding.FragmentEditProfileBinding
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.regex.Pattern
 
 class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
@@ -20,6 +23,9 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
     private var _binding: FragmentEditProfileBinding? = null
     private val binding get() = _binding!!
+
+    private val calendar: Calendar = Calendar.getInstance()
+    private val dateFormatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,9 +52,25 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         profileViewModel.userEmail.observe(viewLifecycleOwner, Observer { email ->
             binding.editEmail.setText(email)
         })
-        profileViewModel.userBirthday.observe(viewLifecycleOwner, Observer { birthday ->
-            binding.editBirthday.setText(birthday)
-        })
+        // Set up the DatePicker for the birthday field
+        binding.editBirthday.setOnClickListener {
+            // Clear focus to prevent the soft keyboard from opening
+            binding.editBirthday.clearFocus()
+
+            val datePickerDialog = DatePickerDialog(
+                requireContext(),
+                //R.style.CustomDatePickerDialogTheme, // Uncomment to style in themes
+                DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                    // Set the chosen date to the EditText
+                    calendar.set(year, month, dayOfMonth)
+                    binding.editBirthday.setText(dateFormatter.format(calendar.time))
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            )
+            datePickerDialog.show()
+        }
         profileViewModel.userAddress.observe(viewLifecycleOwner, Observer { address ->
             binding.editAddress.setText(address)
         })
