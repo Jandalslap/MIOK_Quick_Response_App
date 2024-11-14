@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
+    android:background="#E5EDF3"
     android:gravity="center">
 
     <!-- Display the question text -->
