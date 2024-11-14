@@ -29,6 +29,9 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
     private val _motherName = MutableLiveData<String>()
     val motherName: LiveData<String> get() = _motherName
 
+    private val _imageUrl = MutableLiveData<String?>()
+    val imageUrl: LiveData<String?> get() = _imageUrl
+
     init {
         loadProfile()
     }
@@ -42,6 +45,7 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
             _userAddress.value = it.address
             _fatherName.value = it.fatherName
             _motherName.value = it.motherName
+            _imageUrl.value = it.imageUrl
         }
     }
 
@@ -51,7 +55,8 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
         newBirthday: String,
         newAddress: String,
         newFatherName: String,
-        newMotherName: String
+        newMotherName: String,
+        newImageUrl: String?
     ) {
         _userName.value = newName
         _userEmail.value = newEmail
@@ -59,6 +64,7 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
         _userAddress.value = newAddress
         _fatherName.value = newFatherName
         _motherName.value = newMotherName
+        _imageUrl.value = newImageUrl
 
         // Create Profile object
         val profile = Profile(
@@ -68,7 +74,7 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
             address = newAddress,
             fatherName = newFatherName,
             motherName = newMotherName,
-            imageUrl = "" // Add image URL if needed
+            imageUrl = newImageUrl
         )
 
         // Insert if not exists, otherwise update

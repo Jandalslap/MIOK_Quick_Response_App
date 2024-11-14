@@ -1,5 +1,7 @@
 package com.example.miok_quick_response_app
 
+import android.Manifest
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -45,6 +47,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         // Set up the Edit Button to navigate to EditProfileFragment
         binding.editProfileButton.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
+        }
+
+        // Load existing profile data
+        profileViewModel.imageUrl.observe(viewLifecycleOwner) { uri ->
+            uri?.let {
+                binding.profileImage.setImageURI(Uri.parse(it))  // Load image from URI if available
+            }
         }
 
         // Observe profile data from ViewModel and update UI

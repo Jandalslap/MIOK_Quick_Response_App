@@ -8,5 +8,5 @@ data class Profile(
     val address: String,
     val fatherName: String,
     val motherName: String,
-    val imageUrl: String
+    val imageUrl: String? = null
 )

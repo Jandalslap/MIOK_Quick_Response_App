@@ -1,12 +1,22 @@
 package com.example.miok_quick_response_app
 
+import android.Manifest
+import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -18,6 +28,13 @@ import java.util.regex.Pattern
 
 class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
+    private val CAMERA_REQUEST_CODE = 1001
+    private val GALLERY_REQUEST_CODE = 1002
+    private val REQUEST_CODE_PERMISSIONS = 101
+
+    private var imageUri: String? = null
+
+
     private val profileViewModel: ProfileViewModel by activityViewModels()
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
@@ -26,6 +43,80 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
     private val calendar: Calendar = Calendar.getInstance()
     private val dateFormatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+    // Check permissions at the start
+    private fun checkPermissions() {
+        val permissions = mutableListOf<String>()
+
+        // Check if camera permission is granted
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            permissions.add(Manifest.permission.CAMERA)
+        }
+
+        // If permissions are not granted, request them
+        if (permissions.isNotEmpty()) {
+            ActivityCompat.requestPermissions(requireActivity(), permissions.toTypedArray(), REQUEST_CODE_PERMISSIONS)
+        } else {
+            // Permissions are already granted, proceed with image picking
+            openImagePicker()
+        }
+    }
+
+
+    // Handle the permission request result
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == REQUEST_CODE_PERMISSIONS) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permissions granted, proceed with image picking
+                openImagePicker()
+            } else {
+                // Permissions denied, show a message to the user
+                Toast.makeText(requireContext(), "Permissions required to access camera and storage", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    // Open camera or gallery for selecting profile image
+    private fun openImagePicker() {
+        // Implement logic to open camera or gallery (Intent-based logic)
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, GALLERY_REQUEST_CODE)
+    }
+
+    // Handle the result from picking an image (from camera or gallery)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                CAMERA_REQUEST_CODE -> {
+                    // Get the image URI from the camera capture
+                    val photoUri = data?.data  // Assuming you capture it from the camera as well
+                    photoUri?.let {
+                        // Save the URI to be used later for saving the profile
+                        imageUri = it.toString()
+
+                        // Update the ImageView to show the selected image
+                        binding.profileImage.setImageURI(it)
+                    }
+                }
+                GALLERY_REQUEST_CODE -> {
+                    // Get the image URI from the gallery
+                    val selectedImageUri = data?.data
+                    selectedImageUri?.let {
+                        // Save the URI to be used later for saving the profile
+                        imageUri = it.toString()
+
+                        // Update the ImageView to show the selected image
+                        binding.profileImage.setImageURI(it)
+                    }
+                }
+            }
+        }
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,11 +129,24 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Set up a click listener for the profile image picker button
+        binding.profileImagepick.setOnClickListener {
+            // Show a dialog to choose between camera and gallery
+            showImagePickerDialog()
+        }
+
 
         // Observe the currentLanguage LiveData from SharedViewModel
         sharedViewModel.currentLanguage.observe(viewLifecycleOwner) { language ->
             // Update the UI or perform actions based on the new language value
             updateLanguageUI(language)
+        }
+
+        // Load existing profile data
+        profileViewModel.imageUrl.observe(viewLifecycleOwner) { uri ->
+            uri?.let {
+                binding.profileImage.setImageURI(Uri.parse(it))  // Load image from URI if available
+            }
         }
 
         // Populate EditText fields with current profile data
@@ -130,7 +234,8 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                 newBirthday,
                 newAddress,
                 newFatherName,
-                newMotherName
+                newMotherName,
+                imageUri
             )
             Toast.makeText(requireContext(), "Profile Updated", Toast.LENGTH_SHORT).show()
             // Update UI immediately after saving to reflect the current language
@@ -140,6 +245,36 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             requireActivity().supportFragmentManager.popBackStack() // Go back to profile fragment
         }
     }
+
+    private fun showImagePickerDialog() {
+        val options = arrayOf("Take Photo", "Choose from Gallery", "Cancel")
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Change Profile Picture")
+        builder.setItems(options) { _, which ->
+            when (which) {
+                0 -> openCamera() // Open camera
+                1 -> openGallery() // Open gallery
+                2 -> return@setItems // Do nothing if canceled
+            }
+        }
+        builder.show()
+    }
+
+    private fun openCamera() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (intent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivityForResult(intent, CAMERA_REQUEST_CODE)
+        } else {
+            Toast.makeText(requireContext(), "Camera not available", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intent.type = "image/*"
+        startActivityForResult(intent, GALLERY_REQUEST_CODE)
+    }
+
 
     private fun updateLanguageUI(language: String) {
         if (language == "Māori") {
