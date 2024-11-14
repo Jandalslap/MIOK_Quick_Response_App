@@ -4,14 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Switch
-import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.miok_info_app.viewmodel.SharedViewModel
-import com.example.miok_quick_response_app.questions.QuestionsViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
