@@ -5,13 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.miok_quick_response_app.ContactFragmentDirections
+
 import com.example.miok_quick_response_app.R
 
 class ContactAdapter(
-    private val onRemoveClick: (Contact) -> Unit // Modified to pass the actual contact
+    private val onRemoveClick: (Contact) -> Unit, // Modified to pass the actual contact
+    private val onItemClick: (Contact) -> Unit // Modified to pass the actual contact
 ) : ListAdapter<Contact, ContactAdapter.ContactViewHolder>(ContactDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
@@ -26,11 +31,16 @@ class ContactAdapter(
         holder.relationshipTextView.text = contact.relationship.name.replace("_", " ")
         holder.statusTextView.text = if (contact.status) "Approved" else "Not Approved"
 
-        // Handling the swipe to delete or remove contact
+
         holder.itemView.setOnClickListener {
+            onItemClick(contact)
+        } // Trigger navigation action
+
+        // Handling the swipe to delete or remove contact
+        //holder.itemView.setOnClickListener {
             // Trigger removal of the contact when item is clicked (could be swipe if needed)
-            onRemoveClick(contact)
-        }
+          //  onRemoveClick(contact)
+        //}
     }
 
     override fun getItemCount(): Int = currentList.size

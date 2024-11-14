@@ -117,7 +117,7 @@ class AddContactFragment : Fragment() {
             }
 
 
-            val newContact = Contact(name, number, relationship, status)
+            val newContact = Contact(id = generateId(),name, number, relationship, status)
 
             val resultBundle = Bundle().apply {
                 putParcelable("new_contact", newContact)
@@ -128,7 +128,10 @@ class AddContactFragment : Fragment() {
 
         return view
     }
-
+    fun generateId(): Int {
+        // Generate a unique ID. For example, you could use the current system time as an ID.
+        return (System.currentTimeMillis() % Int.MAX_VALUE).toInt()
+    }
     // Function to update UI based on the language
     private fun updateLanguageUI(
         language: String?,

@@ -4,22 +4,24 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Contact(
+    val id: Int,
     val name: String,
     val phone_number: String,
     val relationship: Relationship,
     val status: Boolean
 ) : Parcelable {
+
     val statusText: String
         get() = if (status) "Status: Approved" else "Status: Not Approved"
 
     constructor(parcel: Parcel) : this(
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        Relationship.valueOf(parcel.readString() ?: Relationship.OTHER.name),
-        parcel.readByte() != 0.toByte()
+        parcel.readInt(),  // Read 'id' as Int
+        parcel.readString() ?: "",  // Read 'name' as String, default to "" if null
+        parcel.readString() ?: "",  // Read 'phone_number' as String, default to "" if null
+        Relationship.valueOf(parcel.readString() ?: Relationship.OTHER.name),  // Read 'relationship' as Enum, default to Relationship.OTHER if null
+        parcel.readByte() != 0.toByte()  // Read 'status' as Boolean, 0 is false, anything else is true
     )
 }
-
 
 enum class Relationship {
     PARENT_GUARDIAN,

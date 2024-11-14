@@ -44,4 +44,23 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
             loadContacts()  // Refresh the list after deletion
         }
     }
+
+    // Get contact by ID
+    fun getContactById(id: Int): LiveData<Contact?> {
+        val contactData = MutableLiveData<Contact?>()
+        thread {
+            val contact = dbHelper.getContactById(id)
+            contactData.postValue(contact)
+        }
+        return contactData
+    }
+
+    // Update an existing contact in the database and refresh the contacts list
+    fun updateContact(contact: Contact) {
+        thread {
+            dbHelper.updateContact(contact)
+            loadContacts()  // Refresh the list after updating
+        }
+    }
+
 }

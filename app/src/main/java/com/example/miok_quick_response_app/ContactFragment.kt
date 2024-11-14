@@ -36,10 +36,20 @@ class ContactFragment : Fragment() {
         // Get the ViewModel
         contactViewModel = ViewModelProvider(this).get(ContactViewModel::class.java)
 
-        // Initialize the RecyclerView
-        contactAdapter = ContactAdapter {
-            // Handle contact removal if needed, for now, no removal functionality
-        }
+        contactAdapter = ContactAdapter(
+            onItemClick = { contact ->
+                // Navigate to EditContactFragment with the contact's ID
+                val action =
+                    ContactFragmentDirections.actionContactFragmentToEditContactFragment()
+                findNavController().navigate(action)
+            },
+            onRemoveClick = { contact ->
+                // Remove the contact when clicked on delete and show a toast
+                contactViewModel.removeContact(contact)
+                Toast.makeText(context, "Contact removed", Toast.LENGTH_SHORT).show()
+            }
+        )
+
 
         // Observe the contacts data from the ViewModel
         contactViewModel.contacts.observe(viewLifecycleOwner) { contacts ->
