@@ -7,39 +7,41 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
+import kotlin.concurrent.thread
+
 class ContactViewModel(application: Application) : AndroidViewModel(application) {
 
     private val dbHelper = ContactDatabase(application)
 
+    // LiveData to observe the list of contacts
     private val _contacts = MutableLiveData<List<Contact>>()
     val contacts: LiveData<List<Contact>> get() = _contacts
 
     init {
-        loadContacts()
+        loadContacts()  // Load contacts initially
     }
 
-    // Load contacts from the database
+    // Load contacts from the database and post the results to LiveData
     private fun loadContacts() {
-        _contacts.value = dbHelper.getAllContacts()
+        thread {  // Use a background thread to prevent blocking the UI
+            val contactList = dbHelper.getAllContacts()
+            _contacts.postValue(contactList)  // Update LiveData on the main thread
+        }
     }
 
-    // Add a new contact to the database
+    // Add a new contact to the database and refresh the contacts list
     fun addContact(contact: Contact) {
-        dbHelper.insertContact(contact)
-        loadContacts() // Refresh the list of contacts
+        thread {  // Background thread for database operations
+            dbHelper.insertContact(contact)
+            loadContacts()  // Refresh the list after insertion
+        }
     }
 
-    fun getAllContacts(): LiveData<List<Contact>> {
-        // If you're using LiveData for observing contacts, you can convert the list to LiveData
-        val contacts = dbHelper.getAllContacts()
-        return MutableLiveData(contacts)
-    }
-
+    // Remove a contact from the database and update LiveData
     fun removeContact(contact: Contact) {
-        dbHelper.removeContact(contact)
-        val updatedContacts = _contacts.value?.toMutableList() ?: mutableListOf()
-        updatedContacts.remove(contact)  // Remove the contact from the list
-        _contacts.value = updatedContacts // Update the LiveData
+        thread {  // Background thread
+            dbHelper.removeContact(contact)
+            loadContacts()  // Refresh the list after deletion
+        }
     }
 }
-

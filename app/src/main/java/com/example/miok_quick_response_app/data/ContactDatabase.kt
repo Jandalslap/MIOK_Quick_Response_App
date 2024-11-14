@@ -23,7 +23,7 @@ class ContactDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
                 $COLUMN_NAME TEXT NOT NULL,
                 $COLUMN_PHONE_NUMBER TEXT NOT NULL,
                 $COLUMN_RELATIONSHIP TEXT NOT NULL,
-                $COLUMN_STATUS Boolean NOT NULL
+                $COLUMN_STATUS INTEGER NOT NULL
             );
         """
         db.execSQL(createTableSQL)
@@ -43,7 +43,7 @@ class ContactDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
             put(COLUMN_NAME, contact.name)
             put(COLUMN_PHONE_NUMBER, contact.phone_number)
             put(COLUMN_RELATIONSHIP, contact.relationship.name)
-            put(COLUMN_STATUS, contact.status)
+            put(COLUMN_STATUS, if (contact.status) 1 else 0)
         }
         db.insert(TABLE_CONTACTS, null, values)
         db.close()
