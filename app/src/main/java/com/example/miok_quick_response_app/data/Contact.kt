@@ -27,6 +27,7 @@ enum class Relationship {
     AUNT_UNCLE,
     GRANDPARENT,
     SOCIAL_WORKER,
+    IWI_SOCIAL_WORKER,
     POLICE,
     OTHER
 }
