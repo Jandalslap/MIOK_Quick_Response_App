@@ -42,7 +42,11 @@ class MessageFragment : Fragment() {
             // findNavController().navigate(action)
             val smsUri = Uri.parse("smsto:${contact.phoneNumber}")
             val intent = Intent(Intent.ACTION_SENDTO, smsUri).apply {
-                putExtra("sms_body", "Hello ${contact.name},")
+                putExtra(
+                    "sms_body", "Alert: ${contact.name} has triggered a safety check in the" +
+                            " MIOK Quick Response App. Please review their status immediately and ensure they're" +
+                            " okay. Contact us if further assistance is needed."
+                )
             }
 
             // Verify that there's an app available to handle SMS
