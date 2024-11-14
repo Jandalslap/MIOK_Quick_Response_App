@@ -76,6 +76,7 @@ class AddContactFragment : Fragment() {
                 "Aunt/Uncle" -> Relationship.AUNT_UNCLE
                 "Grandparent" -> Relationship.GRANDPARENT
                 "Social Worker" -> Relationship.SOCIAL_WORKER
+                "Iwi Social Worker" -> Relationship.IWI_SOCIAL_WORKER
                 "Police" -> Relationship.POLICE
                 "Other" -> Relationship.OTHER
 
@@ -85,6 +86,7 @@ class AddContactFragment : Fragment() {
                 "Whaea/Tipuna" -> Relationship.AUNT_UNCLE
                 "Koroua/Koro" -> Relationship.GRANDPARENT
                 "Kaimahi Tokanga" -> Relationship.SOCIAL_WORKER
+                "Kaimahi Tokanga Iwi" -> Relationship.IWI_SOCIAL_WORKER
                 "Pirihimana" -> Relationship.POLICE
                 "Ētahi Atu" -> Relationship.OTHER
 
