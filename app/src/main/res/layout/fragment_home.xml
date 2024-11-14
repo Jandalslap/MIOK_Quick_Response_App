@@ -21,16 +21,18 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_quiz"
-        android:layout_width="260dp"
+        android:layout_width="330dp"
         android:layout_height="100dp"
         android:background="@drawable/edit_button_homefragment"
         android:fontFamily="@font/lalezar_regular"
         android:textSize="24sp"
         android:textColor="#ffffff"
         android:text="@string/button_take_quiz"
-        android:paddingLeft="20dp"/>
+        android:paddingLeft="20dp"
+        android:drawableLeft="@drawable/miok_copy3"/>
 <!--    Broke when I pulled updates?? commented out temporarily.
-        android:drawableLeft="@drawable/miok_kiwi_only_resized"-->
+        android:drawableLeft="@drawable/miok_kiwi_only_resized"
+        android:layout_width="260dp"-->
 
 
 
