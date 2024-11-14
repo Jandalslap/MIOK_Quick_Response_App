@@ -45,6 +45,7 @@
     <string name="contact_status">Status</string>
     <string name="status_yes">Yes</string>
     <string name="status_no">No</string>
+    <string name="quizResultTextView">Thanks for answering! \nResults have been sent to your contacts.</string>
 
 
 
@@ -63,7 +64,7 @@
     <string name="phone_label_mr">Waea: </string>
     <string name="relationship_label_mr">Tūāhua: </string>
     <string name="status_label_mr">Tūnga: </string>
-
+    <string name="quizResultTextView_mr">Kia ora mō tō whakautu! \nKua tukuna ngā hua ki ō hoapā.</string>
 
 
     <string-array name="relationship_options">
