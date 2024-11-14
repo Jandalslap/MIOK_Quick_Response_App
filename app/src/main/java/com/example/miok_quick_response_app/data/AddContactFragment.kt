@@ -69,21 +69,25 @@ class AddContactFragment : Fragment() {
                 else -> false  // Default to "No" if no selection
             }
 
-            // Define each relationship with its own enum constant, including Māori translations
             val relationship = when (relationshipSpinner.selectedItem.toString()) {
+                // English values
                 "Parent/Guardian" -> Relationship.PARENT_GUARDIAN
-                "Matua/Kaika" -> Relationship.PARENT_GUARDIAN
                 "Caregiver" -> Relationship.CAREGIVER
-                "Kaiāwhina" -> Relationship.CAREGIVER
                 "Aunt/Uncle" -> Relationship.AUNT_UNCLE
-                "Whaea/Tipuna" -> Relationship.AUNT_UNCLE
                 "Grandparent" -> Relationship.GRANDPARENT
-                "Koroua/Koro" -> Relationship.GRANDPARENT
                 "Social Worker" -> Relationship.SOCIAL_WORKER
-                "Kaimahi Tokanga" -> Relationship.SOCIAL_WORKER
                 "Police" -> Relationship.POLICE
+                "Other" -> Relationship.OTHER
+
+                // Māori translations
+                "Matua/Kaika" -> Relationship.PARENT_GUARDIAN
+                "Kaiāwhina" -> Relationship.CAREGIVER
+                "Whaea/Tipuna" -> Relationship.AUNT_UNCLE
+                "Koroua/Koro" -> Relationship.GRANDPARENT
+                "Kaimahi Tokanga" -> Relationship.SOCIAL_WORKER
                 "Pirihimana" -> Relationship.POLICE
-                "Other", "Ētahi Atu" -> Relationship.OTHER
+                "Ētahi Atu" -> Relationship.OTHER
+
                 else -> Relationship.OTHER
             }
 

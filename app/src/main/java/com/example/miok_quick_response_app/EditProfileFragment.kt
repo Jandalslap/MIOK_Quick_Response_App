@@ -76,7 +76,8 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                 return@setOnClickListener
             }
 
-            if (newEmail.isBlank() || !isValidEmail(newEmail)) {
+            // Check if the email is not blank and validate format if it's not
+            if (newEmail.isNotBlank() && !isValidEmail(newEmail)) {
                 Toast.makeText(requireContext(), "Please enter a valid email", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }

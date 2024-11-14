@@ -81,5 +81,14 @@ class ContactDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         return contacts
     }
 
+    // Remove a contact from the database by name or phone number (depending on uniqueness)
+    fun removeContact(contact: Contact) {
+        val db = writableDatabase
+        val selection = "$COLUMN_PHONE_NUMBER = ?"
+        val selectionArgs = arrayOf(contact.phone_number) // Assuming phone number is unique
+        db.delete(TABLE_CONTACTS, selection, selectionArgs)
+        db.close()
+    }
+
 
 }

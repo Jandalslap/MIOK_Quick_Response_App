@@ -4,7 +4,6 @@ import Contact
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.miok_quick_response_app.R
 
 class ContactAdapter(
-    private val onRemoveClick: (Int) -> Unit
+    private val onRemoveClick: (Contact) -> Unit // Modified to pass the actual contact
 ) : ListAdapter<Contact, ContactAdapter.ContactViewHolder>(ContactDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
@@ -26,10 +25,12 @@ class ContactAdapter(
         holder.phone_numberTextView.text = contact.phone_number
         holder.relationshipTextView.text = contact.relationship.name.replace("_", " ")
         holder.statusTextView.text = if (contact.status) "Approved" else "Not Approved"
-/*
-        holder.removeButton.setOnClickListener {
-            onRemoveClick(position)
-        }*/
+
+        // Handling the swipe to delete or remove contact
+        holder.itemView.setOnClickListener {
+            // Trigger removal of the contact when item is clicked (could be swipe if needed)
+            onRemoveClick(contact)
+        }
     }
 
     override fun getItemCount(): Int = currentList.size
@@ -38,14 +39,13 @@ class ContactAdapter(
         val nameTextView: TextView = itemView.findViewById(R.id.contact_name)
         val phone_numberTextView: TextView = itemView.findViewById(R.id.contact_phone_number)
         val relationshipTextView: TextView = itemView.findViewById(R.id.contact_relationship)
-        //val removeButton: ImageButton = itemView.findViewById(R.id.remove_button)
         val statusTextView: TextView = itemView.findViewById(R.id.contact_status)
     }
 
     // DiffUtil callback to compare lists efficiently
     class ContactDiffCallback : DiffUtil.ItemCallback<Contact>() {
         override fun areItemsTheSame(oldItem: Contact, newItem: Contact): Boolean {
-            // Compare based on name, dob, and relationship instead of id
+            // Compare based on name, phone number, and relationship
             return oldItem.name == newItem.name && oldItem.phone_number == newItem.phone_number && oldItem.relationship == newItem.relationship
         }
 
@@ -53,5 +53,4 @@ class ContactAdapter(
             return oldItem == newItem // Compare by all fields
         }
     }
-
 }

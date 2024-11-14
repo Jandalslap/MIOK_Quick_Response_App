@@ -52,10 +52,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             binding.userName.text = name
         }
 
-        profileViewModel.userEmail.observe(viewLifecycleOwner) { email ->
-            binding.userEmail.text = email
-        }
-
         profileViewModel.userBirthday.observe(viewLifecycleOwner) { birthday ->
             binding.userBirthday.text = birthday
         }
@@ -87,12 +83,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         if (!profileDatabase.hasProfile()) {
             if (language == "Māori") {
                 // Update the text views with Māori text
+                binding.userName.text = "Ingoa" // Name
                 binding.userBirthday.text = "Rā Whānau"  // Birthday
                 binding.userAddress.text = "Wāhitau"  // Address
                 binding.motherName.text = "Ingoa o te Māmā"  // Mother's Name
                 binding.fatherName.text = "Ingoa o te Pāpā"  // Father's Name
             } else {
                 // Default to English
+                binding.userName.text = "Name" // Name
                 binding.userBirthday.text = "Birthday"
                 binding.userAddress.text = "Address"
                 binding.motherName.text = "Mother's Name"

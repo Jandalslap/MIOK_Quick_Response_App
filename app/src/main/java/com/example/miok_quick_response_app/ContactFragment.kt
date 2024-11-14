@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.miok_info_app.viewmodel.SharedViewModel
@@ -45,10 +47,34 @@ class ContactFragment : Fragment() {
         }
 
         // Set up RecyclerView
-        view.findViewById<RecyclerView>(R.id.recycler_view_tasks).apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = contactAdapter
-        }
+        val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view_tasks)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = contactAdapter
+
+        // Set up swipe-to-delete using ItemTouchHelper
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false // No need to handle move
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val contactToRemove = contactAdapter.currentList[position]
+
+                // Remove the contact from the ViewModel and show a toast
+                contactViewModel.removeContact(contactToRemove)
+                Toast.makeText(context, "Contact removed", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        // Attach the ItemTouchHelper to the RecyclerView
+        itemTouchHelper.attachToRecyclerView(recyclerView)
 
         // Set up add contact button
         view.findViewById<View>(R.id.profile_add_task).setOnClickListener {

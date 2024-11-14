@@ -34,5 +34,12 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
         val contacts = dbHelper.getAllContacts()
         return MutableLiveData(contacts)
     }
+
+    fun removeContact(contact: Contact) {
+        dbHelper.removeContact(contact)
+        val updatedContacts = _contacts.value?.toMutableList() ?: mutableListOf()
+        updatedContacts.remove(contact)  // Remove the contact from the list
+        _contacts.value = updatedContacts // Update the LiveData
+    }
 }
 
