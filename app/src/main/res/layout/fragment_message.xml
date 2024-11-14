@@ -6,7 +6,7 @@
     android:background="#E5EDF3"
     android:padding="16dp">
 
-    
+
 
     <!-- RecyclerView for displaying the list of contacts -->
     <androidx.recyclerview.widget.RecyclerView

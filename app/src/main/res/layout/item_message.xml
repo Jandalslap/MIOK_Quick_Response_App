@@ -19,5 +19,13 @@
         android:layout_height="wrap_content"
         android:text="Relationship"
         android:textSize="14sp" />
+    <ImageButton
+        android:id="@+id/btn_message"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_message"
+        android:contentDescription="Message"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="end" />
 
 </LinearLayout>
