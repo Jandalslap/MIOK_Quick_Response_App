@@ -66,8 +66,9 @@
 
     <fragment
         android:id="@+id/quizFragment"
-        android:name="com.example.miok_quick_response_app.QuizFragment"
+        android:name="com.example.miok_quick_response_app.questions.QuizFragment"
         android:label="Quiz" />
+
     <fragment
         android:id="@+id/addContactFragment"
         android:name="com.example.miok_quick_response_app.data.AddContactFragment"
