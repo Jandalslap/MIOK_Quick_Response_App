@@ -13,7 +13,9 @@ import com.example.miok_quick_response_app.R
 // MessageContact data class
 data class MessageContact(
     val name: String,
-    val relationship: String
+    val relationship: String,
+    val phoneNumber: String
+
 )
 
 // MessageAdapter class

@@ -1,11 +1,14 @@
 package com.example.miok_quick_response_app
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,6 +40,17 @@ class MessageFragment : Fragment() {
             // Example: navigate to a messaging screen (this is just a placeholder)
             // val action = HomeFragmentDirections.actionHomeFragmentToMessageFragment(contact)
             // findNavController().navigate(action)
+            val smsUri = Uri.parse("smsto:${contact.phoneNumber}")
+            val intent = Intent(Intent.ACTION_SENDTO, smsUri).apply {
+                putExtra("sms_body", "Hello ${contact.name},")
+            }
+
+            // Verify that there's an app available to handle SMS
+            if (intent.resolveActivity(requireActivity().packageManager) != null) {
+                startActivity(intent)
+            } else {
+                Toast.makeText(context, "No SMS app available", Toast.LENGTH_SHORT).show()
+            }
             Toast.makeText(context, "Button for ${contact.name} clicked", Toast.LENGTH_SHORT).show()
         }
 

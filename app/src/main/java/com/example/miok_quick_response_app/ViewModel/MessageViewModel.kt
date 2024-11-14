@@ -26,7 +26,8 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
             val messageContacts = contacts.map { contact ->
                 MessageContact(
                     name = contact.name,
-                    relationship = contact.relationship.name.replace("_", " ")
+                    relationship = contact.relationship.name.replace("_", " "),
+                    phoneNumber = contact.phone_number
                 )
             }
             _messageContacts.postValue(messageContacts)
