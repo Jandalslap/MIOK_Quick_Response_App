@@ -16,23 +16,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.example.miok_quick_response_app.R
+import com.example.miok_quick_response_app.ViewModel.ContactViewModel
 
 class QuizFragment : Fragment() {
 
-    private val quizViewModel = QuizViewModel()
-    var questions : List<Question> = quizViewModel.getAllQuestions()
+    private lateinit var quizViewModel : QuizViewModel
 
     // Access the shared ViewModel scoped to the activity
     private val sharedViewModel: SharedViewModel by activityViewModels()
-
-    // Sample question list
-    //private val questions = quizViewModel.getAllQuestions()
-//    private var questions : List<Question> = listOf(
-//    Question("Are you okay?(Eng)(questionsTamariki)", "Question text 4(TR)",null, R.drawable.emoji_happy),
-//    Question("Are you hurt?(Eng)(questionsTamariki)", "Question text 4(TR)", null, R.drawable.emoji_hurt),
-//    Question("Are you clean and fed?(Eng)(questionsTamariki)", "Question text 4(TR)", null, R.drawable.emoji_clean),
-//    Question("Is someone yelling at you?(Eng)(questionsTamariki)", "Question text 4(TR)", null, R.drawable.emoji_yelling)
-//    )
 
     private var currentQuestionIndex = 0
 
@@ -48,7 +39,8 @@ class QuizFragment : Fragment() {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_quiz, container, false)
 
-
+        quizViewModel = ViewModelProvider(this)[QuizViewModel::class.java]
+        var questions : List<Question> = quizViewModel.getAllQuestions()
 
         // Initialize UI components
         questionTextView = rootView.findViewById(R.id.questionText)
@@ -59,24 +51,24 @@ class QuizFragment : Fragment() {
         // Set up listeners for the buttons
         trueButton.setOnClickListener {
             questions[currentQuestionIndex].userInputAnswer = true
-            goToNextQuestion()
+            goToNextQuestion(questions)
         }
 
         falseButton.setOnClickListener {
             questions[currentQuestionIndex].userInputAnswer = false
-            goToNextQuestion()
+            goToNextQuestion(questions)
         }
 
         sharedViewModel.currentLanguage.observe(viewLifecycleOwner) { language ->
             // Update the UI or perform actions based on the new language value
-            updateLanguageUI(language)
+            updateLanguageUI(language, questions)
         }
 
         //quizViewModel = ViewModel Provider(this).get(QuizViewModel::class.java)
 
 
         // Display the first question
-        displayCurrentQuestion()
+        displayCurrentQuestion(questions)
 
         return rootView
     }
@@ -84,7 +76,7 @@ class QuizFragment : Fragment() {
 
 
     // Function to display the current question
-    private fun displayCurrentQuestion() {
+    private fun displayCurrentQuestion(questions : List<Question>) {
         if (currentQuestionIndex < questions.size) {
             val question = questions[currentQuestionIndex]
             questionTextView.text = question.questionTextEng
@@ -100,18 +92,18 @@ class QuizFragment : Fragment() {
     }
 
     // Function to move to the next question
-    private fun goToNextQuestion() {
+    private fun goToNextQuestion(questions : List<Question>) {
         currentQuestionIndex++
         if (currentQuestionIndex >= questions.size) {
             // Once we reach the end of the questions list, navigate to the result screen
             findNavController().navigate(R.id.action_quizFragment_to_quizResultFragment)
         } else {
             // Otherwise, display the next question
-            displayCurrentQuestion()
+            displayCurrentQuestion(questions)
         }
     }
 
-    private fun updateLanguageUI(language: String) {
+    private fun updateLanguageUI(language: String, questions : List<Question>) {
         // Update TextView text based on language
         if (language == "Māori") {
             trueButton.text = "True(TR)"
