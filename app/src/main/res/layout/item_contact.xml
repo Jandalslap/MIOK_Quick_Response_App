@@ -138,6 +138,7 @@
                         android:layout_height="wrap_content"
                         android:text="EMERGENCY CONTACT"
                         android:visibility="gone"
+                        android:textColor="#E4A824"
                         android:textStyle="bold"
                         />
 

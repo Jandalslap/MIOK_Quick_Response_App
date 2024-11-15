@@ -1,3 +1,4 @@
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
@@ -54,6 +55,13 @@ class ContactDatabase(context: Context) :
     // Insert a contact into the database
     fun insertContact(contact: Contact) {
         val db = writableDatabase
+
+        // If the contact is an emergency contact, make sure to unset any existing emergency contact
+        if (contact.emerg_contact) {
+            // Unset the current emergency contact, if it exists
+            db.execSQL("UPDATE $TABLE_CONTACTS SET $COLUMN_EMERG_CONTACT = 0 WHERE $COLUMN_EMERG_CONTACT = 1")
+        }
+
         val values = ContentValues().apply {
             put(COLUMN_NAME, contact.name)
             put(COLUMN_PHONE_NUMBER, contact.phone_number)
@@ -159,7 +167,6 @@ class ContactDatabase(context: Context) :
 
         // Log the emergency contact status before making changes in the database
         Log.d("ContactDatabase", "Updating contact: ${contact.name}, Emergency Contact: ${contact.emerg_contact}")
-
 
         // If the contact is an emergency contact, make sure to unset any existing emergency contact
         if (contact.emerg_contact) {

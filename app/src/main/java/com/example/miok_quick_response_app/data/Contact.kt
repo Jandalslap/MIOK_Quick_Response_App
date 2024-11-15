@@ -15,7 +15,7 @@ data class Contact(
     val statusText: String
         get() = if (status) "Status: Approved" else "Status: Not Approved"
 
-    val contactText: String
+    val emergContactText: String
         get() = if (emerg_contact) "EMERGENCY CONTACT" else ""
 
     constructor(parcel: Parcel) : this(

@@ -35,8 +35,7 @@ class AddContactFragment : Fragment() {
         val contactStatusInfo = view.findViewById<TextView>(R.id.contact_status_info)
         val emergContact = view.findViewById<RadioButton>(R.id.urgent_contact_checkbox)
 
-        // Capture the emerg_contact status (whether the checkbox is selected)
-        val isEmergencyContact = emergContact.isChecked
+
 
         // Set default values: make sure the radio button defaults to 'Yes'
         statusYesButton.isChecked = true
@@ -128,6 +127,8 @@ class AddContactFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            // Capture the emerg_contact status (whether the checkbox is selected)
+            val isEmergencyContact = emergContact.isChecked
 
             val newContact = Contact(id = generateId(),name, number, relationship, status, isEmergencyContact)
 
