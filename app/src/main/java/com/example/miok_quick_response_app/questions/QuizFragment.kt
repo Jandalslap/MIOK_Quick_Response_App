@@ -93,14 +93,17 @@ class QuizFragment : Fragment() {
 
     // Function to move to the next question
     private fun goToNextQuestion(questions : List<Question>) {
+        quizViewModel.collectResponces(questions[currentQuestionIndex])
         currentQuestionIndex++
         if (currentQuestionIndex >= questions.size) {
+            quizViewModel.quizCompleted()
             // Once we reach the end of the questions list, navigate to the result screen
             findNavController().navigate(R.id.action_quizFragment_to_quizResultFragment)
         } else {
             // Otherwise, display the next question
             displayCurrentQuestion(questions)
         }
+
     }
 
     private fun updateLanguageUI(language: String, questions : List<Question>) {
