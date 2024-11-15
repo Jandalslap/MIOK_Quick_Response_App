@@ -46,11 +46,13 @@ class AddContactFragment : Fragment() {
             addContactButton,
             contactStatus,
             urgentContactLabel,
-            contactStatusInfo
+            contactStatusInfo,
+            statusYesButton,
+            statusNoButton
         )
         sharedViewModel.currentLanguage.observe(viewLifecycleOwner) { language ->
             // Update the UI or perform actions based on the new language value
-            updateLanguageUI(language, relationshipSpinner, nameInput, numberInput, addContactButton, contactStatus, urgentContactLabel, contactStatusInfo)
+            updateLanguageUI(language, relationshipSpinner, nameInput, numberInput, addContactButton, contactStatus, urgentContactLabel, contactStatusInfo, statusYesButton, statusNoButton)
         }
         // Set up the spinner
         ArrayAdapter.createFromResource(
@@ -147,7 +149,9 @@ class AddContactFragment : Fragment() {
         addContactButton: Button,
         contactStatus: TextView,
         urgentContactLabel: TextView,
-        contactStatusInfo: TextView
+        contactStatusInfo: TextView,
+        statusYesButton: TextView,
+        statusNoButton: TextView
     ) {
         // Update TextView text based on language
         if (language == "Māori") {
@@ -167,6 +171,8 @@ class AddContactFragment : Fragment() {
 
             // Set the text for the RadioButtons to Māori
             contactStatus.text = getString(R.string.contact_status_mr)
+            statusYesButton.text = getString(R.string.status_yes_mr)
+            statusNoButton.text = getString(R.string.status_no_mr)
             urgentContactLabel.text = getString(R.string.urgent_contact_label_mr)
             contactStatusInfo.text = getString(R.string.contact_status_info_mr)
 
@@ -174,6 +180,8 @@ class AddContactFragment : Fragment() {
         } else {
             // Default to English
             nameInput.hint = getString(R.string.contact_name_input)
+            statusYesButton.text = getString(R.string.status_yes)
+            statusNoButton.text = getString(R.string.status_no)
             numberInput.hint = getString(R.string.contact_phone_input)
             addContactButton.text = getString(R.string.add_contact_button)
 
