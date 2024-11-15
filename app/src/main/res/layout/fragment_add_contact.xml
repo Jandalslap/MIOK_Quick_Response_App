@@ -33,11 +33,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:entries="@array/relationship_options" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/contact_status"
@@ -65,6 +67,40 @@
                     android:layout_height="wrap_content"
                     android:text="@string/status_no" />
             </RadioGroup>
+
+            <TextView
+                android:id="@+id/contact_status_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/contact_status_info"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <!-- Checkbox for urgent contact -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical">
+
+            <RadioButton
+                android:id="@+id/urgent_contact_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/urgent_contact_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/urgent_contact_label"
+                android:textSize="14sp"
+                />
         </LinearLayout>
         <Button
             android:id="@+id/add_contact_button"
