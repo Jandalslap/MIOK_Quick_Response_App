@@ -48,6 +48,7 @@
     <string name="quizResultTextView">Thanks for answering! \nResults have been sent to your contacts.</string>
     <string name="urgent_contact_label">MAKE THIS PERSON MY URGENT CONTACT</string>
     <string name="contact_status_info">Not sure? Visit www.orangatamariki.govt.nz</string>
+    <string name="question_image">Question Image</string>
 
 
     <!-- Māori Language -->
@@ -90,5 +91,10 @@
         <item>Pirihimana</item> <!-- Police -->
         <item>Ētahi Atu</item> <!-- Other -->
     </string-array>
+
+
+        <!-- Other string resources -->
+
+
 
 </resources>

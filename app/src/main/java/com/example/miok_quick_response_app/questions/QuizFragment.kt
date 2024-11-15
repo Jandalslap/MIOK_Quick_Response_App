@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -25,6 +26,7 @@ class QuizFragment : Fragment() {
     private var currentQuestionIndex = 0
 
     private lateinit var questionTextView: TextView
+    private lateinit var questionImageView: ImageView
     private lateinit var trueButton: Button
     private lateinit var falseButton: Button
 
@@ -37,6 +39,7 @@ class QuizFragment : Fragment() {
 
         // Initialize UI components
         questionTextView = rootView.findViewById(R.id.questionText)
+        questionImageView = rootView.findViewById(R.id.questionImageView) // Initialize ImageView
         trueButton = rootView.findViewById(R.id.trueButton)
         falseButton = rootView.findViewById(R.id.falseButton)
 
@@ -63,11 +66,21 @@ class QuizFragment : Fragment() {
         return rootView
     }
 
+
+
     // Function to display the current question
     private fun displayCurrentQuestion() {
         if (currentQuestionIndex < questions.size) {
             val question = questions[currentQuestionIndex]
             questionTextView.text = question.questionTextEng
+
+            // Set image if available, otherwise hide the ImageView
+            question.imageResId?.let {
+                questionImageView.setImageResource(it)
+                questionImageView.visibility = View.VISIBLE
+            } ?: run {
+                questionImageView.visibility = View.GONE
+            }
         }
     }
 
