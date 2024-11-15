@@ -93,7 +93,7 @@
     <fragment
         android:id="@+id/quizResultFragment"
         android:name="com.example.miok_quick_response_app.questions.QuizResultFragment"
-        android:label="QuizResultFragment" />
+        android:label="Quiz Completed" />
 
     <fragment
         android:id="@+id/editProfileFragment"
