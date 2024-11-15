@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/splashFragment">
 
+    <!-- Splash Fragment -->
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.example.miok_quick_response_app.ui.SplashFragment"
@@ -12,6 +13,7 @@
             app:destination="@id/disclaimerFragment" />
     </fragment>
 
+    <!-- Disclaimer Fragment -->
     <fragment
         android:id="@+id/disclaimerFragment"
         android:name="com.example.miok_quick_response_app.ui.DisclaimerFragment"
@@ -20,10 +22,8 @@
             android:id="@+id/action_disclaimerFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/editProfileFragment"
-        android:name="com.example.miok_quick_response_app.EditProfileFragment"
-        android:label="Edit Profile" />
+
+    <!-- Home Fragment -->
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.miok_quick_response_app.HomeFragment"
@@ -41,6 +41,27 @@
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
+
+    <!-- Contact Fragment (Single Definition) -->
+    <fragment
+        android:id="@+id/contactFragment"
+        android:name="com.example.miok_quick_response_app.ContactFragment"
+        android:label="Contacts">
+        <action
+            android:id="@+id/action_contactFragment_to_editContactFragment"
+            app:destination="@id/editContactFragment" />
+        <action
+            android:id="@+id/action_contactFragment_to_addContactFragment"
+            app:destination="@id/addContactFragment" />
+    </fragment>
+
+
+    <!-- Other Fragments -->
+    <fragment
+        android:id="@+id/editContactFragment"
+        android:name="com.example.miok_quick_response_app.EditContactFragment"
+        android:label="Edit Contact" />
+
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.miok_quick_response_app.ProfileFragment"
@@ -48,15 +69,6 @@
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/contactFragment"
-        android:name="com.example.miok_quick_response_app.ContactFragment"
-        android:label="Contacts">
-        <action
-            android:id="@+id/action_contactFragment_to_addContactFragment"
-            app:destination="@id/addContactFragment" />
     </fragment>
 
     <fragment
@@ -77,8 +89,14 @@
         android:id="@+id/addContactFragment"
         android:name="com.example.miok_quick_response_app.data.AddContactFragment"
         android:label="Add Contact" />
+
     <fragment
         android:id="@+id/quizResultFragment"
         android:name="com.example.miok_quick_response_app.questions.QuizResultFragment"
         android:label="QuizResultFragment" />
+
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.miok_quick_response_app.EditProfileFragment"
+        android:label="Edit Profile" />
 </navigation>

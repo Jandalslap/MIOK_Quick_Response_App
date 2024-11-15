@@ -25,6 +25,7 @@
             android:background="@drawable/mustard_fragment_profile_contacts"
             android:contentDescription="Add contact"
             android:fontFamily="@font/lalezar_regular"
+            android:textSize="16sp"
             android:padding="5dp"
             android:scaleType="centerInside"
             android:src="@drawable/ic_add_contacts"

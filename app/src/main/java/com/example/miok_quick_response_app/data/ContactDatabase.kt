@@ -3,7 +3,8 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class ContactDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+class ContactDatabase(context: Context) :
+    SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
         private const val DATABASE_NAME = "contacts.db"
@@ -14,6 +15,17 @@ class ContactDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         private const val COLUMN_PHONE_NUMBER = "phone_number"
         private const val COLUMN_RELATIONSHIP = "relationship"
         private const val COLUMN_STATUS = "status"
+
+        // Singleton instance
+        @Volatile
+        private var INSTANCE: ContactDatabase? = null
+
+        // Get instance method for singleton access
+        fun getInstance(context: Context): ContactDatabase {
+            return INSTANCE ?: synchronized(this) {
+                INSTANCE ?: ContactDatabase(context).also { INSTANCE = it }
+            }
+        }
     }
 
     override fun onCreate(db: SQLiteDatabase) {
@@ -58,11 +70,18 @@ class ContactDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         if (cursor.moveToFirst()) {
             do {
                 val name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME))
-                val phoneNumber = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PHONE_NUMBER))
-                val relationship = Relationship.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_RELATIONSHIP)))
-                val status = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_STATUS)) == 1  // 1 = true, 0 = false
+                val phoneNumber =
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PHONE_NUMBER))
+                val relationship = Relationship.valueOf(
+                    cursor.getString(
+                        cursor.getColumnIndexOrThrow(COLUMN_RELATIONSHIP)
+                    )
+                )
+                val status =
+                    cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_STATUS)) == 1  // 1 = true, 0 = false
 
                 val contact = Contact(
+                    id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)),
                     name = name,
                     phone_number = phoneNumber,
                     relationship = relationship,
@@ -88,6 +107,52 @@ class ContactDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         val selectionArgs = arrayOf(contact.phone_number) // Assuming phone number is unique
         db.delete(TABLE_CONTACTS, selection, selectionArgs)
         db.close()
+    }
+
+    fun getContactById(id: Int): Contact? {
+        val db = readableDatabase
+        var contact: Contact? = null
+        val cursor = db.query(
+            TABLE_CONTACTS,
+            null,
+            "$COLUMN_ID = ?",
+            arrayOf(id.toString()),
+            null, null, null
+        )
+
+        if (cursor.moveToFirst()) {
+            val name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME))
+            val phoneNumber = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PHONE_NUMBER))
+            val relationship = Relationship.valueOf(
+                cursor.getString(
+                    cursor.getColumnIndexOrThrow(COLUMN_RELATIONSHIP)
+                )
+            )
+            val status = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_STATUS)) == 1
+
+            contact = Contact(
+                id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)),
+                name = name,
+                phone_number = phoneNumber,
+                relationship = relationship,
+                status = status
+            )
+        }
+        cursor.close()
+        //db.close()
+        return contact
+    }
+
+    fun updateContact(contact: Contact) {
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put(COLUMN_NAME, contact.name)
+            put(COLUMN_PHONE_NUMBER, contact.phone_number)
+            put(COLUMN_RELATIONSHIP, contact.relationship.name)
+            put(COLUMN_STATUS, if (contact.status) 1 else 0)
+        }
+        db.update(TABLE_CONTACTS, values, "$COLUMN_PHONE_NUMBER = ?", arrayOf(contact.phone_number))
+        //db.close()
     }
 
 

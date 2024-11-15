@@ -30,6 +30,9 @@ class AddContactFragment : Fragment() {
         val statusRadioGroup = view.findViewById<RadioGroup>(R.id.contact_status_radio_group)
         val statusYesButton = view.findViewById<RadioButton>(R.id.radio_yes)
         val statusNoButton = view.findViewById<RadioButton>(R.id.radio_no)
+        val contactStatus = view.findViewById<TextView>(R.id.contact_status)
+        val urgentContactLabel = view.findViewById<TextView>(R.id.urgent_contact_label)
+        val contactStatusInfo = view.findViewById<TextView>(R.id.contact_status_info)
 
         // Set default values: make sure the radio button defaults to 'Yes'
         statusYesButton.isChecked = true
@@ -40,11 +43,16 @@ class AddContactFragment : Fragment() {
             relationshipSpinner,
             nameInput,
             numberInput,
-            addContactButton
+            addContactButton,
+            contactStatus,
+            urgentContactLabel,
+            contactStatusInfo,
+            statusYesButton,
+            statusNoButton
         )
         sharedViewModel.currentLanguage.observe(viewLifecycleOwner) { language ->
             // Update the UI or perform actions based on the new language value
-            updateLanguageUI(language, relationshipSpinner, nameInput, numberInput, addContactButton)
+            updateLanguageUI(language, relationshipSpinner, nameInput, numberInput, addContactButton, contactStatus, urgentContactLabel, contactStatusInfo, statusYesButton, statusNoButton)
         }
         // Set up the spinner
         ArrayAdapter.createFromResource(
@@ -56,7 +64,7 @@ class AddContactFragment : Fragment() {
             relationshipSpinner.adapter = adapter
         }
 
-        
+
 
         view.findViewById<Button>(R.id.add_contact_button).setOnClickListener {
             val name = nameInput.text.toString()
@@ -117,7 +125,7 @@ class AddContactFragment : Fragment() {
             }
 
 
-            val newContact = Contact(name, number, relationship, status)
+            val newContact = Contact(id = generateId(),name, number, relationship, status)
 
             val resultBundle = Bundle().apply {
                 putParcelable("new_contact", newContact)
@@ -128,14 +136,22 @@ class AddContactFragment : Fragment() {
 
         return view
     }
-
+    fun generateId(): Int {
+        // Generate a unique ID. For example, you could use the current system time as an ID.
+        return (System.currentTimeMillis() % Int.MAX_VALUE).toInt()
+    }
     // Function to update UI based on the language
     private fun updateLanguageUI(
         language: String?,
         relationshipSpinner: Spinner,
         nameInput: EditText,
         numberInput: EditText,
-        addContactButton: Button
+        addContactButton: Button,
+        contactStatus: TextView,
+        urgentContactLabel: TextView,
+        contactStatusInfo: TextView,
+        statusYesButton: TextView,
+        statusNoButton: TextView
     ) {
         // Update TextView text based on language
         if (language == "Māori") {
@@ -152,9 +168,20 @@ class AddContactFragment : Fragment() {
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 relationshipSpinner.adapter = adapter
             }
+
+            // Set the text for the RadioButtons to Māori
+            contactStatus.text = getString(R.string.contact_status_mr)
+            statusYesButton.text = getString(R.string.status_yes_mr)
+            statusNoButton.text = getString(R.string.status_no_mr)
+            urgentContactLabel.text = getString(R.string.urgent_contact_label_mr)
+            contactStatusInfo.text = getString(R.string.contact_status_info_mr)
+
+
         } else {
             // Default to English
             nameInput.hint = getString(R.string.contact_name_input)
+            statusYesButton.text = getString(R.string.status_yes)
+            statusNoButton.text = getString(R.string.status_no)
             numberInput.hint = getString(R.string.contact_phone_input)
             addContactButton.text = getString(R.string.add_contact_button)
 
@@ -167,6 +194,11 @@ class AddContactFragment : Fragment() {
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 relationshipSpinner.adapter = adapter
             }
+
+            // Set the text for the RadioButtons to English
+            contactStatus.text = getString(R.string.contact_status)
+            urgentContactLabel.text = getString(R.string.urgent_contact_label)
+            contactStatusInfo.text = getString(R.string.contact_status_info)
         }
     }
 
