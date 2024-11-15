@@ -189,5 +189,20 @@ class ContactDatabase(context: Context) :
     }
 
 
+    @SuppressLint("Range")
+    fun getEmergencyContact(): String? {
+        val db = readableDatabase
+        val query = "SELECT $COLUMN_PHONE_NUMBER FROM $TABLE_CONTACTS WHERE $COLUMN_EMERG_CONTACT = 1 LIMIT 1"
+        val cursor = db.rawQuery(query, null)
+        var phoneNumber: String? = null
+
+        if (cursor.moveToFirst()) {
+            phoneNumber = cursor.getString(cursor.getColumnIndex(COLUMN_PHONE_NUMBER))
+        }
+        cursor.close()
+        db.close()
+        return phoneNumber
+    }
+
 
 }

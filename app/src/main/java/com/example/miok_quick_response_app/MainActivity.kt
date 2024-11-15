@@ -1,9 +1,13 @@
 package com.example.miok_quick_response_app
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.Switch
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
@@ -26,6 +30,25 @@ class MainActivity : AppCompatActivity() {
 
         // Initialize the shared ViewModel
         sharedViewModel = ViewModelProvider(this)[SharedViewModel::class.java]
+
+        // Find the emergency call button
+        val emergencyCallButton = findViewById<ImageView>(R.id.emergency_call_button)
+
+        emergencyCallButton.setOnClickListener {
+            val dbHelper = ContactDatabase.getInstance(this)
+            val emergencyNumber = dbHelper.getEmergencyContact()
+
+            if (emergencyNumber != null) {
+                // Start the phone dialer
+                val callIntent = Intent(Intent.ACTION_DIAL).apply {
+                    data = Uri.parse("tel:$emergencyNumber")
+                }
+                startActivity(callIntent)
+            } else {
+                // No emergency contact found
+                Toast.makeText(this, "No emergency contact set.", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         // Find the Switch by its ID
         val languageSwitch = findViewById<Switch>(R.id.languageswitch)
