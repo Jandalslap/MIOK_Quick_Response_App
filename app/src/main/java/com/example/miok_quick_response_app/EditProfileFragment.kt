@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -145,7 +146,8 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         // Load existing profile data
         profileViewModel.imageUrl.observe(viewLifecycleOwner) { uri ->
             uri?.let {
-                binding.profileImage.setImageURI(Uri.parse(it))  // Load image from URI if available
+                binding.profileImage.setImageURI(Uri.parse(it)) // Load image from URI if available
+                imageUri = it // Initialize imageUri variable with the current value
             }
         }
 
@@ -156,25 +158,44 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         profileViewModel.userEmail.observe(viewLifecycleOwner, Observer { email ->
             binding.editEmail.setText(email)
         })
+
+        profileViewModel.userBirthday.observe(viewLifecycleOwner, Observer { birthday ->
+            // Pre-fill the birthday EditText
+            binding.editBirthday.setText(birthday)
+
+            // Parse the birthday to set the DatePicker default date if available
+            if (!birthday.isNullOrEmpty()) {
+                val date = dateFormatter.parse(birthday)
+                if (date != null) {
+                    calendar.time = date // Set the calendar to the parsed birthday
+                }
+            }
+        })
+
         // Set up the DatePicker for the birthday field
         binding.editBirthday.setOnClickListener {
             // Clear focus to prevent the soft keyboard from opening
             binding.editBirthday.clearFocus()
 
+            val initialYear = calendar.get(Calendar.YEAR)
+            val initialMonth = calendar.get(Calendar.MONTH)
+            val initialDay = calendar.get(Calendar.DAY_OF_MONTH)
+
             val datePickerDialog = DatePickerDialog(
                 requireContext(),
-                //R.style.CustomDatePickerDialogTheme, // Uncomment to style in themes
-                DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                     // Set the chosen date to the EditText
                     calendar.set(year, month, dayOfMonth)
                     binding.editBirthday.setText(dateFormatter.format(calendar.time))
                 },
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)
+                initialYear,
+                initialMonth,
+                initialDay
             )
+
             datePickerDialog.show()
         }
+
         profileViewModel.userAddress.observe(viewLifecycleOwner, Observer { address ->
             binding.editAddress.setText(address)
         })
@@ -189,6 +210,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
         // Save button logic
         binding.saveButton.setOnClickListener {
+            Log.d("EditProfile", "Image URI: $imageUri")
             val newName = binding.editName.text.toString()
             val newEmail = binding.editEmail.text.toString()
             val newBirthday = binding.editBirthday.text.toString()

@@ -40,7 +40,7 @@ class ContactFragment : Fragment() {
             onItemClick = { contact ->
                 // Navigate to EditContactFragment with the contact's ID
                 val action =
-                    ContactFragmentDirections.actionContactFragmentToEditContactFragment()
+                    ContactFragmentDirections.actionContactFragmentToEditContactFragment(contactId = contact.id)
                 findNavController().navigate(action)
             },
             onRemoveClick = { contact ->
@@ -115,7 +115,7 @@ class ContactFragment : Fragment() {
         val button = view?.findViewById<AppCompatButton>(R.id.profile_add_task)
         // Depending on the current language, update UI elements here
         if (language == "Māori") {
-            button?.text = "Tāpiri Rārangi"  // Example text change
+            button?.text = "Tāpiri Rārangi"
         } else {
             button?.text = "Add Contact"  // Default English text
         }

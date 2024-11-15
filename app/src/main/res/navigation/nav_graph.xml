@@ -60,7 +60,12 @@
     <fragment
         android:id="@+id/editContactFragment"
         android:name="com.example.miok_quick_response_app.EditContactFragment"
-        android:label="@string/editContactFragment" />
+        android:label="@string/editContactFragment" >
+        <!-- Define the contactId argument -->
+        <argument
+            android:name="contactId"
+            app:argType="integer" />
+    </fragment>
 
     <fragment
         android:id="@+id/profileFragment"
