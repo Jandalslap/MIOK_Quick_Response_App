@@ -26,6 +26,7 @@ class QuizFragment : Fragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private var currentQuestionIndex = 0
+    lateinit var questions : List<Question>
 
     private lateinit var questionTextView: TextView
     private lateinit var questionImageView: ImageView
@@ -96,6 +97,7 @@ class QuizFragment : Fragment() {
         quizViewModel.collectResponces(questions[currentQuestionIndex])
         currentQuestionIndex++
         if (currentQuestionIndex >= questions.size) {
+            //this.questions = emptyList()
             quizViewModel.quizCompleted()
             // Once we reach the end of the questions list, navigate to the result screen
             findNavController().navigate(R.id.action_quizFragment_to_quizResultFragment)

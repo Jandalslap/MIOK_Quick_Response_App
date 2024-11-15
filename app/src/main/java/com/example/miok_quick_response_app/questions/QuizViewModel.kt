@@ -37,12 +37,12 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
     private lateinit var birthDate : LocalDate
     private val ageSeparator : Int = 14
 
-
+    var questionsTamariki : List<Question> = emptyList()
+    var questionsRangatahi : List<Question> = emptyList()
 
     fun getAllQuestions(): List<Question> {
-        questionDb.addQuestionsToDatabase()
-        val questionsTamariki : List<Question> = questionDb.getAllQuestionsFromTamariki()
-        val questionsRangatahi : List<Question> = questionDb.getAllQuestionsFromRangatahi()
+        questionsTamariki = questionDb.getAllQuestionsFromTamariki()
+        questionsRangatahi = questionDb.getAllQuestionsFromRangatahi()
 
         if (profileDb.hasProfile()) {
             // Get the birthday string
@@ -98,7 +98,7 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
         {   // Send results to remote database.
             // TODO NOT YET IMPLEMENTED
         }
-        for (e in questionsAnswered){
+        for (e in questionsRangatahi){
             println(e.questionTextEng + e.userInputAnswer.toString())
         }
     }

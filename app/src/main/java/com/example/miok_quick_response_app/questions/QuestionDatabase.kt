@@ -7,7 +7,9 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.miok_quick_response_app.R
 import com.example.miok_quick_response_app.questions.Question
+import javax.inject.Singleton
 
+@Singleton
 class QuestionDatabase(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
@@ -52,6 +54,8 @@ class QuestionDatabase(context: Context) :
         """
         db.execSQL(createRangatahiTable)
 
+        // Insert predefined questions only if tables are empty
+        addQuestionsToDatabase(db)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -61,9 +65,49 @@ class QuestionDatabase(context: Context) :
         onCreate(db)
     }
 
+    // Method to add each question one by one to the database
+    private fun addQuestionsToDatabase(db: SQLiteDatabase) {
+        // Check if questions already exist in the tables before inserting
+        if (isTableEmpty(db, TABLE_TAMARIKI) && isTableEmpty(db, TABLE_RANGATAHI)) {
+            // Predefined questions for Tamariki
+            val questionsTamariki = listOf(
+                Question("Are you okay?(Eng)(questionsTamariki)", "Question text 4(TR)", null, R.drawable.emoji_happy),
+                Question("Are you hurt?(Eng)(questionsTamariki)", "Question text 4(TR)", null, R.drawable.emoji_hurt),
+                Question("Are you clean and fed?(Eng)(questionsTamariki)", "Question text 4(TR)", null, R.drawable.emoji_clean),
+                Question("Is someone yelling at you?(Eng)(questionsTamariki)", "Question text 4(TR)", null, R.drawable.emoji_yelling)
+            )
+
+            // Predefined questions for Rangatahi
+            val questionsRangatahi = listOf(
+                Question("Are you okay?(Eng)(questionsRangatahi)", "Question text 4(TR)", null, R.drawable.emoji_happy),
+                Question("Are you hurt?(Eng)(questionsRangatahi)", "Question text 4(TR)", null, R.drawable.emoji_hurt),
+                Question("Are you clean and fed?(Eng)(questionsRangatahi)", "Question text 4(TR)", null, R.drawable.emoji_clean),
+                Question("Is someone yelling at you?(Eng)(questionsRangatahi)", "Question text 4(TR)", null, R.drawable.emoji_yelling)
+            )
+
+            // Insert each Tamariki question one by one
+            for (question in questionsTamariki) {
+                insertQuestionToTamariki(db, question)
+            }
+
+            // Insert each Rangatahi question one by one
+            for (question in questionsRangatahi) {
+                insertQuestionToRangatahi(db, question)
+            }
+        }
+    }
+
+    // Helper function to check if a table is empty
+    private fun isTableEmpty(db: SQLiteDatabase, tableName: String): Boolean {
+        val cursor: Cursor = db.rawQuery("SELECT COUNT(*) FROM $tableName", null)
+        cursor.moveToFirst()
+        val count = cursor.getInt(0)
+        cursor.close()
+        return count == 0
+    }
+
     // Insert a question into the Tamariki table
-    fun insertQuestionToTamariki(question: Question) {
-        val db = this.writableDatabase
+    private fun insertQuestionToTamariki(db: SQLiteDatabase, question: Question) {
         val values = ContentValues().apply {
             put(COLUMN_QUESTION_TEXT_ENG, question.questionTextEng)
             put(COLUMN_QUESTION_TEXT_TR, question.questionTextTR)
@@ -71,12 +115,10 @@ class QuestionDatabase(context: Context) :
             put(COLUMN_IMAGE_RES_ID, question.imageResId)
         }
         db.insert(TABLE_TAMARIKI, null, values)
-        db.close()
     }
 
     // Insert a question into the Rangatahi table
-    fun insertQuestionToRangatahi(question: Question) {
-        val db = this.writableDatabase
+    private fun insertQuestionToRangatahi(db: SQLiteDatabase, question: Question) {
         val values = ContentValues().apply {
             put(COLUMN_QUESTION_TEXT_ENG, question.questionTextEng)
             put(COLUMN_QUESTION_TEXT_TR, question.questionTextTR)
@@ -84,7 +126,6 @@ class QuestionDatabase(context: Context) :
             put(COLUMN_IMAGE_RES_ID, question.imageResId)
         }
         db.insert(TABLE_RANGATAHI, null, values)
-        db.close()
     }
 
     // Get all questions from the Tamariki table
@@ -127,34 +168,5 @@ class QuestionDatabase(context: Context) :
         }
         cursor.close()
         return questions
-    }
-
-    // Method to add each question one by one to the database
-    fun addQuestionsToDatabase() {
-        // Predefined questions for Tamariki
-        val questionsTamariki = listOf(
-            Question("Are you okay?(Eng)(questionsTamariki)", "Question text 4(TR)", null, R.drawable.emoji_happy),
-            Question("Are you hurt?(Eng)(questionsTamariki)", "Question text 4(TR)", null, R.drawable.emoji_hurt),
-            Question("Are you clean and fed?(Eng)(questionsTamariki)", "Question text 4(TR)", null, R.drawable.emoji_clean),
-            Question("Is someone yelling at you?(Eng)(questionsTamariki)", "Question text 4(TR)", null, R.drawable.emoji_yelling)
-        )
-
-        // Predefined questions for Rangatahi
-        val questionsRangatahi = listOf(
-            Question("Are you okay?(Eng)(questionsRangatahi)", "Question text 4(TR)", null, R.drawable.emoji_happy),
-            Question("Are you hurt?(Eng)(questionsRangatahi)", "Question text 4(TR)", null, R.drawable.emoji_hurt),
-            Question("Are you clean and fed?(Eng)(questionsRangatahi)", "Question text 4(TR)", null, R.drawable.emoji_clean),
-            Question("Is someone yelling at you?(Eng)(questionsRangatahi)", "Question text 4(TR)", null, R.drawable.emoji_yelling)
-        )
-
-        // Insert each Tamariki question one by one
-        for (question in questionsTamariki) {
-            insertQuestionToTamariki(question)
-        }
-
-        // Insert each Rangatahi question one by one
-        for (question in questionsRangatahi) {
-            insertQuestionToRangatahi(question)
-        }
     }
 }
