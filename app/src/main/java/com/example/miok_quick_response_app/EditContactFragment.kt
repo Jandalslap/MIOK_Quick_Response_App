@@ -19,6 +19,8 @@ class EditContactFragment : Fragment() {
     private lateinit var relationshipSpinner: Spinner
     private lateinit var statusRadioGroup: RadioGroup
     private lateinit var saveButton: Button
+    private lateinit var urgentContactRadioButton: RadioButton
+    private lateinit var emergContact: TextView
     private var contactId: Int = -1
 
     override fun onCreateView(
@@ -34,6 +36,8 @@ class EditContactFragment : Fragment() {
         phoneNumberEditText = view.findViewById(R.id.contact_phone_number)
         relationshipSpinner = view.findViewById(R.id.contact_relationship_spinner)
         statusRadioGroup = view.findViewById(R.id.contact_status_radio_group)
+        urgentContactRadioButton = view.findViewById(R.id.urgent_contact_checkbox)
+        emergContact = view.findViewById(R.id.urgent_contact_label)
         saveButton = view.findViewById(R.id.save_contact_button)
 
         contactId = arguments?.getInt("contactId") ?: -1
@@ -46,6 +50,8 @@ class EditContactFragment : Fragment() {
                 relationshipSpinner.setSelection(getRelationshipIndex(it.relationship.name))
                 val radioButtonId = if (it.status) R.id.radio_yes else R.id.radio_no
                 statusRadioGroup.check(radioButtonId)
+                // Set the emergency contact checkbox based on the contact data
+                urgentContactRadioButton.isChecked = it.emerg_contact
             }
         }
 
@@ -54,6 +60,7 @@ class EditContactFragment : Fragment() {
             val selectedRelationshipString = relationshipSpinner.selectedItem.toString()
             val selectedRelationship = mapToRelationship(selectedRelationshipString)
             val selectedStatus = statusRadioGroup.checkedRadioButtonId == R.id.radio_yes
+            val isEmergencyContact = urgentContactRadioButton.isChecked
 
             if (selectedRelationship != null) {
                 val updatedContact = Contact(
@@ -61,8 +68,10 @@ class EditContactFragment : Fragment() {
                     name = nameEditText.text.toString(),
                     phone_number = phoneNumberEditText.text.toString(),
                     relationship = selectedRelationship,
-                    status = selectedStatus
+                    status = selectedStatus,
+                    emerg_contact = isEmergencyContact  // Set emergency contact status
                 )
+
                 contactViewModel.updateContact(updatedContact)
 
                 Toast.makeText(context, "Contact updated", Toast.LENGTH_SHORT).show()

@@ -2,6 +2,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 
 class ContactDatabase(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -15,6 +16,7 @@ class ContactDatabase(context: Context) :
         private const val COLUMN_PHONE_NUMBER = "phone_number"
         private const val COLUMN_RELATIONSHIP = "relationship"
         private const val COLUMN_STATUS = "status"
+        private const val COLUMN_EMERG_CONTACT = "emerg_contact"
 
         // Singleton instance
         @Volatile
@@ -35,7 +37,8 @@ class ContactDatabase(context: Context) :
                 $COLUMN_NAME TEXT NOT NULL,
                 $COLUMN_PHONE_NUMBER TEXT NOT NULL,
                 $COLUMN_RELATIONSHIP TEXT NOT NULL,
-                $COLUMN_STATUS INTEGER NOT NULL
+                $COLUMN_STATUS INTEGER NOT NULL,
+                $COLUMN_EMERG_CONTACT INTEGER NOT NULL
             );
         """
         db.execSQL(createTableSQL)
@@ -56,6 +59,7 @@ class ContactDatabase(context: Context) :
             put(COLUMN_PHONE_NUMBER, contact.phone_number)
             put(COLUMN_RELATIONSHIP, contact.relationship.name)
             put(COLUMN_STATUS, if (contact.status) 1 else 0)
+            put(COLUMN_EMERG_CONTACT, if (contact.emerg_contact) 1 else 0)
         }
         db.insert(TABLE_CONTACTS, null, values)
         db.close()
@@ -80,12 +84,16 @@ class ContactDatabase(context: Context) :
                 val status =
                     cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_STATUS)) == 1  // 1 = true, 0 = false
 
+                val emergContact =
+                    cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_EMERG_CONTACT)) == 1  // 1 = true, 0 = false
+
                 val contact = Contact(
                     id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)),
                     name = name,
                     phone_number = phoneNumber,
                     relationship = relationship,
-                    status = status
+                    status = status,
+                    emerg_contact = emergContact
                 )
 
                 contacts.add(contact)
@@ -130,12 +138,15 @@ class ContactDatabase(context: Context) :
             )
             val status = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_STATUS)) == 1
 
+            val emergContact = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_EMERG_CONTACT)) == 1
+
             contact = Contact(
                 id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)),
                 name = name,
                 phone_number = phoneNumber,
                 relationship = relationship,
-                status = status
+                status = status,
+                emerg_contact = emergContact
             )
         }
         cursor.close()
@@ -145,15 +156,31 @@ class ContactDatabase(context: Context) :
 
     fun updateContact(contact: Contact) {
         val db = writableDatabase
+
+        // Log the emergency contact status before making changes in the database
+        Log.d("ContactDatabase", "Updating contact: ${contact.name}, Emergency Contact: ${contact.emerg_contact}")
+
+
+        // If the contact is an emergency contact, make sure to unset any existing emergency contact
+        if (contact.emerg_contact) {
+            // Unset the current emergency contact, if it exists
+            db.execSQL("UPDATE $TABLE_CONTACTS SET $COLUMN_EMERG_CONTACT = 0 WHERE $COLUMN_EMERG_CONTACT = 1")
+        }
+
+        // Prepare the new contact values to be updated in the database
         val values = ContentValues().apply {
             put(COLUMN_NAME, contact.name)
             put(COLUMN_PHONE_NUMBER, contact.phone_number)
             put(COLUMN_RELATIONSHIP, contact.relationship.name)
             put(COLUMN_STATUS, if (contact.status) 1 else 0)
+            put(COLUMN_EMERG_CONTACT, if (contact.emerg_contact) 1 else 0)
         }
-        db.update(TABLE_CONTACTS, values, "$COLUMN_PHONE_NUMBER = ?", arrayOf(contact.phone_number))
-        //db.close()
+
+        // Update the contact record in the database
+        db.update(TABLE_CONTACTS, values, "$COLUMN_ID = ?", arrayOf(contact.id.toString()))
+        db.close()
     }
+
 
 
 }

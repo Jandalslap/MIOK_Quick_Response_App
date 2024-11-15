@@ -8,18 +8,23 @@ data class Contact(
     val name: String,
     val phone_number: String,
     val relationship: Relationship,
-    val status: Boolean
+    val status: Boolean,
+    val emerg_contact: Boolean
 ) : Parcelable {
 
     val statusText: String
         get() = if (status) "Status: Approved" else "Status: Not Approved"
+
+    val contactText: String
+        get() = if (emerg_contact) "EMERGENCY CONTACT" else ""
 
     constructor(parcel: Parcel) : this(
         parcel.readInt(),  // Read 'id' as Int
         parcel.readString() ?: "",  // Read 'name' as String, default to "" if null
         parcel.readString() ?: "",  // Read 'phone_number' as String, default to "" if null
         Relationship.valueOf(parcel.readString() ?: Relationship.OTHER.name),  // Read 'relationship' as Enum, default to Relationship.OTHER if null
-        parcel.readByte() != 0.toByte()  // Read 'status' as Boolean, 0 is false, anything else is true
+        parcel.readByte() != 0.toByte(),  // Read 'status' as Boolean, 0 is false, anything else is true
+        parcel.readByte() != 0.toByte()
     )
 }
 

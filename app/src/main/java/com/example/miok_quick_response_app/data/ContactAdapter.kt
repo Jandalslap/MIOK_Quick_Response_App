@@ -30,6 +30,14 @@ class ContactAdapter(
         holder.phone_numberTextView.text = contact.phone_number
         holder.relationshipTextView.text = contact.relationship.name.replace("_", " ")
         holder.statusTextView.text = if (contact.status) "Approved" else "Not Approved"
+        //holder.emergencyContactLabel.text = if (contact.emerg_contact) "EMERGENCY CONTACT" else ""
+
+        // Show or hide the "EMERGENCY CONTACT" label based on the contact's emergency status
+        if (contact.emerg_contact) {
+            holder.emergencyContactLabel.visibility = View.VISIBLE // Show label
+        } else {
+            holder.emergencyContactLabel.visibility = View.GONE // Hide label
+        }
 
 
         holder.itemView.setOnClickListener {
@@ -50,6 +58,8 @@ class ContactAdapter(
         val phone_numberTextView: TextView = itemView.findViewById(R.id.contact_phone_number)
         val relationshipTextView: TextView = itemView.findViewById(R.id.contact_relationship)
         val statusTextView: TextView = itemView.findViewById(R.id.contact_status)
+        // Reference to the emergency contact label
+        val emergencyContactLabel: TextView = itemView.findViewById(R.id.emergency_contact_label)
     }
 
     // DiffUtil callback to compare lists efficiently
