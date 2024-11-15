@@ -7,10 +7,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.Switch
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -68,7 +71,8 @@ class MainActivity : AppCompatActivity() {
             }
             // Update language in the shared ViewModel
             sharedViewModel.updateLanguage(language)
-        }
+            //updateNavGraphLabels(language) // Uncomment for Fragment Label translation but it reloads app to do it
+         }
 
         // Setup the NavHostFragment
         val navHostFragment = supportFragmentManager
@@ -122,6 +126,43 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         return navController.navController.navigateUp() || super.onSupportNavigateUp()
     }
+
+    private fun updateNavGraphLabels(language: String) {
+        // Access the NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        // Access the nav graph
+        val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
+
+        // Update the labels based on language
+        if (language == "Māori") {
+            navGraph.findNode(R.id.homeFragment)?.label = getString(R.string.homeFragment_mr)
+            navGraph.findNode(R.id.contactFragment)?.label = getString(R.string.contactFragment_mr)
+            navGraph.findNode(R.id.editContactFragment)?.label = getString(R.string.editContactFragment_mr)
+            navGraph.findNode(R.id.profileFragment)?.label = getString(R.string.profileFragment_mr)
+            navGraph.findNode(R.id.messageFragment)?.label = getString(R.string.messageFragment_mr)
+            navGraph.findNode(R.id.quizFragment)?.label = getString(R.string.quizFragment_mr)
+            navGraph.findNode(R.id.addContactFragment)?.label = getString(R.string.addContactFragment_mr)
+            navGraph.findNode(R.id.quizResultFragment)?.label = getString(R.string.quizResultFragment_mr)
+            navGraph.findNode(R.id.editProfileFragment)?.label = getString(R.string.editProfileFragment_mr)
+        } else {
+            // Default to English
+            navGraph.findNode(R.id.homeFragment)?.label = getString(R.string.homeFragment)
+            navGraph.findNode(R.id.contactFragment)?.label = getString(R.string.contactFragment)
+            navGraph.findNode(R.id.editContactFragment)?.label = getString(R.string.editContactFragment)
+            navGraph.findNode(R.id.profileFragment)?.label = getString(R.string.profileFragment)
+            navGraph.findNode(R.id.messageFragment)?.label = getString(R.string.messageFragment)
+            navGraph.findNode(R.id.quizFragment)?.label = getString(R.string.quizFragment)
+            navGraph.findNode(R.id.addContactFragment)?.label = getString(R.string.addContactFragment)
+            navGraph.findNode(R.id.quizResultFragment)?.label = getString(R.string.quizResultFragment)
+            navGraph.findNode(R.id.editProfileFragment)?.label = getString(R.string.editProfileFragment)
+        }
+
+        // Update the navigation graph (without reloading the app)
+        navController.graph = navGraph
+    }
+
 }
 
 

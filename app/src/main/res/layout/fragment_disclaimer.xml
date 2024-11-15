@@ -9,7 +9,7 @@
         android:id="@+id/disclaimer_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Disclaimer"
+        android:text="@string/disclaimer_title"
         android:textSize="24sp"
         android:textColor="#004B8C"
         android:fontFamily="@font/lalezar_regular"
@@ -21,7 +21,7 @@
         android:id="@+id/disclaimer_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="This App is for a WINTEC Group Project Assessment only and is not affiliated with any company or government organisation."
+        android:text="@string/disclaimer_text"
         android:textSize="18sp"
         android:textColor="#004B8C"
         android:fontFamily="@font/opensans_regular"
@@ -43,7 +43,7 @@
             android:id="@+id/acceptButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Accept"
+            android:text="@string/acceptButton"
             android:layout_marginEnd="16dp"
             android:backgroundTint="#004B8C" />
 
@@ -51,7 +51,7 @@
             android:id="@+id/declineButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Decline"
+            android:text="@string/declineButton"
             android:backgroundTint="#004B8C" />
     </LinearLayout>
 
