@@ -8,7 +8,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.compose.ui.window.ApplicationScope
+import androidx.compose.ui.window.application
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.example.miok_quick_response_app.R
@@ -16,12 +20,19 @@ import com.example.miok_quick_response_app.R
 class QuizFragment : Fragment() {
 
     private val quizViewModel = QuizViewModel()
+    var questions : List<Question> = quizViewModel.getAllQuestions()
 
     // Access the shared ViewModel scoped to the activity
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
     // Sample question list
-    private val questions = quizViewModel.getAllQuestions()
+    //private val questions = quizViewModel.getAllQuestions()
+//    private var questions : List<Question> = listOf(
+//    Question("Are you okay?(Eng)(questionsTamariki)", "Question text 4(TR)",null, R.drawable.emoji_happy),
+//    Question("Are you hurt?(Eng)(questionsTamariki)", "Question text 4(TR)", null, R.drawable.emoji_hurt),
+//    Question("Are you clean and fed?(Eng)(questionsTamariki)", "Question text 4(TR)", null, R.drawable.emoji_clean),
+//    Question("Is someone yelling at you?(Eng)(questionsTamariki)", "Question text 4(TR)", null, R.drawable.emoji_yelling)
+//    )
 
     private var currentQuestionIndex = 0
 
@@ -36,6 +47,8 @@ class QuizFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_quiz, container, false)
+
+
 
         // Initialize UI components
         questionTextView = rootView.findViewById(R.id.questionText)
@@ -58,6 +71,8 @@ class QuizFragment : Fragment() {
             // Update the UI or perform actions based on the new language value
             updateLanguageUI(language)
         }
+
+        //quizViewModel = ViewModel Provider(this).get(QuizViewModel::class.java)
 
 
         // Display the first question

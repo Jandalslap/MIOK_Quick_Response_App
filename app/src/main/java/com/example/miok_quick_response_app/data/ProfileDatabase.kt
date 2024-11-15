@@ -7,6 +7,7 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.util.Log
 import com.example.miok_quick_response_app.model.Profile
+import com.example.miok_quick_response_app.questions.QuizViewModel
 
 class ProfileDatabase(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {

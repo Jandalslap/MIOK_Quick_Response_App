@@ -9,4 +9,11 @@ data class Profile(
     val fatherName: String,
     val motherName: String,
     val imageUrl: String? = null
-)
+) {
+    fun getBirthDay(): String? {
+        if (!birthday.contentEquals("") || !birthday.equals(null))
+            return birthday.toString()
+        else return null
+    }
+}
+
