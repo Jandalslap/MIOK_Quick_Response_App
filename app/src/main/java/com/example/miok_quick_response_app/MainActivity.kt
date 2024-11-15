@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Switch
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
@@ -17,6 +18,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class MainActivity : AppCompatActivity() {
+
+
 
     // Access the shared ViewModel scoped to the activity
     private lateinit var sharedViewModel: SharedViewModel

@@ -52,7 +52,7 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
             if (!birthday.isNullOrEmpty()) {
                 try {
                     // Parse the string to a LocalDate
-                    birthDate = LocalDate.parse(birthday, DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+                    birthDate = LocalDate.parse(birthday, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
                     if (isOlderThan(birthDate, ageSeparator)) {
                         return questionsRangatahi
                     } else {
