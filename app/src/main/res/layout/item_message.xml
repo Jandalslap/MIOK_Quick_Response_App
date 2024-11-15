@@ -2,30 +2,68 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
     android:padding="8dp">
 
-    <TextView
-        android:id="@+id/contact_name"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Name"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp">
 
-    <TextView
-        android:id="@+id/contact_relationship"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Relationship"
-        android:textSize="14sp" />
-    <ImageButton
-        android:id="@+id/btn_message"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_message"
-        android:contentDescription="Message"
-        android:layout_marginTop="8dp"
-        android:layout_gravity="end" />
+        <!-- Card background image -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/edit_button_homefragment" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <!-- Text area with name and relationship -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/contact_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/contact_relationship"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Relationship"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- ImageButton with adjusted padding and size -->
+            <ImageButton
+                android:id="@+id/btn_message"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_sendmessage"
+                android:background="@android:color/transparent"
+                android:contentDescription="Message"
+                android:scaleType="centerInside"
+                android:padding="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_gravity="center_vertical" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>
