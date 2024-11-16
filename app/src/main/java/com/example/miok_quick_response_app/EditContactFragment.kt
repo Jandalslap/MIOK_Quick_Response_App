@@ -130,6 +130,29 @@ class EditContactFragment : Fragment() {
         val name = binding.contactNameInput.text.toString()
         val phoneNumber = binding.contactPhoneNumber.text.toString()
 
+        // Validate all fields
+        if (name.isEmpty()) {
+            binding.contactNameInput.error = "Please enter a name"
+            return
+        }
+
+        // Validate name for letters only
+        if (!name.matches("^[A-Za-z\\s]+$".toRegex())) {
+            binding.contactNameInput.error = "Name should only contain letters"
+            return
+        }
+
+        if (phoneNumber.isEmpty()) {
+            binding.contactPhoneNumber.error = "Please enter a phone number"
+            return
+        }
+
+        // Validate phone number for numbers only
+        if (!phoneNumber.matches("^[0-9]+$".toRegex())) {
+            binding.contactPhoneNumber.error = "Phone number should only contain digits"
+            return
+        }
+
         // Get selected relationship from spinner
         val selectedRelationship = binding.contactRelationshipSpinner.selectedItem.toString()
         // Map the selected user-friendly name to the corresponding Relationship enum
