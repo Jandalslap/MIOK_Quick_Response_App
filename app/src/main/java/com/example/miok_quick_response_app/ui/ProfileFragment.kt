@@ -1,4 +1,4 @@
-package com.example.miok_quick_response_app
+package com.example.miok_quick_response_app.ui
 
 import android.net.Uri
 import android.os.Bundle
@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.miok_info_app.viewmodel.SharedViewModel
+import com.example.miok_quick_response_app.ProfileViewModel
+import com.example.miok_quick_response_app.R
 import com.example.miok_quick_response_app.database.ProfileDatabase
 import com.example.miok_quick_response_app.databinding.FragmentProfileBinding
 

@@ -1,18 +1,12 @@
-package com.example.miok_quick_response_app.questions
+package com.example.miok_quick_response_app.viewmodel
 
-import Contact
-import ContactDatabase
 import android.app.Application
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.miok_quick_response_app.R
 import com.example.miok_quick_response_app.database.ProfileDatabase
 import com.example.miok_quick_response_app.model.Profile
-import dagger.hilt.android.internal.Contexts.getApplication
+import com.example.miok_quick_response_app.data.Question
+import com.example.miok_quick_response_app.data.QuestionDatabase
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.OutputStreamWriter

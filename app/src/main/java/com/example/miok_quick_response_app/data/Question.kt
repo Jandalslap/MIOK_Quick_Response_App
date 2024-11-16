@@ -1,4 +1,4 @@
-package com.example.miok_quick_response_app.questions
+package com.example.miok_quick_response_app.data
 
 class Question(
     var questionTextEng: String = "",

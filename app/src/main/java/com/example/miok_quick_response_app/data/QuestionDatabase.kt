@@ -1,4 +1,4 @@
-package com.example.miok_quick_response_app.questions
+package com.example.miok_quick_response_app.data
 
 import android.content.ContentValues
 import android.content.Context
@@ -6,7 +6,6 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.miok_quick_response_app.R
-import com.example.miok_quick_response_app.questions.Question
 import javax.inject.Singleton
 
 @Singleton
@@ -139,9 +138,15 @@ class QuestionDatabase(context: Context) :
         if (cursor.moveToFirst()) {
             do {
                 val question = Question(
-                    questionTextEng = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_QUESTION_TEXT_ENG)),
-                    questionTextTR = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_QUESTION_TEXT_TR)),
-                    userInputAnswer = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_USER_INPUT_ANSWER)) == 1,
+                    questionTextEng = cursor.getString(cursor.getColumnIndexOrThrow(
+                        COLUMN_QUESTION_TEXT_ENG
+                    )),
+                    questionTextTR = cursor.getString(cursor.getColumnIndexOrThrow(
+                        COLUMN_QUESTION_TEXT_TR
+                    )),
+                    userInputAnswer = cursor.getInt(cursor.getColumnIndexOrThrow(
+                        COLUMN_USER_INPUT_ANSWER
+                    )) == 1,
                     imageResId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IMAGE_RES_ID))
                 )
                 questions.add(question)
@@ -160,9 +165,15 @@ class QuestionDatabase(context: Context) :
         if (cursor.moveToFirst()) {
             do {
                 val question = Question(
-                    questionTextEng = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_QUESTION_TEXT_ENG)),
-                    questionTextTR = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_QUESTION_TEXT_TR)),
-                    userInputAnswer = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_USER_INPUT_ANSWER)) == 1,
+                    questionTextEng = cursor.getString(cursor.getColumnIndexOrThrow(
+                        COLUMN_QUESTION_TEXT_ENG
+                    )),
+                    questionTextTR = cursor.getString(cursor.getColumnIndexOrThrow(
+                        COLUMN_QUESTION_TEXT_TR
+                    )),
+                    userInputAnswer = cursor.getInt(cursor.getColumnIndexOrThrow(
+                        COLUMN_USER_INPUT_ANSWER
+                    )) == 1,
                     imageResId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IMAGE_RES_ID))
                 )
                 questions.add(question)

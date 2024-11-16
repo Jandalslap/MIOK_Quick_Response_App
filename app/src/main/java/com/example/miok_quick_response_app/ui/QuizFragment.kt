@@ -1,4 +1,4 @@
-package com.example.miok_quick_response_app.questions
+package com.example.miok_quick_response_app.ui
 
 import androidx.fragment.app.Fragment
 import android.os.Bundle
@@ -9,15 +9,13 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.window.ApplicationScope
-import androidx.compose.ui.window.application
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.example.miok_quick_response_app.R
-import com.example.miok_quick_response_app.ViewModel.ContactViewModel
+import com.example.miok_quick_response_app.viewmodel.QuizViewModel
+import com.example.miok_quick_response_app.data.Question
 
 class QuizFragment : Fragment() {
 

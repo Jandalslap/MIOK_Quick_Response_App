@@ -1,4 +1,4 @@
-package com.example.miok_quick_response_app
+package com.example.miok_quick_response_app.ui
 
 import Contact
 import android.content.Intent
@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
@@ -19,7 +18,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.miok_info_app.viewmodel.SharedViewModel
-import com.example.miok_quick_response_app.ViewModel.ContactViewModel
+import com.example.miok_quick_response_app.R
+import com.example.miok_quick_response_app.viewmodel.ContactViewModel
 import com.example.miok_quick_response_app.data.ContactAdapter
 
 class ContactFragment : Fragment() {
@@ -60,7 +60,6 @@ class ContactFragment : Fragment() {
 
         )
 
-
         // Set up RecyclerView
         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view_tasks)
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -87,6 +86,7 @@ class ContactFragment : Fragment() {
                 Toast.makeText(context, "Contact removed", Toast.LENGTH_SHORT).show()
             }
         })
+
 
         // Attach the ItemTouchHelper to the RecyclerView
         itemTouchHelper.attachToRecyclerView(recyclerView)

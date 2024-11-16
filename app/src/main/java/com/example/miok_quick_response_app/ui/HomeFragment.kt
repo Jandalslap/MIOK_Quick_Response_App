@@ -1,4 +1,4 @@
-package com.example.miok_quick_response_app
+package com.example.miok_quick_response_app.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater

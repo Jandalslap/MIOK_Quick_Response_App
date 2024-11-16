@@ -1,4 +1,4 @@
-package com.example.miok_quick_response_app.data
+package com.example.miok_quick_response_app.ui
 
 import Contact
 import Relationship

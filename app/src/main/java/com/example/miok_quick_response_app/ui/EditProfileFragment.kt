@@ -1,11 +1,10 @@
-package com.example.miok_quick_response_app
+package com.example.miok_quick_response_app.ui
 
 import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -23,6 +22,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.miok_info_app.viewmodel.SharedViewModel
+import com.example.miok_quick_response_app.ProfileViewModel
+import com.example.miok_quick_response_app.R
 import com.example.miok_quick_response_app.databinding.FragmentEditProfileBinding
 import java.text.SimpleDateFormat
 import java.util.*

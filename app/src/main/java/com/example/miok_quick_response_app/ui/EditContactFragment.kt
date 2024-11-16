@@ -1,4 +1,4 @@
-package com.example.miok_quick_response_app
+package com.example.miok_quick_response_app.ui
 
 import Contact
 import Relationship
@@ -12,7 +12,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.miok_info_app.viewmodel.SharedViewModel
-import com.example.miok_quick_response_app.ViewModel.ContactViewModel
+import com.example.miok_quick_response_app.R
+import com.example.miok_quick_response_app.viewmodel.ContactViewModel
 import com.example.miok_quick_response_app.databinding.FragmentEditContactBinding
 
 class EditContactFragment : Fragment() {

@@ -1,4 +1,4 @@
-package com.example.miok_quick_response_app
+package com.example.miok_quick_response_app.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -14,12 +14,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.miok_info_app.viewmodel.SharedViewModel
-import com.example.miok_quick_response_app.ViewModel.ContactViewModel
-import com.example.miok_quick_response_app.ViewModel.MessageViewModel
+import com.example.miok_quick_response_app.R
+import com.example.miok_quick_response_app.viewmodel.ContactViewModel
+import com.example.miok_quick_response_app.viewmodel.MessageViewModel
 import com.example.miok_quick_response_app.data.MessageAdapter
 import com.example.miok_quick_response_app.data.MessageContact
 import com.example.miok_quick_response_app.database.ProfileDatabase
-import com.example.miok_quick_response_app.databinding.FragmentHomeBinding
 import com.example.miok_quick_response_app.databinding.FragmentMessageBinding
 
 class MessageFragment : Fragment() {

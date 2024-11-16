@@ -26,7 +26,7 @@
     <!-- Home Fragment -->
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.miok_quick_response_app.HomeFragment"
+        android:name="com.example.miok_quick_response_app.ui.HomeFragment"
         android:label="@string/homeFragment">
         <action
             android:id="@+id/action_homeFragment_to_quizFragment"
@@ -45,7 +45,7 @@
     <!-- Contact Fragment (Single Definition) -->
     <fragment
         android:id="@+id/contactFragment"
-        android:name="com.example.miok_quick_response_app.ContactFragment"
+        android:name="com.example.miok_quick_response_app.ui.ContactFragment"
         android:label="@string/contactFragment">
         <action
             android:id="@+id/action_contactFragment_to_editContactFragment"
@@ -59,7 +59,7 @@
     <!-- Other Fragments -->
     <fragment
         android:id="@+id/editContactFragment"
-        android:name="com.example.miok_quick_response_app.EditContactFragment"
+        android:name="com.example.miok_quick_response_app.ui.EditContactFragment"
         android:label="@string/editContactFragment" >
         <!-- Define the contactId argument -->
         <argument
@@ -69,7 +69,7 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.miok_quick_response_app.ProfileFragment"
+        android:name="com.example.miok_quick_response_app.ui.ProfileFragment"
         android:label="@string/profileFragment">
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
@@ -78,12 +78,12 @@
 
     <fragment
         android:id="@+id/messageFragment"
-        android:name="com.example.miok_quick_response_app.MessageFragment"
+        android:name="com.example.miok_quick_response_app.ui.MessageFragment"
         android:label="@string/messageFragment" />
 
     <fragment
         android:id="@+id/quizFragment"
-        android:name="com.example.miok_quick_response_app.questions.QuizFragment"
+        android:name="com.example.miok_quick_response_app.ui.QuizFragment"
         android:label="@string/quizFragment" >
         <action
             android:id="@+id/action_quizFragment_to_quizResultFragment"
@@ -92,16 +92,16 @@
 
     <fragment
         android:id="@+id/addContactFragment"
-        android:name="com.example.miok_quick_response_app.data.AddContactFragment"
+        android:name="com.example.miok_quick_response_app.ui.AddContactFragment"
         android:label="@string/addContactFragment" />
 
     <fragment
         android:id="@+id/quizResultFragment"
-        android:name="com.example.miok_quick_response_app.questions.QuizResultFragment"
+        android:name="com.example.miok_quick_response_app.ui.QuizResultFragment"
         android:label="@string/quizResultFragment" />
 
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.example.miok_quick_response_app.EditProfileFragment"
+        android:name="com.example.miok_quick_response_app.ui.EditProfileFragment"
         android:label="@string/editProfileFragment" />
 </navigation>

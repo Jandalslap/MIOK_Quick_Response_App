@@ -1,4 +1,4 @@
-package com.example.miok_quick_response_app
+package com.example.miok_quick_response_app.ui
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate

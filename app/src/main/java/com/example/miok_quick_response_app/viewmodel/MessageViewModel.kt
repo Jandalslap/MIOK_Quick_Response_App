@@ -1,4 +1,4 @@
-package com.example.miok_quick_response_app.ViewModel
+package com.example.miok_quick_response_app.viewmodel
 
 
 import android.app.Application
