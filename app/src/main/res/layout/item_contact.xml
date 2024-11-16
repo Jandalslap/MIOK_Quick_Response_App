@@ -43,6 +43,7 @@
                     android:orientation="horizontal"
                     android:padding="2dp">
                 <TextView
+                    android:id="@+id/contact_name_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
@@ -65,10 +66,11 @@
                     android:orientation="horizontal"
                     android:padding="2dp">
                     <TextView
+                        android:id="@+id/contact_phone_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
-                        android:text="@string/phone_label"
+                        android:text="@string/contact_phone_label"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:paddingRight="7dp" />
@@ -88,10 +90,11 @@
                     android:orientation="horizontal"
                     android:padding="2dp">
                     <TextView
+                        android:id="@+id/contact_relationship_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
-                        android:text="@string/relationship_label"
+                        android:text="@string/contact_relationship_label"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:paddingRight="7dp"/>
@@ -111,10 +114,11 @@
                     android:orientation="horizontal"
                     android:padding="2dp">
                     <TextView
+                        android:id="@+id/contact_status_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
-                        android:text="STATUS: "
+                        android:text="@string/contact_status_label"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:paddingRight="7dp"/>

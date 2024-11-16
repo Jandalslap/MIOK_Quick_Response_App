@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.window.ApplicationScope
 import androidx.compose.ui.window.application
 import androidx.fragment.app.activityViewModels
@@ -61,6 +62,10 @@ class QuizFragment : Fragment() {
             questions[currentQuestionIndex].userInputAnswer = false
             goToNextQuestion(questions)
         }
+
+        // Hide the back arrow by removing the up button from the action bar.
+        val actionBar = (activity as AppCompatActivity).supportActionBar
+        actionBar?.setDisplayHomeAsUpEnabled(false) // Hides the back arrow
 
         sharedViewModel.currentLanguage.observe(viewLifecycleOwner) { language ->
             // Update the UI or perform actions based on the new language value
