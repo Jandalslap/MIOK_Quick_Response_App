@@ -33,6 +33,8 @@ class QuizFragment : Fragment() {
     private lateinit var trueButton: Button
     private lateinit var falseButton: Button
 
+    private var currentLanguage : String = ""
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,7 +43,7 @@ class QuizFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_quiz, container, false)
 
         quizViewModel = ViewModelProvider(this)[QuizViewModel::class.java]
-        var questions : List<Question> = quizViewModel.getAllQuestions()
+        questions = quizViewModel.getAllQuestions()
 
         // Initialize UI components
         questionTextView = rootView.findViewById(R.id.questionText)
@@ -63,6 +65,7 @@ class QuizFragment : Fragment() {
         sharedViewModel.currentLanguage.observe(viewLifecycleOwner) { language ->
             // Update the UI or perform actions based on the new language value
             updateLanguageUI(language, questions)
+            currentLanguage = language
         }
 
         //quizViewModel = ViewModel Provider(this).get(QuizViewModel::class.java)
@@ -80,7 +83,8 @@ class QuizFragment : Fragment() {
     private fun displayCurrentQuestion(questions : List<Question>) {
         if (currentQuestionIndex < questions.size) {
             val question = questions[currentQuestionIndex]
-            questionTextView.text = question.questionTextEng
+            updateLanguageUI(currentLanguage, questions)
+            //questionTextView.text = question.questionTextEng
 
             // Set image if available, otherwise hide the ImageView
             question.imageResId?.let {
