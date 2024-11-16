@@ -68,6 +68,10 @@
     <string name="quizResultFragment">Quiz Completed</string>
     <string name="editProfileFragment">Edit Profile</string>
 
+    <!-- Edit Contact -->
+    <string name="save_contact_button">Save Contact</string>
+
+
 
 
 
