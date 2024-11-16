@@ -16,12 +16,14 @@ import com.example.miok_quick_response_app.ViewModel.ContactViewModel
 import com.example.miok_quick_response_app.ViewModel.MessageViewModel
 import com.example.miok_quick_response_app.data.MessageAdapter
 import com.example.miok_quick_response_app.data.MessageContact
+import com.example.miok_quick_response_app.database.ProfileDatabase
 
 class MessageFragment : Fragment() {
 
     private lateinit var messageViewModel: MessageViewModel
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var contactViewModel: ContactViewModel
+    private lateinit var profileDatabase: ProfileDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +31,11 @@ class MessageFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_message, container, false)
 
+        profileDatabase = ProfileDatabase(requireContext())
+
+        // Fetch profile name
+        val profileName = profileDatabase.getProfile()?.name ?: "Unknown"
+        
         // Initialize ViewModel
         messageViewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
 
@@ -58,6 +65,8 @@ class MessageFragment : Fragment() {
         messageViewModel.messageContacts.observe(viewLifecycleOwner) { contacts ->
             messageAdapter.submitList(contacts)
         }
+
+
 // Handle "Message Everyone" button
         val messageEveryoneButton = view.findViewById<Button>(R.id.btn_message_everyone)
         messageEveryoneButton.setOnClickListener {
@@ -72,13 +81,13 @@ class MessageFragment : Fragment() {
                     val allPhoneNumbers = contacts.map { it.phoneNumber }
 
                     // Compose the message
-                    val message = "Alert: $formattedNames have triggered a safety check notification in " +
-                            "the MIOK Quick Response App. " +
-                            "Please review their statuses and ensure their safety." +
-                            "" +
-                            "Whakatūpato: Kua whakaoho a $formattedNames i tētahi whakamōhiotanga tirotiro" +
-                            " haumaru i te taupānga MIOK Quick Response." +
-                            " Tēnā koa tirohia ō rātou āhuatanga ā tēnā whakakaha i tō rātou haumaru."
+                    val message =
+                        "Alert: $formattedNames and $profileName have triggered a safety check notification in " +
+                                "the MIOK Quick Response App. " +
+                                "Please review their statuses and ensure their safety.\n\n" +
+                                "Whakatūpato: Kua whakaoho a $formattedNames me $profileName i tētahi whakamōhiotanga tirotiro" +
+                                " haumaru i te taupānga MIOK Quick Response.\n" +
+                                "Tēnā koa tirohia ō rātou āhuatanga ā tēnā whakakaha i tō rātou haumaru."
 
                     // Send bulk SMS
                     sendBulkSMS(allPhoneNumbers, message)
