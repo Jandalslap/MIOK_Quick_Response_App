@@ -9,27 +9,43 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.example.miok_quick_response_app.ViewModel.ContactViewModel
 import com.example.miok_quick_response_app.ViewModel.MessageViewModel
 import com.example.miok_quick_response_app.data.MessageAdapter
 import com.example.miok_quick_response_app.data.MessageContact
 import com.example.miok_quick_response_app.database.ProfileDatabase
+import com.example.miok_quick_response_app.databinding.FragmentHomeBinding
+import com.example.miok_quick_response_app.databinding.FragmentMessageBinding
 
 class MessageFragment : Fragment() {
-
+    private lateinit var binding: FragmentMessageBinding
     private lateinit var messageViewModel: MessageViewModel
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var contactViewModel: ContactViewModel
     private lateinit var profileDatabase: ProfileDatabase
+
+    // Access the shared ViewModel scoped to the activity
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_message, container, false)
+
+
+        binding = FragmentMessageBinding.bind(view)
+
+        // Observe the currentLanguage LiveData from SharedViewModel
+        sharedViewModel.currentLanguage.observe(viewLifecycleOwner) { language ->
+            // Update the UI or perform actions based on the new language value
+            updateLanguageUI(language)
+        }
 
         profileDatabase = ProfileDatabase(requireContext())
 
@@ -159,6 +175,17 @@ class MessageFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
             e.printStackTrace()
+        }
+    }
+
+    // Function to update UI based on the language
+    private fun updateLanguageUI(language: String) {
+        // Update TextView text based on language
+        if (language == "Māori") {
+            binding.btnMessageEveryone.text = getString(R.string.button_message_mr)
+        } else {
+            // Default to English
+            binding.btnMessageEveryone.text = getString(R.string.button_message)
         }
     }
 }
