@@ -103,16 +103,17 @@ class EditContactFragment : Fragment() {
         // Populate relationship spinner
         val relationshipOptions = resources.getStringArray(R.array.relationship_options)
 
-        // Find the index of the contact's relationship in the spinner options
-        val selectedIndex = relationshipOptions.indexOf(contact.relationship.name)
+        // Get the user-friendly name of the relationship from the enum
+        val relationshipUserFriendlyName = mapFromRelationship(contact.relationship)
+
+        // Find the index of the user-friendly name in the spinner options
+        val selectedIndex = relationshipOptions.indexOf(relationshipUserFriendlyName)
+
+        // Set the spinner selection if a match is found
         if (selectedIndex >= 0) {
             binding.contactRelationshipSpinner.setSelection(selectedIndex)
-        }
-
-        // Map the relationship to the spinner index
-        val relationshipIndex = relationshipOptions.indexOf(contact.relationship.name.replace("_", " "))
-        if (relationshipIndex != -1) {
-            binding.contactRelationshipSpinner.setSelection(relationshipIndex)
+        } else {
+            binding.contactRelationshipSpinner.setSelection(0) // Default to the first option
         }
 
         // Set status radio button based on the contact's status
@@ -229,6 +230,19 @@ class EditContactFragment : Fragment() {
             contactStatus.text = getString(R.string.contact_status)
             urgentContactLabel.text = getString(R.string.urgent_contact_label)
             contactStatusInfo.text = getString(R.string.contact_status_info)
+        }
+    }
+
+    private fun mapFromRelationship(relationship: Relationship): String {
+        return when (relationship) {
+            Relationship.PARENT_GUARDIAN -> "Parent/Guardian"
+            Relationship.CAREGIVER -> "Caregiver"
+            Relationship.AUNT_UNCLE -> "Aunt/Uncle"
+            Relationship.GRANDPARENT -> "Grandparent"
+            Relationship.SOCIAL_WORKER -> "Social Worker"
+            Relationship.IWI_SOCIAL_WORKER -> "Iwi Social Worker"
+            Relationship.POLICE -> "Police"
+            Relationship.OTHER -> "Other"
         }
     }
 
