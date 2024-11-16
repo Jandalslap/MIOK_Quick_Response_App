@@ -152,4 +152,5 @@ class ContactFragment : Fragment() {
         startActivity(messageIntent)
     }
 
+
 }

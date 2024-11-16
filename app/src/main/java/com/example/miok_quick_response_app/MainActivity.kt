@@ -25,8 +25,6 @@ class MainActivity : AppCompatActivity() {
     // Access the shared ViewModel scoped to the activity
     private lateinit var sharedViewModel: SharedViewModel
 
-    // This should be done automaticly by hilt, but this is for debuging.
-//    private val viewModel: QuestionsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,12 +101,32 @@ class MainActivity : AppCompatActivity() {
             val bottomNav = findViewById<View>(R.id.nav_bottom)
 
             when (destination.id) {
-                R.id.splashFragment, R.id.disclaimerFragment -> {
+                R.id.splashFragment -> {
                     supportActionBar?.hide() // Hide the action bar
                     header.isVisible = false // Hide header
                     bottomNav.isVisible = false // Hide bottom navigation
                 }
+                R.id.disclaimerFragment -> {
+                    supportActionBar?.hide() // Hide the action bar
+                    header.isVisible = true // Show header
+                    bottomNav.isVisible = false // Hide bottom navigation
+                }
                 R.id.editProfileFragment -> {
+                    supportActionBar?.show() // Show the action bar
+                    header.isVisible = true // Show header
+                    bottomNav.isVisible = false // Hide bottom navigation
+                }
+                R.id.profileFragment -> {
+                    supportActionBar?.show() // Show the action bar
+                    header.isVisible = true // Show header
+                    bottomNav.isVisible = false // Hide bottom navigation
+                }
+                R.id.contactFragment -> {
+                    supportActionBar?.show() // Show the action bar
+                    header.isVisible = true // Show header
+                    bottomNav.isVisible = false // Hide bottom navigation
+                }
+                R.id.messageFragment -> {
                     supportActionBar?.show() // Show the action bar
                     header.isVisible = true // Show header
                     bottomNav.isVisible = false // Hide bottom navigation

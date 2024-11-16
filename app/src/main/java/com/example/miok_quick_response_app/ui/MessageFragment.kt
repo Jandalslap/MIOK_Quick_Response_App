@@ -188,4 +188,5 @@ class MessageFragment : Fragment() {
             binding.btnMessageEveryone.text = getString(R.string.button_message)
         }
     }
+
 }
