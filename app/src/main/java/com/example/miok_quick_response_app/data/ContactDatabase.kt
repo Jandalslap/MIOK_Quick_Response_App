@@ -53,6 +53,7 @@ class ContactDatabase(context: Context) :
     }
 
     // Insert a contact into the database
+    @Synchronized
     fun insertContact(contact: Contact) {
         val db = writableDatabase
 
@@ -74,6 +75,7 @@ class ContactDatabase(context: Context) :
     }
 
     // Get all contacts from the database
+    @Synchronized
     fun getAllContacts(): List<Contact> {
         val contacts = mutableListOf<Contact>()
         val db = readableDatabase
@@ -162,6 +164,7 @@ class ContactDatabase(context: Context) :
         return contact
     }
 
+    @Synchronized
     fun updateContact(contact: Contact) {
         val db = writableDatabase
 

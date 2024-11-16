@@ -120,4 +120,5 @@ class ContactFragment : Fragment() {
             button?.text = "Add Contact"  // Default English text
         }
     }
+
 }

@@ -8,11 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.example.miok_quick_response_app.ViewModel.ContactViewModel
 import com.example.miok_quick_response_app.databinding.FragmentEditContactBinding
 
 class EditContactFragment : Fragment() {
+
+    // Access the shared ViewModel scoped to the activity
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private var _binding: FragmentEditContactBinding? = null
     private val binding get() = _binding!!
@@ -33,6 +38,32 @@ class EditContactFragment : Fragment() {
 
         // Initialize ViewModel
         contactViewModel = ViewModelProvider(requireActivity()).get(ContactViewModel::class.java)
+
+        val relationshipSpinner = view.findViewById<Spinner>(R.id.contact_relationship_spinner)
+        val saveContactButton = view.findViewById<Button>(R.id.save_contact_button)
+        val statusRadioGroup = view.findViewById<RadioGroup>(R.id.contact_status_radio_group)
+        val statusYesButton = view.findViewById<RadioButton>(R.id.radio_yes)
+        val statusNoButton = view.findViewById<RadioButton>(R.id.radio_no)
+        val contactStatus = view.findViewById<TextView>(R.id.contact_status)
+        val urgentContactLabel = view.findViewById<TextView>(R.id.urgent_contact_label)
+        val contactStatusInfo = view.findViewById<TextView>(R.id.contact_status_info)
+        val emergContact = view.findViewById<RadioButton>(R.id.urgent_contact_checkbox)
+
+        // Set up the spinner with default English values
+        updateLanguageUI(
+            sharedViewModel.currentLanguage.value,
+            relationshipSpinner,
+            saveContactButton,
+            contactStatus,
+            urgentContactLabel,
+            contactStatusInfo,
+            statusYesButton,
+            statusNoButton
+        )
+        sharedViewModel.currentLanguage.observe(viewLifecycleOwner) { language ->
+            // Update the UI or perform actions based on the new language value
+            updateLanguageUI(language, relationshipSpinner, saveContactButton, contactStatus, urgentContactLabel, contactStatusInfo, statusYesButton, statusNoButton)
+        }
 
         // Set up the relationship spinner adapter
         setupRelationshipSpinner()
@@ -135,6 +166,63 @@ class EditContactFragment : Fragment() {
             "Police" -> Relationship.POLICE
             "Other" -> Relationship.OTHER
             else -> null // If the name doesn't match, return null
+        }
+    }
+
+    // Function to update UI based on the language
+    private fun updateLanguageUI(
+        language: String?,
+        relationshipSpinner: Spinner,
+        saveContactButton: Button,
+        contactStatus: TextView,
+        urgentContactLabel: TextView,
+        contactStatusInfo: TextView,
+        statusYesButton: TextView,
+        statusNoButton: TextView
+    ) {
+        // Update TextView text based on language
+        if (language == "Māori") {
+
+            saveContactButton.text = getString(R.string.save_contact_button_mr)
+
+            // Set the spinner entries to Māori
+            ArrayAdapter.createFromResource(
+                requireContext(),
+                R.array.relationship_options_mr,
+                android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                relationshipSpinner.adapter = adapter
+            }
+
+            // Set the text for the RadioButtons to Māori
+            contactStatus.text = getString(R.string.contact_status_mr)
+            statusYesButton.text = getString(R.string.status_yes_mr)
+            statusNoButton.text = getString(R.string.status_no_mr)
+            urgentContactLabel.text = getString(R.string.urgent_contact_label_mr)
+            contactStatusInfo.text = getString(R.string.contact_status_info_mr)
+
+
+        } else {
+            // Default to English
+            statusYesButton.text = getString(R.string.status_yes)
+            statusNoButton.text = getString(R.string.status_no)
+            saveContactButton.text = getString(R.string.save_contact_button)
+
+            // Set the spinner entries to English
+            ArrayAdapter.createFromResource(
+                requireContext(),
+                R.array.relationship_options,
+                android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                relationshipSpinner.adapter = adapter
+            }
+
+            // Set the text for the RadioButtons to English
+            contactStatus.text = getString(R.string.contact_status)
+            urgentContactLabel.text = getString(R.string.urgent_contact_label)
+            contactStatusInfo.text = getString(R.string.contact_status_info)
         }
     }
 

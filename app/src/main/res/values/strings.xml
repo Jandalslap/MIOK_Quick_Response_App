@@ -113,7 +113,8 @@
     <string name="quizResultFragment_mr">Kua Oti te Whakamātautau</string>
     <string name="editProfileFragment_mr">Whakatika Kōtaha</string>
 
-
+    <!-- Edit Contact -->
+    <string name="save_contact_button_mr">Tārua i te Pārongo</string>
 
 
     <string-array name="relationship_options">
