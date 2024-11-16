@@ -35,28 +35,30 @@ class MessageFragment : Fragment() {
 
         // Define the onMessageClick lambda
         val onMessageClick: (MessageContact) -> Unit = { contact ->
-            // Handle the message button click for this contact
-            // For example, navigate to a new fragment, or show a message dialog, etc.
-            // Example: navigate to a messaging screen (this is just a placeholder)
-            // val action = HomeFragmentDirections.actionHomeFragmentToMessageFragment(contact)
-            // findNavController().navigate(action)
-            val smsUri = Uri.parse("smsto:${contact.phoneNumber}")
+            val smsUri = Uri.parse("smsto:${contact.phoneNumber}") // Use smsto URI for SMS
             val intent = Intent(Intent.ACTION_SENDTO, smsUri).apply {
                 putExtra(
-                    "sms_body", "Alert: ${contact.name} has triggered a safety check in the" +
-                            " MIOK Quick Response App. Please review their status immediately and ensure they're" +
-                            " okay. Contact us if further assistance is needed."
+                    "sms_body",
+                    "Alert: ${contact.name} has triggered a safety check in the " +
+                            "MIOK Quick Response App. Please review their status immediately and ensure they're " +
+                            "okay. Contact us if further assistance is needed."
                 )
             }
 
-            // Verify that there's an app available to handle SMS
-            if (intent.resolveActivity(requireActivity().packageManager) != null) {
-                startActivity(intent)
-            } else {
-                Toast.makeText(context, "No SMS app available", Toast.LENGTH_SHORT).show()
+            try {
+                // Verify that an app exists to handle SMS intents
+                if (intent.resolveActivity(requireActivity().packageManager) != null) {
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(context, "No SMS app available to send messages.", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                // Handle any unexpected errors
+                Toast.makeText(context, "An error occurred while trying to send the message.", Toast.LENGTH_SHORT).show()
+                e.printStackTrace()
             }
-            Toast.makeText(context, "Button for ${contact.name} clicked", Toast.LENGTH_SHORT).show()
         }
+
 
         // Pass the onMessageClick callback to the MessageAdapter
         messageAdapter = MessageAdapter(onMessageClick)
