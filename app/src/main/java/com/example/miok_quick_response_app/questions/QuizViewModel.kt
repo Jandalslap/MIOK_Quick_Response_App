@@ -35,7 +35,7 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
 
     private var birthday = ""
     private lateinit var birthDate : LocalDate
-    private val ageSeparator : Int = 14
+    private val ageSeparator : Int = 13
 
     var questionsTamariki : List<Question> = emptyList()
     var questionsRangatahi : List<Question> = emptyList()
