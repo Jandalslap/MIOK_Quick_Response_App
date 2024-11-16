@@ -2,11 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#E5EDF3"
+    android:orientation="vertical"
     android:padding="16dp">
 
-
+    <Button
+        android:id="@+id/btn_message_everyone"
+        android:layout_width="260dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/mustard_button_homefragment"
+        app:backgroundTint="@null"
+        android:padding="12dp"
+        android:text="Message Everyone"
+        android:textColor="@android:color/white"
+        android:fontFamily="@font/lalezar_regular"
+        android:textSize="16sp"/>
 
     <!-- RecyclerView for displaying the list of contacts -->
     <androidx.recyclerview.widget.RecyclerView
