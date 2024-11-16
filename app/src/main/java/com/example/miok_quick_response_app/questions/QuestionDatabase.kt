@@ -80,11 +80,11 @@ class QuestionDatabase(context: Context) :
 
             // Predefined questions for Rangatahi
             val questionsRangatahi = listOf(
-                Question("Are you okay?", "Kei te pai koe?", null, R.drawable.emoji_happy),
-                Question("Are you hurt?", "Kei te pātea koe?", null, R.drawable.emoji_hurt),
-                Question("Are you clean and fed?", "Kua horoia koe, kua kai?", null, R.drawable.emoji_clean),
-                Question("Is someone yelling at you?", "E karanga ana te tangata ki a koe?", null, R.drawable.emoji_yelling),
-                Question("Do you need help?", "Kei te hiahia awhina koe?", null, R.drawable.emoji_help)
+                Question("Is someone making you feel uncomfortable?", "Kei te whakararuraru tetahi i a koe?", null, R.drawable.emoji_happy),
+                Question("Is someone saying scary things or threatening you?", "Kei te kōrero whakamataku, kei te whakaharahara tetahi ki a koe?", null, R.drawable.emoji_hurt),
+                Question("Do you feel scared at home?", "Kei te mataku koe i te kāinga?", null, R.drawable.emoji_clean),
+                Question("Has anyone at home yelled at you in a way that makes you feel unsafe?", "Kua karanga tētahi i te kāinga ki a koe i runga i te āhua e kore ai koe e haumaru?", null, R.drawable.emoji_yelling),
+                Question("Do you need help?", "Kei te hiahia āwhina koe?", null, R.drawable.emoji_help)
             )
 
             // Insert each Tamariki question one by one
