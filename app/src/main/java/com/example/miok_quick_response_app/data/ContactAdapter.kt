@@ -4,6 +4,7 @@ import Contact
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 
@@ -16,7 +17,9 @@ import com.example.miok_quick_response_app.R
 
 class ContactAdapter(
     private val onRemoveClick: (Contact) -> Unit, // Modified to pass the actual contact
-    private val onItemClick: (Contact) -> Unit // Modified to pass the actual contact
+    private val onItemClick: (Contact) -> Unit, // Modified to pass the actual contact
+    private val onCallClick: ((Contact) -> Unit)? = null,
+    private val onMessageClick: ((Contact) -> Unit)? = null
 ) : ListAdapter<Contact, ContactAdapter.ContactViewHolder>(ContactDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
@@ -39,6 +42,9 @@ class ContactAdapter(
             holder.emergencyContactLabel.visibility = View.GONE // Hide label
         }
 
+        holder.callButton.setOnClickListener { onCallClick?.invoke(contact) }
+        holder.messageButton.setOnClickListener { onMessageClick?.invoke(contact) }
+
 
         holder.itemView.setOnClickListener {
             onItemClick(contact)
@@ -60,6 +66,13 @@ class ContactAdapter(
         val statusTextView: TextView = itemView.findViewById(R.id.contact_status)
         // Reference to the emergency contact label
         val emergencyContactLabel: TextView = itemView.findViewById(R.id.emergency_contact_label)
+
+        val callButton: ImageButton = itemView.findViewById(R.id.contact_call_btn)
+        val messageButton: ImageButton = itemView.findViewById(R.id.contact_message_btn)
+
+        fun bind(contact: Contact) {
+            // Bind contact details to the item view
+        }
     }
 
     // DiffUtil callback to compare lists efficiently

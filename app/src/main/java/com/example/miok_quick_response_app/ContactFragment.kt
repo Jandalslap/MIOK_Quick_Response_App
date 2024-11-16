@@ -1,6 +1,8 @@
 package com.example.miok_quick_response_app
 
 import Contact
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -47,7 +49,14 @@ class ContactFragment : Fragment() {
                 // Remove the contact when clicked on delete and show a toast
                 contactViewModel.removeContact(contact)
                 Toast.makeText(context, "Contact removed", Toast.LENGTH_SHORT).show()
+            },
+            onCallClick = { contact ->
+                initiateCall(contact.phone_number) // Trigger the call logic
+            },
+            onMessageClick = { contact ->
+                initiateMessage(contact.phone_number) // Trigger the message logic
             }
+
         )
 
 
@@ -119,6 +128,20 @@ class ContactFragment : Fragment() {
         } else {
             button?.text = "Add Contact"  // Default English text
         }
+    }
+
+    private fun initiateCall(phoneNumber: String) {
+        val callIntent = Intent(Intent.ACTION_DIAL).apply {
+            data = Uri.parse("tel:$phoneNumber")
+        }
+        startActivity(callIntent)
+    }
+
+    private fun initiateMessage(phoneNumber: String) {
+        val messageIntent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("smsto:$phoneNumber")
+        }
+        startActivity(messageIntent)
     }
 
 }

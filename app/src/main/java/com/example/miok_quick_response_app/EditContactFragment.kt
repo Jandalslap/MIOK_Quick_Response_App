@@ -103,6 +103,12 @@ class EditContactFragment : Fragment() {
         // Populate relationship spinner
         val relationshipOptions = resources.getStringArray(R.array.relationship_options)
 
+        // Find the index of the contact's relationship in the spinner options
+        val selectedIndex = relationshipOptions.indexOf(contact.relationship.name)
+        if (selectedIndex >= 0) {
+            binding.contactRelationshipSpinner.setSelection(selectedIndex)
+        }
+
         // Map the relationship to the spinner index
         val relationshipIndex = relationshipOptions.indexOf(contact.relationship.name.replace("_", " "))
         if (relationshipIndex != -1) {
