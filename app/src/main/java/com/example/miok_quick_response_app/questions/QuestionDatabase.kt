@@ -71,18 +71,20 @@ class QuestionDatabase(context: Context) :
         if (isTableEmpty(db, TABLE_TAMARIKI) && isTableEmpty(db, TABLE_RANGATAHI)) {
             // Predefined questions for Tamariki
             val questionsTamariki = listOf(
-                Question("Are you okay?(Eng)(questionsTamariki)", "Question text 4(TR)", null, R.drawable.emoji_happy),
-                Question("Are you hurt?(Eng)(questionsTamariki)", "Question text 4(TR)", null, R.drawable.emoji_hurt),
-                Question("Are you clean and fed?(Eng)(questionsTamariki)", "Question text 4(TR)", null, R.drawable.emoji_clean),
-                Question("Is someone yelling at you?(Eng)(questionsTamariki)", "Question text 4(TR)", null, R.drawable.emoji_yelling)
+                Question("Are you okay?(Eng)(questionsTamariki)", "Kei te pai koe?(TR)", null, R.drawable.emoji_happy),
+                Question("Are you hurt?(Eng)(questionsTamariki)", "Kei te pātea koe?", null, R.drawable.emoji_hurt),
+                Question("Are you clean and fed?(Eng)(questionsTamariki)", "Kua horoia koe, kua kai?(TR)", null, R.drawable.emoji_clean),
+                Question("Is someone yelling at you?(Eng)(questionsTamariki)", "E karanga ana te tangata ki a koe?", null, R.drawable.emoji_yelling),
+                Question("Do you need help?(Eng)(questionsTamariki)", "Kei te hiahia awhina koe?", null, R.drawable.emoji_help)
             )
 
             // Predefined questions for Rangatahi
             val questionsRangatahi = listOf(
-                Question("Are you okay?(Eng)(questionsRangatahi)", "Question text 4(TR)", null, R.drawable.emoji_happy),
-                Question("Are you hurt?(Eng)(questionsRangatahi)", "Question text 4(TR)", null, R.drawable.emoji_hurt),
-                Question("Are you clean and fed?(Eng)(questionsRangatahi)", "Question text 4(TR)", null, R.drawable.emoji_clean),
-                Question("Is someone yelling at you?(Eng)(questionsRangatahi)", "Question text 4(TR)", null, R.drawable.emoji_yelling)
+                Question("Are you okay?(Eng)(questionsRangatahi)", "Kei te pai koe?(TR)", null, R.drawable.emoji_happy),
+                Question("Are you hurt?(Eng)(questionsRangatahi)", "Kei te pātea koe?(TR)", null, R.drawable.emoji_hurt),
+                Question("Are you clean and fed?(Eng)(questionsRangatahi)", "Kua horoia koe, kua kai?(TR)", null, R.drawable.emoji_clean),
+                Question("Is someone yelling at you?(Eng)(questionsRangatahi)", "E karanga ana te tangata ki a koe?", null, R.drawable.emoji_yelling),
+                Question("Do you need help?(Eng)(questionsTamariki)", "Kei te hiahia awhina koe?", null, R.drawable.emoji_help)
             )
 
             // Insert each Tamariki question one by one
