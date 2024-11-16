@@ -7,6 +7,12 @@
     android:background="#E5EDF3"
     android:gravity="center">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginBottom="100dp"
+        android:gravity="center">
     <ImageView
         android:id="@+id/quizResultImageView"
         android:layout_width="250dp"
@@ -27,4 +33,6 @@
         android:textColor="@color/Blue"
         android:textSize="22sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    </LinearLayout>
 </LinearLayout>

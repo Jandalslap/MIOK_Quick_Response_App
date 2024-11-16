@@ -2,13 +2,16 @@ package com.example.miok_quick_response_app.ui
 
 import androidx.fragment.app.Fragment
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -34,6 +37,8 @@ class QuizFragment : Fragment() {
 
     private var currentLanguage : String = ""
 
+    private lateinit var progressBar: LinearLayout
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,15 +55,20 @@ class QuizFragment : Fragment() {
         trueButton = rootView.findViewById(R.id.trueButton)
         falseButton = rootView.findViewById(R.id.falseButton)
 
+        // Initialize the progress bar
+        progressBar = rootView.findViewById(R.id.progressBar)
+
         // Set up listeners for the buttons
         trueButton.setOnClickListener {
             questions[currentQuestionIndex].userInputAnswer = true
             goToNextQuestion(questions)
+            updateProgressBar(currentQuestionIndex)
         }
 
         falseButton.setOnClickListener {
             questions[currentQuestionIndex].userInputAnswer = false
             goToNextQuestion(questions)
+            updateProgressBar(currentQuestionIndex)
         }
 
         // Hide the back arrow by removing the up button from the action bar.
@@ -76,11 +86,25 @@ class QuizFragment : Fragment() {
 
         // Display the first question
         displayCurrentQuestion(questions)
+        updateProgressBar(currentQuestionIndex)
 
         return rootView
     }
 
+    private fun updateProgressBar(currentQuestionIndex: Int) {
+        Log.d("QuizFragment", "Updating progress bar for question index: $currentQuestionIndex")
+        for (i in 0 until progressBar.childCount) {
+            val view = progressBar.getChildAt(i)
+            // Set inactive color by default
+            view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.inactive_color))
 
+            if (i <= currentQuestionIndex) {
+                // Set active color up to the current question
+                view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.question_color))
+                Log.d("QuizFragment", "Progress bar updated at index $i to active color.")
+            }
+        }
+    }
 
     // Function to display the current question
     private fun displayCurrentQuestion(questions : List<Question>) {

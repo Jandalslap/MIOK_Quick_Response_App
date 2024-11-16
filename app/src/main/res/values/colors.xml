@@ -11,6 +11,8 @@
     <color name="mustard">#E4A023</color>
     <color name="Blue">#004B8D</color>
 
+    <color name="inactive_color">#CCCCCC</color> <!-- Quiz Question Progress Bar -->
+    <color name="question_color">#004B8C</color>
 
 
 </resources>

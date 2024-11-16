@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+    <!-- add this back in above if using bottom nav android:paddingBottom="80dp" -->
 
     <!-- after creating .ProfileContacts file
     tools:context=".ui.tasks.ProfileContacts">-->
