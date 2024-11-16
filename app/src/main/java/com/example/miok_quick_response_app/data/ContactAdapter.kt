@@ -30,7 +30,7 @@ class ContactAdapter(
         holder.phone_numberTextView.text = contact.phone_number
         holder.relationshipTextView.text = contact.relationship.name.replace("_", " ")
         holder.statusTextView.text = if (contact.status) "Approved" else "Not Approved"
-        //holder.emergencyContactLabel.text = if (contact.emerg_contact) "EMERGENCY CONTACT" else ""
+
 
         // Show or hide the "EMERGENCY CONTACT" label based on the contact's emergency status
         if (contact.emerg_contact) {
