@@ -14,100 +14,114 @@ import com.example.miok_quick_response_app.databinding.FragmentEditContactBindin
 
 class EditContactFragment : Fragment() {
 
-    // Declare the binding object
     private var _binding: FragmentEditContactBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var contactViewModel: ContactViewModel
-    private lateinit var nameEditText: EditText
-    private lateinit var phoneNumberEditText: EditText
-    private lateinit var relationshipSpinner: Spinner
-    private lateinit var statusRadioGroup: RadioGroup
-    private lateinit var saveButton: Button
-    private lateinit var urgentContactRadioButton: RadioButton
-    private lateinit var emergContact: TextView
     private var contactId: Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Initialize binding
+    ): View {
         _binding = FragmentEditContactBinding.inflate(inflater, container, false)
-        return binding.root // Return the root view from binding
+        return binding.root
+    }
 
-        val view = inflater.inflate(R.layout.fragment_edit_contact, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        // Initialize ViewModel
         contactViewModel = ViewModelProvider(requireActivity()).get(ContactViewModel::class.java)
 
+        // Set up the relationship spinner adapter
+        setupRelationshipSpinner()
 
-        // Bind views to layout IDs using ViewBinding
-        nameEditText = binding.contactNameInput
-        phoneNumberEditText = binding.contactPhoneNumber
-        relationshipSpinner = binding.contactRelationshipSpinner
-        statusRadioGroup = binding.contactStatusRadioGroup
-        urgentContactRadioButton = binding.urgentContactCheckbox
-        emergContact = binding.urgentContactLabel
-        saveButton = binding.saveContactButton
-
-        // Retrieve contactId passed as an argument to the fragment
+        // Retrieve the contactId passed from the arguments
         contactId = arguments?.getInt("contactId") ?: -1
 
-        // Ensure contactId is valid before querying
         if (contactId != -1) {
-            // Observe the contact details from ViewModel and populate fields
+            // Fetch and observe the contact details
             contactViewModel.getContactById(contactId).observe(viewLifecycleOwner) { contact ->
                 contact?.let {
-                    // Populate the EditText fields with the existing data
-                    nameEditText.setText(it.name)
-                    phoneNumberEditText.setText(it.phone_number)
-
-                    // Set the spinner selection based on the relationship of the contact
-                    relationshipSpinner.setSelection(getRelationshipIndex(it.relationship.name))
-
-                    // Set the RadioGroup based on the contact's status
-                    val radioButtonId = if (it.status) R.id.radio_yes else R.id.radio_no
-                    statusRadioGroup.check(radioButtonId)
-
-                    // Set the checkbox for emergency contact status
-                    urgentContactRadioButton.isChecked = it.emerg_contact
+                    populateContactFields(it)
                 }
             }
         }
 
-        // Save button click listener to update the contact
-        saveButton.setOnClickListener {
-            val selectedRelationshipString = relationshipSpinner.selectedItem.toString()
-            val selectedRelationship = mapToRelationship(selectedRelationshipString)
-            val selectedStatus = statusRadioGroup.checkedRadioButtonId == R.id.radio_yes
-            val isEmergencyContact = urgentContactRadioButton.isChecked
-
-            if (selectedRelationship != null) {
-                val updatedContact = Contact(
-                    id = contactId,
-                    name = nameEditText.text.toString(),
-                    phone_number = phoneNumberEditText.text.toString(),
-                    relationship = selectedRelationship,
-                    status = selectedStatus,
-                    emerg_contact = isEmergencyContact  // Set emergency contact status
-                )
-
-                contactViewModel.updateContact(updatedContact)
-
-                Toast.makeText(context, "Contact updated", Toast.LENGTH_SHORT).show()
-                // findNavController().popBackStack()  // Uncomment to navigate back after saving
-            } else {
-                Toast.makeText(context, "Invalid relationship selected", Toast.LENGTH_SHORT).show()
-            }
+        // Set up the Save button logic
+        binding.saveContactButton.setOnClickListener {
+            saveContact()
         }
+    }
 
-        return view
+    // Set up the relationship spinner adapter
+    private fun setupRelationshipSpinner() {
+        val relationshipOptions = resources.getStringArray(R.array.relationship_options)
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, relationshipOptions)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.contactRelationshipSpinner.adapter = adapter
     }
 
 
-    private fun getRelationshipIndex(relationshipName: String): Int {
-        val relationships = resources.getStringArray(R.array.relationship_options)
-        return relationships.indexOfFirst { it.equals(relationshipName, ignoreCase = true) }
+    private fun populateContactFields(contact: Contact) {
+        // Populate fields with existing contact data
+        binding.contactNameInput.setText(contact.name)
+        binding.contactPhoneNumber.setText(contact.phone_number)
+
+        // Populate relationship spinner
+        val relationshipOptions = resources.getStringArray(R.array.relationship_options)
+
+        // Map the relationship to the spinner index
+        val relationshipIndex = relationshipOptions.indexOf(contact.relationship.name.replace("_", " "))
+        if (relationshipIndex != -1) {
+            binding.contactRelationshipSpinner.setSelection(relationshipIndex)
+        }
+
+        // Set status radio button based on the contact's status
+        when (contact.status) {
+            true -> binding.radioYes.isChecked = true
+            false -> binding.radioNo.isChecked = true
+        }
+
+        // Set urgent contact checkbox
+        binding.urgentContactCheckbox.isChecked = contact.emerg_contact
+    }
+
+    private fun saveContact() {
+        val name = binding.contactNameInput.text.toString()
+        val phoneNumber = binding.contactPhoneNumber.text.toString()
+
+        // Get selected relationship from spinner
+        val selectedRelationship = binding.contactRelationshipSpinner.selectedItem.toString()
+        // Map the selected user-friendly name to the corresponding Relationship enum
+        val relationship = mapToRelationship(selectedRelationship)
+            ?: run {
+                // If mapping fails, show an error message and return early
+                Toast.makeText(requireContext(), "Invalid relationship selected", Toast.LENGTH_SHORT).show()
+                return
+            }
+
+        // Get the status from radio group
+        val isApproved = binding.contactStatusRadioGroup.checkedRadioButtonId == R.id.radio_yes
+
+        // Get the urgent contact status
+        val isUrgentContact = binding.urgentContactCheckbox.isChecked
+
+        // Create a new or updated Contact object
+        val updatedContact = Contact(
+            id = contactId,
+            name = name,
+            phone_number = phoneNumber,
+            relationship = relationship,
+            status = isApproved,
+            emerg_contact = isUrgentContact
+        )
+
+        // Save the updated contact through ViewModel
+        contactViewModel.updateContact(updatedContact)
+
+        Toast.makeText(requireContext(), "Contact updated successfully.", Toast.LENGTH_SHORT).show()
     }
 
     private fun mapToRelationship(userFriendlyName: String): Relationship? {
@@ -120,13 +134,13 @@ class EditContactFragment : Fragment() {
             "Iwi Social Worker" -> Relationship.IWI_SOCIAL_WORKER
             "Police" -> Relationship.POLICE
             "Other" -> Relationship.OTHER
-            else -> null
+            else -> null // If the name doesn't match, return null
         }
     }
 
+
     override fun onDestroyView() {
         super.onDestroyView()
-        // Clean up binding to avoid memory leaks
         _binding = null
     }
 }
