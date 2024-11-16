@@ -12,7 +12,7 @@
         android:id="@+id/profile_image"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/ic_user_girl"
+        android:src="@drawable/ic_user"
         android:contentDescription="@string/profile_picture"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
