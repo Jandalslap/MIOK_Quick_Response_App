@@ -60,11 +60,6 @@ class ContactFragment : Fragment() {
         )
 
 
-        // Observe the contacts data from the ViewModel
-        contactViewModel.contacts.observe(viewLifecycleOwner) { contacts ->
-            contactAdapter.submitList(contacts)
-        }
-
         // Set up RecyclerView
         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view_tasks)
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -118,6 +113,17 @@ class ContactFragment : Fragment() {
         }
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Observe the contacts data from the ViewModel
+        contactViewModel.contacts.observe(viewLifecycleOwner, Observer { contacts ->
+            contactAdapter.submitList(contacts) // Update the adapter when contacts change
+        })
+
+        contactViewModel.loadContacts()
     }
 
     private fun updateLanguageUI(language: String) {

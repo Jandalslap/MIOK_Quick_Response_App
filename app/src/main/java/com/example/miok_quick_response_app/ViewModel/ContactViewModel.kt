@@ -3,6 +3,8 @@ package com.example.miok_quick_response_app.ViewModel
 import Contact
 import ContactDatabase
 import android.app.Application
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -27,7 +29,10 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
         thread {  // Use a background thread to prevent blocking the UI
             val contactList = dbHelper.getAllContacts()
             Log.d("ContactViewModel", "Contacts loaded: $contactList")
-            _contacts.postValue(contactList)  // Update LiveData on the main thread
+            // Post the updated contact list to LiveData from the main thread
+            Handler(Looper.getMainLooper()).post {
+                _contacts.postValue(contactList)
+            }
         }
     }
 

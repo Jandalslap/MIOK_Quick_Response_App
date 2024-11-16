@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.example.miok_quick_response_app.databinding.FragmentEditProfileBinding
 import java.text.SimpleDateFormat
@@ -264,7 +265,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             sharedViewModel.currentLanguage.value?.let { language ->
                 updateLanguageUI(language)
             }
-            requireActivity().supportFragmentManager.popBackStack() // Go back to profile fragment
+            findNavController().popBackStack()
         }
     }
 

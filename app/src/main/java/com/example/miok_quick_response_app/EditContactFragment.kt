@@ -10,6 +10,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.example.miok_quick_response_app.ViewModel.ContactViewModel
 import com.example.miok_quick_response_app.databinding.FragmentEditContactBinding
@@ -183,6 +184,8 @@ class EditContactFragment : Fragment() {
         contactViewModel.updateContact(updatedContact)
 
         Toast.makeText(requireContext(), "Contact updated successfully.", Toast.LENGTH_SHORT).show()
+
+        findNavController().popBackStack()
     }
 
     private fun mapToRelationship(userFriendlyName: String): Relationship? {
