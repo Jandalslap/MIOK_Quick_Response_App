@@ -52,9 +52,9 @@
             <!-- ImageButton with adjusted padding and size -->
             <ImageButton
                 android:id="@+id/btn_message"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:src="@drawable/ic_sendmessage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_sendmessage2"
                 android:background="@android:color/transparent"
                 android:contentDescription="Message"
                 android:scaleType="centerInside"
