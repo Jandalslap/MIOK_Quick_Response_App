@@ -129,7 +129,8 @@ class EditContactFragment : Fragment() {
     }
 
     private fun saveContact() {
-        val name = binding.contactNameInput.text.toString()
+        val rawName = binding.contactNameInput.text.toString()
+        val name = capitalizeEachWord(rawName)
         val phoneNumber = binding.contactPhoneNumber.text.toString()
 
         // Validate all fields
@@ -296,6 +297,12 @@ class EditContactFragment : Fragment() {
             Relationship.POLICE -> "Police"
             Relationship.OTHER -> "Other"
         }
+    }
+
+    fun capitalizeEachWord(input: String): String {
+        return input.trim()
+            .split("\\s+".toRegex()) // Split by whitespace
+            .joinToString(" ") { word -> word.lowercase().replaceFirstChar { it.uppercase() } }
     }
 
 

@@ -213,12 +213,16 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         // Save button logic
         binding.saveButton.setOnClickListener {
             Log.d("EditProfile", "Image URI: $imageUri")
-            val newName = binding.editName.text.toString()
+            val rawName = binding.editName.text.toString()
+            val newName = capitalizeEachWord(rawName)
             val newEmail = binding.editEmail.text.toString()
             val newBirthday = binding.editBirthday.text.toString()
-            val newAddress = binding.editAddress.text.toString()
-            val newFatherName = binding.editParentName1.text.toString()  // Get father's name
-            val newMotherName = binding.editParentName2.text.toString()  // Get mother's name
+            val rawAddress = binding.editAddress.text.toString()
+            val newAddress = capitalizeEachWord(rawAddress)
+            val rawFatherName = binding.editParentName1.text.toString()  // Get father's name
+            val newFatherName = capitalizeEachWord(rawFatherName)
+            val rawMotherName = binding.editParentName2.text.toString()  // Get mother's name
+            val newMotherName = capitalizeEachWord(rawMotherName)
 
             // Perform validation
 
@@ -403,6 +407,13 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         sharedViewModel.currentLanguage.value?.let { language ->
             updateLanguageUI(language)
         }
+    }
+
+    // Utility function to capitalize each word
+    fun capitalizeEachWord(input: String): String {
+        return input.trim()
+            .split("\\s+".toRegex()) // Split by whitespace
+            .joinToString(" ") { word -> word.lowercase().replaceFirstChar { it.uppercase() } }
     }
 
     override fun onDestroyView() {
