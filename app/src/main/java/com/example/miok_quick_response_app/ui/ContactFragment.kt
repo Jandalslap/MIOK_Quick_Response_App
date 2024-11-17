@@ -55,7 +55,7 @@ class ContactFragment : Fragment() {
                 initiateCall(contact.phone_number) // Trigger the call logic
             },
             onMessageClick = { contact ->
-                initiateMessage(contact.phone_number) // Trigger the message logic
+                initiateMessage(contact.phone_number,contact) // Trigger the message logic
             }
 
         )
@@ -145,11 +145,39 @@ class ContactFragment : Fragment() {
         startActivity(callIntent)
     }
 
-    private fun initiateMessage(phoneNumber: String) {
-        val messageIntent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("smsto:$phoneNumber")
+    private fun initiateMessage(phoneNumber: String,contact: Contact) {
+        val defaultMessage =
+            "Alert: ${contact.name} has triggered a safety check in the MIOK Quick Response App. " +
+                    "Please review their status immediately and ensure they're okay. " +
+                    "Contact us if further assistance is needed." +
+                    "" +
+                    "Whakamataku: Kua whakahohea e ${contact.name} tētahi arotake haumaru i te Taupānga Urupare Tere MIOK.\n" +
+                    "Tēnā koa tirohia tō rātou āhuatanga ināianei, kia mārama kei te pai rātou.\n" +
+                    "Whakapā mai ki a mātou mēnā ka hiahiatia he āwhina anō."
+
+        try {
+            val smsUri = Uri.parse("smsto:$phoneNumber")
+            val intent = Intent(Intent.ACTION_SENDTO, smsUri).apply {
+                putExtra("sms_body", defaultMessage)
+            }
+
+            if (intent.resolveActivity(requireActivity().packageManager) != null) {
+                startActivity(intent)
+            } else {
+                Toast.makeText(
+                    context,
+                    "No SMS app available to send messages.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        } catch (e: Exception) {
+            Toast.makeText(
+                context,
+                "An error occurred while sending the message.",
+                Toast.LENGTH_SHORT
+            ).show()
+            e.printStackTrace()
         }
-        startActivity(messageIntent)
     }
 
 
