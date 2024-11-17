@@ -94,7 +94,7 @@ class AddContactFragment : Fragment() {
                 // Māori translations
                 "Matua/Kaika" -> Relationship.PARENT_GUARDIAN
                 "Kaiāwhina" -> Relationship.CAREGIVER
-                "Whaea/Tipuna" -> Relationship.AUNT_UNCLE
+                "Whaea/Matua" -> Relationship.AUNT_UNCLE
                 "Koroua/Koro" -> Relationship.GRANDPARENT
                 "Kaimahi Tokanga" -> Relationship.SOCIAL_WORKER
                 "Kaimahi Tokanga Iwi" -> Relationship.IWI_SOCIAL_WORKER
