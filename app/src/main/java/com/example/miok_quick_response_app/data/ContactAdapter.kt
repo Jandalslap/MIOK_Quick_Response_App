@@ -97,11 +97,13 @@ class ContactAdapter(
                 phoneLabel.text = itemView.context.getString(R.string.contact_phone_label_mr)
                 relationshipLabel.text = itemView.context.getString(R.string.contact_relationship_label_mr)
                 statusLabel.text = itemView.context.getString(R.string.contact_status_label_mr)
+                emergencyContactLabel.text = itemView.context.getString(R.string.emergency_contact_label_mr)
             } else {
                 nameLabel.text = itemView.context.getString(R.string.contact_name_label)
                 phoneLabel.text = itemView.context.getString(R.string.contact_phone_label)
                 relationshipLabel.text = itemView.context.getString(R.string.contact_relationship_label)
                 statusLabel.text = itemView.context.getString(R.string.contact_status_label)
+                emergencyContactLabel.text = itemView.context.getString(R.string.emergency_contact_label)
             }
         }
     }

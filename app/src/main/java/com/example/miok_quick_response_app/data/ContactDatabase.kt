@@ -76,12 +76,19 @@ class ContactDatabase(context: Context) :
         db.close()
     }
 
-    // Get all contacts from the database
+    // Get all contacts from the database, sorted by emergency contact (emerg_contact == 1 first) and then by name alphabetically (case-insensitive)
     @Synchronized
     fun getAllContacts(): List<Contact> {
         val contacts = mutableListOf<Contact>()
         val db = readableDatabase
-        val cursor = db.query(TABLE_CONTACTS, null, null, null, null, null, null)
+
+        // Query with sorting: prioritize emerg_contact == 1 first, then alphabetically by name (case-insensitive)
+        val query = """
+        SELECT * FROM $TABLE_CONTACTS
+        ORDER BY $COLUMN_EMERG_CONTACT DESC, LOWER($COLUMN_NAME) ASC
+    """
+
+        val cursor = db.rawQuery(query, null)
 
         if (cursor.moveToFirst()) {
             do {
@@ -89,9 +96,7 @@ class ContactDatabase(context: Context) :
                 val phoneNumber =
                     cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PHONE_NUMBER))
                 val relationship = Relationship.valueOf(
-                    cursor.getString(
-                        cursor.getColumnIndexOrThrow(COLUMN_RELATIONSHIP)
-                    )
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_RELATIONSHIP))
                 )
                 val status =
                     cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_STATUS)) == 1  // 1 = true, 0 = false

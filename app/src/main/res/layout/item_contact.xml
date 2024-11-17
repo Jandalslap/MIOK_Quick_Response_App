@@ -150,7 +150,7 @@
                         android:id="@+id/emergency_contact_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="EMERGENCY CONTACT"
+                        android:text="@string/emergency_contact_label"
                         android:visibility="gone"
                         android:textColor="#E32525"
                         android:textStyle="bold"
