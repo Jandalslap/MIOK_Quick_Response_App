@@ -23,6 +23,8 @@
                 android:layout_marginTop="30dp"
                 android:drawableStart="@drawable/ic_yellow_contacts"
                 android:drawablePadding="12dp"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:ems="15"
                 android:textSize="16sp"
                 /> <!-- Pre-fill with existing data -->
@@ -35,6 +37,8 @@
                 android:layout_marginTop="10dp"
                 android:drawableStart="@drawable/ic_yellow_phone_circle"
                 android:drawablePadding="12dp"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:ems="15"
                 android:textSize="16sp"
                 /> <!-- Pre-fill with existing data -->

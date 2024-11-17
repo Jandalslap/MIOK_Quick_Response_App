@@ -94,7 +94,7 @@ class AddContactFragment : Fragment() {
                 // Māori translations
                 "Matua/Kaika" -> Relationship.PARENT_GUARDIAN
                 "Kaiāwhina" -> Relationship.CAREGIVER
-                "Whaea/Tipuna" -> Relationship.AUNT_UNCLE
+                "Whaea/Matua" -> Relationship.AUNT_UNCLE
                 "Koroua/Koro" -> Relationship.GRANDPARENT
                 "Kaimahi Tokanga" -> Relationship.SOCIAL_WORKER
                 "Kaimahi Tokanga Iwi" -> Relationship.IWI_SOCIAL_WORKER
@@ -106,26 +106,39 @@ class AddContactFragment : Fragment() {
 
             // Validate all fields
             if (name.isEmpty()) {
-                nameInput.error = "Please enter a name"
+                Toast.makeText(requireContext(), "Please enter a name", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             // Validate name for letters only
             if (!name.matches("^[A-Za-z\\s]+$".toRegex())) {
-                nameInput.error = "Name should only contain letters"
+                Toast.makeText(requireContext(), "Name should only contain letters", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // Enforce name character limit (max 30 characters)
+            if (name.length > 30) {
+                Toast.makeText(requireContext(), "Name cannot be more than 30 letters", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             if (number.isEmpty()) {
-                numberInput.error = "Please enter a phone number"
+                Toast.makeText(requireContext(), "Please enter a phone number", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             // Validate phone number for numbers only
             if (!number.matches("^[0-9]+$".toRegex())) {
-                numberInput.error = "Phone number should only contain digits"
+                Toast.makeText(requireContext(), "Phone number should only contain numbers", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
+            // Enforce phone number digit limit (between 8 and 12 digits)
+            if (number.length !in 8..12) {
+                Toast.makeText(requireContext(), "Phone number should be between 8 and 12 numbers", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
 
             // Capture the emerg_contact status (whether the checkbox is selected)
             val isEmergencyContact = emergContact.isChecked

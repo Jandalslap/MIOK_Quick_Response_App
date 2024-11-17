@@ -221,36 +221,92 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             val newMotherName = binding.editParentName2.text.toString()  // Get mother's name
 
             // Perform validation
-            if (newName.isBlank() || !isValidName(newName)) {
-                Toast.makeText(requireContext(), "Please enter a valid name (letters only)", Toast.LENGTH_SHORT).show()
+
+            // Validate name: check if blank first, then validate format
+            if (newName.isBlank()) {
+                Toast.makeText(requireContext(), "Please enter a name", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (!newName.matches("^[A-Za-z\\s]+$".toRegex())) {
+                Toast.makeText(requireContext(), "Name should only have letters", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            // Enforce 30-character limit for the name
+            if (newName.length > 30) {
+                Toast.makeText(requireContext(), "Name cannot be more than 30 letters", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Check if the email is not blank and validate format if it's not
-            if (newEmail.isNotBlank() && !isValidEmail(newEmail)) {
-                Toast.makeText(requireContext(), "Please enter a valid email", Toast.LENGTH_SHORT).show()
+            // Validate email: optional, validate length first, then format
+            if (newEmail.isNotBlank()) {
+                if (newEmail.length > 30) {
+                    Toast.makeText(requireContext(), "Email address cannot be more than 30 characters", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                if (!isValidEmail(newEmail)) {
+                    Toast.makeText(requireContext(), "Please enter a valid email", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+            }
+
+            // Validate birthday: check if blank first, then validate format
+            if (newBirthday.isBlank()) {
+                Toast.makeText(requireContext(), "Birthday cannot be empty", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            // Regex to check if the date matches the format DD/MM/YYYY
+            val datePattern = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$"
+            if (!newBirthday.matches(datePattern.toRegex())) {
+                Toast.makeText(requireContext(), "Please enter a valid birthday (DD/MM/YYYY)", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            if (newBirthday.isBlank() || !isValidDate(newBirthday)) {
-                Toast.makeText(requireContext(), "Please enter a valid birthday DD/MM/YYYY", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
+            // Validate address: check if blank first, then enforce length
             if (newAddress.isBlank()) {
                 Toast.makeText(requireContext(), "Address cannot be empty", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+            if (newAddress.length > 50) {
+                Toast.makeText(requireContext(), "Address cannot be more than 50 characters", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
+            // Validate father's name: check if blank first, then validate format
             if (newFatherName.isBlank()) {
                 Toast.makeText(requireContext(), "Please enter the father's name", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
+            // Validate Father's name: Letters only
+            if (!newFatherName.matches("^[A-Za-z\\s]+$".toRegex())) {
+                Toast.makeText(requireContext(), "Father's name should only contain letters", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // Enforce Father's name character limit (max 20 characters)
+            if (newFatherName.length > 20) {
+                Toast.makeText(requireContext(), "Father's name cannot be more than 20 letters", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // Validate mother's name: check if blank first, then validate format
             if (newMotherName.isBlank()) {
                 Toast.makeText(requireContext(), "Please enter the mother's name", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
+            // Validate Mother's name: Letters only
+            if (!newMotherName.matches("^[A-Za-z\\s]+$".toRegex())) {
+                Toast.makeText(requireContext(), "Mother's name should only contain letters", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // Enforce Mother's name character limit (max 20 characters)
+            if (newMotherName.length > 20) {
+                Toast.makeText(requireContext(), "Mother's name cannot be more than 20 letters", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
 
             profileViewModel.updateUserProfile(
                 newName,
