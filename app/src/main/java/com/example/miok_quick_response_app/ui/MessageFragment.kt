@@ -120,12 +120,12 @@ class MessageFragment : Fragment() {
      * Sends an SMS to a single contact.
      */
     private fun sendSMS(phoneNumber: String, message: String) {
-        val smsUri = Uri.parse("smsto:$phoneNumber")
-        val intent = Intent(Intent.ACTION_SENDTO, smsUri).apply {
-            putExtra("sms_body", message)
-        }
-
         try {
+            val smsUri = Uri.parse("smsto:$phoneNumber")
+            val intent = Intent(Intent.ACTION_SENDTO, smsUri).apply {
+                putExtra("sms_body", message)
+            }
+
             if (intent.resolveActivity(requireActivity().packageManager) != null) {
                 startActivity(intent)
             } else {
@@ -144,6 +144,7 @@ class MessageFragment : Fragment() {
             e.printStackTrace()
         }
     }
+
 
     /**
      * Sends an SMS to multiple contacts.
