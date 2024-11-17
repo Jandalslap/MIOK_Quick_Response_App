@@ -134,26 +134,40 @@ class EditContactFragment : Fragment() {
 
         // Validate all fields
         if (name.isEmpty()) {
-            binding.contactNameInput.error = "Please enter a name"
+            Toast.makeText(requireContext(), "Please enter a name", Toast.LENGTH_SHORT).show()
             return
         }
 
         // Validate name for letters only
         if (!name.matches("^[A-Za-z\\s]+$".toRegex())) {
-            binding.contactNameInput.error = "Name should only contain letters"
+            Toast.makeText(requireContext(), "Name should only contain letters", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Enforce name character limit (max 30 characters)
+        if (name.length > 30) {
+            Toast.makeText(requireContext(), "Name cannot be more than 30 letters", Toast.LENGTH_SHORT).show()
             return
         }
 
         if (phoneNumber.isEmpty()) {
-            binding.contactPhoneNumber.error = "Please enter a phone number"
+            Toast.makeText(requireContext(), "Please enter a phone number", Toast.LENGTH_SHORT).show()
             return
         }
 
         // Validate phone number for numbers only
         if (!phoneNumber.matches("^[0-9]+$".toRegex())) {
-            binding.contactPhoneNumber.error = "Phone number should only contain digits"
+            Toast.makeText(requireContext(), "Phone number should only contain numbers", Toast.LENGTH_SHORT).show()
             return
         }
+
+        // Enforce phone number digit limit (between 8 and 12 digits)
+        if (phoneNumber.length !in 8..12) {
+            Toast.makeText(requireContext(), "Phone number should be between 8 and 12 numbers", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+
 
         // Get selected relationship from spinner
         val selectedRelationship = binding.contactRelationshipSpinner.selectedItem.toString()
