@@ -331,18 +331,21 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
     }
 
     private fun showImagePickerDialog() {
-        val options = arrayOf("Take Photo", "Choose from Gallery", "Cancel")
+        // Remove "Take Photo" option and just keep "Choose from Gallery"
+        val options = arrayOf("Choose from Gallery", "Cancel")
+
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Change Profile Picture")
         builder.setItems(options) { _, which ->
             when (which) {
-                0 -> openCamera() // Open camera
-                1 -> openGallery() // Open gallery
-                2 -> return@setItems // Do nothing if canceled
+                // 0 -> openCamera() // Open camera was here...
+                0 -> openGallery() // Open gallery to choose an image
+                1 -> return@setItems // Do nothing if canceled
             }
         }
         builder.show()
     }
+
 
     private fun openCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
