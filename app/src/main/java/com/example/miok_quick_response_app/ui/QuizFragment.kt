@@ -125,7 +125,7 @@ class QuizFragment : Fragment() {
 
     // Function to move to the next question
     private fun goToNextQuestion(questions : List<Question>) {
-        quizViewModel.collectResponces(questions[currentQuestionIndex])
+        quizViewModel.collectResponses(questions[currentQuestionIndex])
         currentQuestionIndex++
         if (currentQuestionIndex >= questions.size) {
             //this.questions = emptyList()

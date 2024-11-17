@@ -1,16 +1,14 @@
 package com.example.miok_quick_response_app.viewmodel
 
+import ContactDatabase
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import com.example.miok_quick_response_app.database.ProfileDatabase
-import com.example.miok_quick_response_app.model.Profile
 import com.example.miok_quick_response_app.data.Question
 import com.example.miok_quick_response_app.data.QuestionDatabase
-import java.io.ByteArrayOutputStream
-import java.io.IOException
-import java.io.OutputStreamWriter
-import java.nio.charset.StandardCharsets
+import com.example.miok_quick_response_app.miscUtil.FirestoreHelper
+import com.example.miok_quick_response_app.miscUtil.SmsHelper
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
@@ -20,6 +18,10 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
 
     private var questionDb = QuestionDatabase(application)
     private var profileDb = ProfileDatabase(application)
+    private var contactDb = ContactDatabase(application)
+
+    //private var firestoreHelper = FirestoreHelper()
+    private var smsHelper = SmsHelper(application)
 
     private var questionsAnswered : List<Question> = emptyList()
 
@@ -62,10 +64,6 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
         return questionsTamariki
     }
 
-//    fun getAllQuestions(): List<Question>{
-//        return questionsTamariki
-//    }
-
     private fun isOlderThan(birthDate: LocalDate, age: Int): Boolean {
         // Get the current date
         val currentDate = LocalDate.now()
@@ -77,13 +75,13 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
         return period.years >= age
     }
 
-    fun collectResponces(question: Question){
+    fun collectResponses(question: Question){
         questionsAnswered += question
     }
 
     fun quizCompleted(){
-        csvResults = convertQuestionsToCSVInMemory(questionsAnswered)
-        csvProfile = convertProfileToCSVInMemory(profileDb.getProfile())
+//        csvResults = convertQuestionsToCSVInMemory(questionsAnswered)
+//        csvProfile = convertProfileToCSVInMemory(profileDb.getProfile())
         if (csvResults == null || csvProfile == null){
             // Raise error
             // TODO NOT YET IMPLEMENTED
@@ -95,83 +93,47 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
         for (e in questionsRangatahi){
             println(e.questionTextEng + e.userInputAnswer.toString())
         }
+        //smsMsgAllContact(questionsAnswered)
+        // Clear list
+        questionsAnswered = emptyList()
     }
 
-    // Used to prepare response to be sent out as a csv to firebase.
-    fun convertQuestionsToCSVInMemory(questions: List<Question>): ByteArray? {
-        // Create an in-memory byte array output stream
-        val byteArrayOutputStream = ByteArrayOutputStream()
+    // Function to add profile and get the generated ID
+//    fun addProfile(profile: Profile) {
+//        viewModelScope.launch {
+//            val profileId = firestoreHelper.addProfile(profile)
+//            if (profileId != null) {
+//                // Do something with the generated ID (e.g., save it, associate with other data)
+//                println("Profile added with ID: $profileId")
+//            } else {
+//                println("Failed to add profile")
+//            }
+//        }
+//    }
 
-        try {
-            // Write CSV data to the output stream using OutputStreamWriter
-            val writer = OutputStreamWriter(byteArrayOutputStream, StandardCharsets.UTF_8)
 
-            // Write the header row
-            writer.append("question_text_eng,question_text_tr,user_input_answer,image_res_id\n")
+    fun smsMsgAllContact(questions: List<Question>){
+        var contactNumList : List<String> = emptyList()
+        for (e in contactDb.getAllContacts()){contactNumList += e.phone_number}
 
-            // Write each question as a row
-            for (question in questions) {
-                writer.append("${question.questionTextEng},${question.questionTextTR},${question.userInputAnswer ?: "null"},${question.imageResId ?: "null"}\n")
-            }
-
-            // Flush and close the writer to ensure all data is written
-            writer.flush()
-
-            // Return the byte array representing the CSV data
-            return byteArrayOutputStream.toByteArray()
-        } catch (e: IOException) {
-            e.printStackTrace()
-            return null
-        } finally {
-            try {
-                byteArrayOutputStream.close()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
+        var smsStrArr = Array(questions.size+1) { "" }
+        smsStrArr[0] = profileDb.getProfile()?.name.toString() + " has completed a MIOK safety survey.\n Questions and answers " +
+                "will be displayed in a series of messages as follows:"
+        var i : Int = 1
+        for (e in questions ) {
+            smsStrArr[i] = e.questionTextEng + "\n"
+            smsStrArr[i] = e.questionTextTR + "\n"
+            smsStrArr[i] = e.userInputAnswer.toString() + "\n"
+            i ++
+        }
+        for (phNum in contactNumList){
+            for (str in smsStrArr)
+                smsHelper.sendSms(phNum, str)
         }
     }
 
-    fun convertProfileToCSVInMemory(profile: Profile?): ByteArray? {
-        if (profile == null){
-            return null
-        }
-        else {
-            // Create an in-memory byte array output stream
-            val byteArrayOutputStream = ByteArrayOutputStream()
 
-            try {
-                // Write CSV data to the output stream using OutputStreamWriter
-                val writer = OutputStreamWriter(byteArrayOutputStream, StandardCharsets.UTF_8)
 
-                // Write the header row (matching the Profile object properties)
-                writer.append("id,name,email,birthday,address,father_name,mother_name,image_url\n")
 
-                // Write the profile data as a row
-                writer.append("${profile.id ?: "null"},")
-                writer.append("${profile.name},")
-                writer.append("${profile.email},")
-                writer.append("${profile.birthday},")
-                writer.append("${profile.address},")
-                writer.append("${profile.fatherName},")
-                writer.append("${profile.motherName},")
-                writer.append("${profile.imageUrl ?: "null"}\n")
-
-                // Flush and close the writer to ensure all data is written
-                writer.flush()
-
-                // Return the byte array representing the CSV data
-                return byteArrayOutputStream.toByteArray()
-            } catch (e: IOException) {
-                e.printStackTrace()
-                return null
-            } finally {
-                try {
-                    byteArrayOutputStream.close()
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-            }
-        }
-    }
 }
 
