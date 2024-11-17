@@ -51,7 +51,7 @@ class MessageFragment : Fragment() {
 
         // Fetch profile name
         val profileName = profileDatabase.getProfile()?.name ?: "Unknown"
-        
+
         // Initialize ViewModel
         messageViewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
 
@@ -98,12 +98,13 @@ class MessageFragment : Fragment() {
 
                     // Compose the message
                     val message =
-                        "Alert: $formattedNames and $profileName have triggered a safety check notification in " +
+                        "Alert: $formattedNames \n $profileName has triggered a safety check notification in " +
                                 "the MIOK Quick Response App. " +
-                                "Please review their statuses and ensure their safety.\n\n" +
-                                "Whakatūpato: Kua whakaoho a $formattedNames me $profileName i tētahi whakamōhiotanga tirotiro" +
-                                " haumaru i te taupānga MIOK Quick Response.\n" +
-                                "Tēnā koa tirohia ō rātou āhuatanga ā tēnā whakakaha i tō rātou haumaru."
+                                "Please review their status and ensure their safety.\n\n" +
+                                "Whakamōhio: $formattedNames \\n Kua whakaoho a $profileName i tētahi " +
+                                "whakamōhiotanga arowhai haumaru i roto i te taupānga MIOK " +
+                                "Quick Response. \" +\n" +
+                                "\"Me arotake tō rātou āhuatanga me te whakarite i tō rātou haumaru.\\n\\n"
 
                     // Send bulk SMS
                     sendBulkSMS(allPhoneNumbers, message)
