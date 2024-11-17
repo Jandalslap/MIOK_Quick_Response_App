@@ -48,6 +48,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:text="@string/name_label"
+                    android:textColor="#000000"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:paddingRight="7dp"/>
@@ -56,6 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Contact Name"
+                    android:textColor="#000000"
                     android:textSize="16sp"/>
                 </LinearLayout>
 
@@ -71,6 +73,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
                         android:text="@string/contact_phone_label"
+                        android:textColor="#000000"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:paddingRight="7dp"/>
@@ -80,6 +83,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Phone Number"
+                        android:textColor="#000000"
                         android:textSize="16sp"/>
                 </LinearLayout>
 
@@ -95,6 +99,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
                         android:text="@string/contact_relationship_label"
+                        android:textColor="#000000"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:paddingRight="7dp"/>
@@ -104,6 +109,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Relationship"
+                        android:textColor="#000000"
                         android:singleLine="true"
                         android:ellipsize="end"
                         android:textSize="16sp"/>
@@ -121,6 +127,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
                         android:text="@string/contact_status_label"
+                        android:textColor="#000000"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:paddingRight="7dp"/>
@@ -130,6 +137,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Status"
+                        android:textColor="#000000"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -152,7 +160,7 @@
                         android:shadowRadius="8"
                         android:textSize="15sp"/>
 
-                    <!--#E4A824   #ECFF7B-->
+                    <!-- -->
 
                 </LinearLayout>
 
