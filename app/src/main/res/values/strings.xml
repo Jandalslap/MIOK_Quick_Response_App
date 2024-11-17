@@ -75,7 +75,7 @@
     <string name="contact_name_label">Name: </string>
     <string name="contact_phone_label">Phone: </string>
     <string name="contact_relationship_label">Relationship: </string>
-    <string name="contact_status_label">STATUS: </string>
+    <string name="contact_status_label">Status: </string>
     <string name="emergency_contact_label">EMERGENCY CONTACT</string>
 
 
@@ -125,7 +125,7 @@
     <string name="contact_name_label_mr">Ingoa: </string>
     <string name="contact_phone_label_mr">Waea: </string>
     <string name="contact_relationship_label_mr">Whanaungatanga: </string>
-    <string name="contact_status_label_mr">TŪĀHUA: </string>
+    <string name="contact_status_label_mr">Tūāhua: </string>
     <string name="emergency_contact_label_mr">RĀRANGI WHAKAARO TŌKAHI</string>
 
 

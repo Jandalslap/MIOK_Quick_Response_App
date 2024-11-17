@@ -70,7 +70,8 @@ class AddContactFragment : Fragment() {
 
 
         view.findViewById<Button>(R.id.add_contact_button).setOnClickListener {
-            val name = nameInput.text.toString()
+            val rawName = nameInput.text.toString()
+            val name = capitalizeEachWord(rawName)
             val number = numberInput.text.toString()
 
             // Capture the selected status (Yes or No)
@@ -218,6 +219,12 @@ class AddContactFragment : Fragment() {
             urgentContactLabel.text = getString(R.string.urgent_contact_label)
             contactStatusInfo.text = getString(R.string.contact_status_info)
         }
+    }
+
+    fun capitalizeEachWord(input: String): String {
+        return input.trim()
+            .split("\\s+".toRegex()) // Split by whitespace
+            .joinToString(" ") { word -> word.lowercase().replaceFirstChar { it.uppercase() } }
     }
 
 }

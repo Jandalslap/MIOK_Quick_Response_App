@@ -171,6 +171,14 @@ class ContactDatabase(context: Context) :
         return contact
     }
 
+    fun normalizeRelationship(relationship: String): String {
+        return Relationship.valueOf(relationship)
+            .name
+            .replace('_', ' ')
+            .lowercase()
+            .replaceFirstChar { it.uppercase() }
+    }
+
     @Synchronized
     fun updateContact(contact: Contact) {
         val db = writableDatabase
