@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MIOK_Quick_Response_App</string>
     <string name="language_switch">Language</string>
-    <string name="button_take_quiz">Take Quiz</string>
+    <string name="button_take_quiz">SAFETY CHECK</string>
     <string name="profile_picture">Profile Picture</string>
     <string name="birthday">Birthday</string>
     <string name="dob">DOB</string>
@@ -9,8 +9,8 @@
     <string name="contacts">Contacts</string>
     <string name="homeTextView">Hi, how are you today?</string>
     <string name="homeTextView_mr">Hi, kei te pēhea koe i tēnei rā?</string>
-    <string name="button_quiz">Take Quiz</string>
-    <string name="button_quiz_mr">WHAKAMĀTAUTAU</string>
+    <string name="button_quiz">SAFETY CHECK</string>
+    <string name="button_quiz_mr">TĪKINA HAUMARU</string>
     <string name="button_contact">CONTACTS</string>
     <string name="button_contact_mr">PŪRONGO WHAKAPĀ</string>
     <string name="button_message">MESSAGE EVERYONE</string>
