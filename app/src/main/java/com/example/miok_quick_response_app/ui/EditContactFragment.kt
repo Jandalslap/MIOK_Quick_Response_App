@@ -199,6 +199,17 @@ class EditContactFragment : Fragment() {
             "Iwi Social Worker" -> Relationship.IWI_SOCIAL_WORKER
             "Police" -> Relationship.POLICE
             "Other" -> Relationship.OTHER
+
+            // Māori translations
+            "Matua/Kaika" -> Relationship.PARENT_GUARDIAN
+            "Kaiāwhina" -> Relationship.CAREGIVER
+            "Whaea/Matua" -> Relationship.AUNT_UNCLE
+            "Koroua/Koro" -> Relationship.GRANDPARENT
+            "Kaimahi Tokanga" -> Relationship.SOCIAL_WORKER
+            "Kaimahi Tokanga Iwi" -> Relationship.IWI_SOCIAL_WORKER
+            "Pirihimana" -> Relationship.POLICE
+            "Ētahi Atu" -> Relationship.OTHER
+
             else -> null // If the name doesn't match, return null
         }
     }

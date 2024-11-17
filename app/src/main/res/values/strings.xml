@@ -142,7 +142,7 @@
     <string-array name="relationship_options_mr">
         <item>Matua/Kaika</item> <!-- Parent/Guardian -->
         <item>Kaiāwhina</item> <!-- Caregiver -->
-        <item>Whaea/Tīpuna</item> <!-- Aunt/Uncle (Whaea for Aunt, Tīpuna for Uncles can be generalized as a family term) -->
+        <item>Whaea/Matua</item> <!-- Aunt/Uncle (Whaea for Aunt, Matua for Uncles can be generalized as a family term) -->
         <item>Koroua/Koro</item> <!-- Grandparent (Koroua for Grandfather, Koro for Grandmother) -->
         <item>Kaimahi Tokanga</item> <!-- Social Worker -->
         <item>Kaimahi Tokanga Iwi</item> <!-- Iwi Social Worker -->
