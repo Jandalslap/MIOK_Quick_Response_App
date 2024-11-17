@@ -10,7 +10,7 @@ class ContactDatabase(context: Context) :
 
     companion object {
         private const val DATABASE_NAME = "contacts.db"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2 //1
         private const val TABLE_CONTACTS = "contacts"
         private const val COLUMN_ID = "id"
         private const val COLUMN_NAME = "name"
@@ -47,8 +47,10 @@ class ContactDatabase(context: Context) :
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         if (oldVersion < newVersion) {
-            db.execSQL("DROP TABLE IF EXISTS $TABLE_CONTACTS")
-            onCreate(db)
+            //db.execSQL("DROP TABLE IF EXISTS $TABLE_CONTACTS")
+            //onCreate(db)
+            db.execSQL("ALTER TABLE $TABLE_CONTACTS ADD COLUMN $COLUMN_EMERG_CONTACT INTEGER NOT NULL DEFAULT 0")
+            //Jung
         }
     }
 
