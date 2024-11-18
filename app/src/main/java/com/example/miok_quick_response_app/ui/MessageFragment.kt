@@ -15,18 +15,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.example.miok_quick_response_app.R
-import com.example.miok_quick_response_app.viewmodel.ContactViewModel
-import com.example.miok_quick_response_app.viewmodel.MessageViewModel
 import com.example.miok_quick_response_app.data.MessageAdapter
 import com.example.miok_quick_response_app.data.MessageContact
 import com.example.miok_quick_response_app.database.ProfileDatabase
 import com.example.miok_quick_response_app.databinding.FragmentMessageBinding
+import com.example.miok_quick_response_app.viewmodel.MessageViewModel
 
 class MessageFragment : Fragment() {
     private lateinit var binding: FragmentMessageBinding
     private lateinit var messageViewModel: MessageViewModel
     private lateinit var messageAdapter: MessageAdapter
-    private lateinit var contactViewModel: ContactViewModel
     private lateinit var profileDatabase: ProfileDatabase
 
     // Access the shared ViewModel scoped to the activity
@@ -59,13 +57,11 @@ class MessageFragment : Fragment() {
         val onMessageClick: (MessageContact) -> Unit = { contact ->
             sendSMS(
                 contact.phoneNumber,
-                "Alert: ${contact.name} has triggered a safety check in the MIOK Quick Response App. " +
-                        "Please review their status immediately and ensure they're okay. " +
-                        "Contact us if further assistance is needed." +
-                        "" +
-                        "Whakamataku: Kua whakahohea e ${contact.name} tētahi arotake haumaru i te Taupānga Urupare Tere MIOK.\n" +
-                        "Tēnā koa tirohia tō rātou āhuatanga ināianei, kia mārama kei te pai rātou.\n" +
-                        "Whakapā mai ki a mātou mēnā ka hiahiatia he āwhina anō."
+                "Alert: $profileName has triggered a safety check in the MIOK Quick Response App. Please review their status immediately and ensure they're okay. " +
+                        "Contact the appropriate service if further assistance is needed.\n \n" +
+
+                        " Whakamataku: Kua whakahohea e $profileName tētahi arotake haumaru i te Taupānga Urupare Tere MIOK.\n" +
+                        "Tēnā koa tirohia tō rātou āhuatanga ināianei, kia mārama kei te pai rātou.\n Whakapā mai ki a mātou mēnā ka hiahiatia he āwhina anō."
 
             )
         }
@@ -98,13 +94,13 @@ class MessageFragment : Fragment() {
 
                     // Compose the message
                     val message =
-                        "Alert: $formattedNames \n $profileName has triggered a safety check notification in " +
+                        "Alert: $formattedNames \n \n$profileName has triggered a safety check notification in " +
                                 "the MIOK Quick Response App. " +
                                 "Please review their status and ensure their safety.\n\n" +
-                                "Whakamōhio: $formattedNames \\n Kua whakaoho a $profileName i tētahi " +
+                                "Whakamōhio: $formattedNames \n Kua whakaoho a $profileName i tētahi " +
                                 "whakamōhiotanga arowhai haumaru i roto i te taupānga MIOK " +
-                                "Quick Response. \" +\n" +
-                                "\"Me arotake tō rātou āhuatanga me te whakarite i tō rātou haumaru.\\n\\n"
+                                "Quick Response. \n" +
+                                "Me arotake tō rātou āhuatanga me te whakarite i tō rātou haumaru.\n\n"
 
                     // Send bulk SMS
                     sendBulkSMS(allPhoneNumbers, message)

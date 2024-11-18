@@ -21,11 +21,14 @@ import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.example.miok_quick_response_app.R
 import com.example.miok_quick_response_app.viewmodel.ContactViewModel
 import com.example.miok_quick_response_app.data.ContactAdapter
+import com.example.miok_quick_response_app.database.ProfileDatabase
+import com.example.miok_quick_response_app.model.Profile
 
 class ContactFragment : Fragment() {
 
     private lateinit var contactViewModel: ContactViewModel
     private lateinit var contactAdapter: ContactAdapter
+    private lateinit var profileDatabase: ProfileDatabase
 
     // Access the shared ViewModel scoped to the activity
     private val sharedViewModel: SharedViewModel by activityViewModels()
@@ -38,7 +41,8 @@ class ContactFragment : Fragment() {
 
         // Get the ViewModel
         contactViewModel = ViewModelProvider(this).get(ContactViewModel::class.java)
-
+        profileDatabase = ProfileDatabase(requireContext())
+        val profileName = profileDatabase.getProfile()?.name ?: "Unknown"
         contactAdapter = ContactAdapter(
             onItemClick = { contact ->
                 // Navigate to EditContactFragment with the contact's ID
@@ -55,8 +59,14 @@ class ContactFragment : Fragment() {
                 initiateCall(contact.phone_number) // Trigger the call logic
             },
             onMessageClick = { contact ->
-                initiateMessage(contact.phone_number,contact) // Trigger the message logic
+                val profile = profileDatabase.getProfile()
+                if (profile != null) {
+                    initiateMessage(contact.phone_number, profile)
+                } else {
+                    Toast.makeText(context, "Profile data is unavailable.", Toast.LENGTH_SHORT).show()
+                }
             }
+
 
         )
 
@@ -120,7 +130,7 @@ class ContactFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Observe the contacts data from the ViewModel
-        contactViewModel.contacts.observe(viewLifecycleOwner, Observer { contacts ->
+        contactViewModel.contacts.observe(viewLifecycleOwner, { contacts ->
             contactAdapter.submitList(contacts) // Update the adapter when contacts change
         })
 
@@ -145,13 +155,15 @@ class ContactFragment : Fragment() {
         startActivity(callIntent)
     }
 
-    private fun initiateMessage(phoneNumber: String,contact: Contact) {
+    private fun initiateMessage(phoneNumber: String, profile: Profile) {
+        val ProfileName = profileDatabase.getProfile()?.name ?: "Unknown"
         val defaultMessage =
-            "Alert: ${contact.name} has triggered a safety check in the MIOK Quick Response App. " +
+            "Alert: ${ProfileName} has triggered a safety check in the MIOK Quick Response App. " +
                     "Please review their status immediately and ensure they're okay. " +
-                    "Contact us if further assistance is needed." +
-                    "" +
-                    "Whakamataku: Kua whakahohea e ${contact.name} tētahi arotake haumaru i te Taupānga Urupare Tere MIOK.\n" +
+                    "Contact us if further assistance is needed.\n\n" +
+
+                    "Whakamataku: Kua whakahohea e $ProfileName tētahi arotake haumaru i te Taupānga" +
+                    " Urupare Tere MIOK.\n" +
                     "Tēnā koa tirohia tō rātou āhuatanga ināianei, kia mārama kei te pai rātou.\n" +
                     "Whakapā mai ki a mātou mēnā ka hiahiatia he āwhina anō."
 
