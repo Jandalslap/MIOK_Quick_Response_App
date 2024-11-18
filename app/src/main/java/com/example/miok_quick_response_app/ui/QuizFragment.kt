@@ -97,16 +97,19 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
     }
 
     private fun updateProgressBar(currentQuestionIndex: Int) {
-        Log.d("QuizFragment", "Updating progress bar for question index: $currentQuestionIndex")
+
+        // Adjust the index to reflect progress after the question is answered
+        val adjustedIndex = currentQuestionIndex - 1
+
         for (i in 0 until progressBar.childCount) {
             val view = progressBar.getChildAt(i)
-            // Set inactive color by default
+
+            // Set all progress bar elements to inactive color by default
             view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.inactive_color))
 
-            if (i <= currentQuestionIndex) {
-                // Set active color up to the current question
+            if (i <= adjustedIndex) {
+                // Set active color for elements up to the adjusted index
                 view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.question_color))
-                Log.d("QuizFragment", "Progress bar updated at index $i to active color.")
             }
         }
     }
