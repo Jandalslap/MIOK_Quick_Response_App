@@ -3,11 +3,12 @@ package com.example.miok_quick_response_app.viewmodel
 import ContactDatabase
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.AndroidViewModel
-import com.example.miok_quick_response_app.database.ProfileDatabase
 import com.example.miok_quick_response_app.data.Question
 import com.example.miok_quick_response_app.data.QuestionDatabase
-import com.example.miok_quick_response_app.miscUtil.FirestoreHelper
+import com.example.miok_quick_response_app.database.ProfileDatabase
 import com.example.miok_quick_response_app.miscUtil.SmsHelper
 import java.time.LocalDate
 import java.time.Period
@@ -20,120 +21,112 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
     private var profileDb = ProfileDatabase(application)
     private var contactDb = ContactDatabase(application)
 
-    //private var firestoreHelper = FirestoreHelper()
-    private var smsHelper = SmsHelper(application)
+    private lateinit var smsHelper: SmsHelper
 
-    private var questionsAnswered : List<Question> = emptyList()
-
-    // Used to store the csv of questions and results.
-    private var csvResults: ByteArray? = null
-    private var csvProfile: ByteArray? = null
+    private var questionsAnswered: List<Question> = emptyList()
 
     private var birthday = ""
-    private lateinit var birthDate : LocalDate
-    private val ageSeparator : Int = 13
+    private lateinit var birthDate: LocalDate
+    private var ageRange: String = ""
+    private val ageSeparator: Int = 13
 
-    var questionsTamariki : List<Question> = emptyList()
-    var questionsRangatahi : List<Question> = emptyList()
+    var questionsTamariki: List<Question> = emptyList()
+    var questionsRangatahi: List<Question> = emptyList()
+
+
+    fun initializeSmsHelper() {
+        smsHelper = SmsHelper(getApplication())
+    }
 
     fun getAllQuestions(): List<Question> {
         questionsTamariki = questionDb.getAllQuestionsFromTamariki()
         questionsRangatahi = questionDb.getAllQuestionsFromRangatahi()
 
         if (profileDb.hasProfile()) {
-            // Get the birthday string
             birthday = profileDb.getProfile()?.getBirthDay().toString()
 
-            // Check if birthday is neither null nor empty
             if (!birthday.isNullOrEmpty()) {
                 try {
-                    // Parse the string to a LocalDate
                     birthDate = LocalDate.parse(birthday, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
                     if (isOlderThan(birthDate, ageSeparator)) {
+                        ageRange = "Rangatahi"
                         return questionsRangatahi
                     } else {
+                        ageRange = "Tamariki"
                         return questionsTamariki
                     }
                 } catch (e: DateTimeParseException) {
-                    // Handle the exception if parsing fails
                     Log.e("QuizViewModel", "Error parsing birth date: $birthday", e)
                 }
             }
         }
-        // If no birthdate can be found or there's an error, return the default list
         return questionsTamariki
     }
 
     private fun isOlderThan(birthDate: LocalDate, age: Int): Boolean {
-        // Get the current date
         val currentDate = LocalDate.now()
-
-        // Calculate the period (difference) between the birth date and current date
         val period = Period.between(birthDate, currentDate)
-
-        // If the age difference (in years) is greater than or equal to the target age, return true
         return period.years >= age
     }
 
-    fun collectResponses(question: Question){
+    fun collectResponses(question: Question) {
         questionsAnswered += question
     }
 
-    fun quizCompleted(){
-//        csvResults = convertQuestionsToCSVInMemory(questionsAnswered)
-//        csvProfile = convertProfileToCSVInMemory(profileDb.getProfile())
-        if (csvResults == null || csvProfile == null){
-            // Raise error
-            // TODO NOT YET IMPLEMENTED
+    fun quizCompleted() {
+        if (questionsAnswered.isEmpty()) {
+            // Handle error or notify user that no questions were answered
+            Toast.makeText(getApplication(), "No questions answered", Toast.LENGTH_SHORT).show()
+            return
         }
-        else
-        {   // Send results to remote database.
-            // TODO NOT YET IMPLEMENTED
-        }
-        for (e in questionsRangatahi){
-            println(e.questionTextEng + e.userInputAnswer.toString())
-        }
-        //smsMsgAllContact(questionsAnswered)
-        // Clear list
-        questionsAnswered = emptyList()
+        smsMsgAllContact(questionsAnswered)
+        questionsAnswered = emptyList() // Clear list after sending messages
     }
 
-    // Function to add profile and get the generated ID
-//    fun addProfile(profile: Profile) {
-//        viewModelScope.launch {
-//            val profileId = firestoreHelper.addProfile(profile)
-//            if (profileId != null) {
-//                // Do something with the generated ID (e.g., save it, associate with other data)
-//                println("Profile added with ID: $profileId")
-//            } else {
-//                println("Failed to add profile")
-//            }
-//        }
-//    }
-
-
-    fun smsMsgAllContact(questions: List<Question>){
-        var contactNumList : List<String> = emptyList()
-        for (e in contactDb.getAllContacts()){contactNumList += e.phone_number}
-
-        var smsStrArr = Array(questions.size+1) { "" }
-        smsStrArr[0] = profileDb.getProfile()?.name.toString() + " has completed a MIOK safety survey.\n Questions and answers " +
-                "will be displayed in a series of messages as follows:"
-        var i : Int = 1
-        for (e in questions ) {
-            smsStrArr[i] = e.questionTextEng + "\n"
-            smsStrArr[i] = e.questionTextTR + "\n"
-            smsStrArr[i] = e.userInputAnswer.toString() + "\n"
-            i ++
+    fun smsMsgAllContact(questions: List<Question>) {
+        initializeSmsHelper()
+        var contactNumList: MutableList<String> =
+            contactDb.getAllContacts().map { it.phone_number }.toMutableList()
+        // Adds "+64" New Zealand country code prefix to each number in contacts.
+        for (i in contactNumList.indices) {
+            contactNumList[i] = "+64" + contactNumList[i]
         }
-        for (phNum in contactNumList){
-            for (str in smsStrArr)
-                smsHelper.sendSms(phNum, str)
+        // Prepare SMS message content
+        val smsStrArr = Array(questions.size + 1) { "" }
+        smsStrArr[0] = profileDb.getProfile()?.name.toString() + " has completed a MIOK safety survey, results are:"
+
+        // I know this is ugly but I would have to change the question object to contain an abbreviated
+        // term and make a database method to retrieve a list of them and its too late :(
+        if (ageRange == "Rangatahi"){
+            smsStrArr[1] = "Feel uncomfortable? ~ "
+            smsStrArr[2] = "Threatening? ~ "
+            smsStrArr[3] = "Scared at home? ~ "
+            smsStrArr[4] = "Yelled at you - feel unsafe? ~ "
+            smsStrArr[5] = "Need help? ~ "
+        } else {
+            smsStrArr[1] = "Okay? ~ "
+            smsStrArr[2] = "Hurt? ~ "
+            smsStrArr[3] = "Clean and fed? ~ "
+            smsStrArr[4] = "Yelling? ~ "
+            smsStrArr[5] = "Need help? ~ "
+        }
+
+        // Adds response to questions in message.
+        var i = 0
+        for (e in questions) {
+            smsStrArr[i+1] += e.userInputAnswer.toString()
+            smsStrArr[i] += "\n"
+            i++
+        }
+
+        var message :  String = ""
+        for (line in smsStrArr) {
+            message += line
+        }
+        // Opens a multi recipient sms group and prefills input box for user to press send.
+        for (phNum in contactNumList) {
+            smsHelper.openSmsAppWithMessage(contactNumList, message)
         }
     }
-
-
-
-
 }
 
