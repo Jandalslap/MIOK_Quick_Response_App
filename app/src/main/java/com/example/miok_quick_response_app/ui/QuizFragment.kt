@@ -6,10 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
@@ -20,30 +19,29 @@ import com.example.miok_quick_response_app.R
 import com.example.miok_quick_response_app.viewmodel.QuizViewModel
 import com.example.miok_quick_response_app.data.Question
 
-class QuizFragment : Fragment() {
+class QuizFragment : Fragment(R.layout.fragment_quiz) {
 
-    private lateinit var quizViewModel : QuizViewModel
+    private lateinit var quizViewModel: QuizViewModel
+    private lateinit var sendSmsPermissionRequest: ActivityResultLauncher<String>
 
     // Access the shared ViewModel scoped to the activity
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private var currentQuestionIndex = 0
-    lateinit var questions : List<Question>
+    lateinit var questions: List<Question>
 
     private lateinit var questionTextView: TextView
     private lateinit var questionImageView: ImageView
     private lateinit var trueButton: Button
     private lateinit var falseButton: Button
 
-    private var currentLanguage : String = ""
-
+    private var currentLanguage: String = ""
     private lateinit var progressBar: LinearLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_quiz, container, false)
 
         quizViewModel = ViewModelProvider(this)[QuizViewModel::class.java]
@@ -81,8 +79,15 @@ class QuizFragment : Fragment() {
             currentLanguage = language
         }
 
-        //quizViewModel = ViewModel Provider(this).get(QuizViewModel::class.java)
-
+        // Register for permission request to send SMS
+        sendSmsPermissionRequest = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                // Permission granted, send SMS
+                quizViewModel.smsMsgAllContact(questions)
+            } else {
+                Toast.makeText(requireContext(), "SMS permission denied", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         // Display the first question
         displayCurrentQuestion(questions)
@@ -106,13 +111,10 @@ class QuizFragment : Fragment() {
         }
     }
 
-    // Function to display the current question
-    private fun displayCurrentQuestion(questions : List<Question>) {
+    private fun displayCurrentQuestion(questions: List<Question>) {
         if (currentQuestionIndex < questions.size) {
             val question = questions[currentQuestionIndex]
             updateLanguageUI(currentLanguage, questions)
-            //questionTextView.text = question.questionTextEng
-
             // Set image if available, otherwise hide the ImageView
             question.imageResId?.let {
                 questionImageView.setImageResource(it)
@@ -123,23 +125,22 @@ class QuizFragment : Fragment() {
         }
     }
 
-    // Function to move to the next question
-    private fun goToNextQuestion(questions : List<Question>) {
+    private fun goToNextQuestion(questions: List<Question>) {
         quizViewModel.collectResponses(questions[currentQuestionIndex])
         currentQuestionIndex++
         if (currentQuestionIndex >= questions.size) {
-            //this.questions = emptyList()
+            // Once quiz is completed, send SMS
             quizViewModel.quizCompleted()
-            // Once we reach the end of the questions list, navigate to the result screen
+
+            // Navigate to the result screen
             findNavController().navigate(R.id.action_quizFragment_to_quizResultFragment)
         } else {
             // Otherwise, display the next question
             displayCurrentQuestion(questions)
         }
-
     }
 
-    private fun updateLanguageUI(language: String, questions : List<Question>) {
+    private fun updateLanguageUI(language: String, questions: List<Question>) {
         // Update TextView text based on language
         if (language == "Māori") {
             trueButton.text = "True(TR)"
