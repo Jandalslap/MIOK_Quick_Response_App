@@ -8,6 +8,7 @@ import android.database.Cursor
 import android.util.Log
 import com.example.miok_quick_response_app.model.Profile
 
+// A class for managing the SQLite database that stores user profile information, including database schema and constants.
 class ProfileDatabase(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
@@ -27,6 +28,7 @@ class ProfileDatabase(context: Context) :
         private const val COLUMN_IMAGE_URL = "image_url"
     }
 
+    // Creates the profile table in the database with columns for personal information when the database is created.
     override fun onCreate(db: SQLiteDatabase) {
         val createTable = ("CREATE TABLE $TABLE_PROFILE ("
                 + "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -40,11 +42,13 @@ class ProfileDatabase(context: Context) :
         db.execSQL(createTable)
     }
 
+    // Drops the existing profile table and recreates it when the database is upgraded to a new version.
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL("DROP TABLE IF EXISTS $TABLE_PROFILE")
         onCreate(db)
     }
 
+    // Adds a new profile record to the profile table in the database.
     fun addProfile(profile: Profile) {
         val db = this.writableDatabase
         val values = ContentValues().apply {
@@ -60,6 +64,7 @@ class ProfileDatabase(context: Context) :
         db.close()
     }
 
+    // Function to get profile from database
     fun getProfile(): Profile? {
         val db = this.readableDatabase
         val cursor: Cursor = db.query(
@@ -88,6 +93,7 @@ class ProfileDatabase(context: Context) :
         }
     }
 
+    // Inserts a new profile record into the profile table in the database.
     fun insertProfile(profile: Profile) {
         val db = this.writableDatabase
         val values = ContentValues().apply {
@@ -103,7 +109,7 @@ class ProfileDatabase(context: Context) :
         db.close()
     }
 
-
+    // Function to update an existing profile in the database by its ID
     fun updateProfile(profile: Profile) {
         val db = this.writableDatabase
         val values = ContentValues().apply {
@@ -119,6 +125,7 @@ class ProfileDatabase(context: Context) :
         db.close()
     }
 
+    // Function to check if at least one profile exists in the database
     fun hasProfile(): Boolean {
         val db = this.readableDatabase
         val cursor: Cursor = db.rawQuery("SELECT COUNT(*) FROM $TABLE_PROFILE", null)

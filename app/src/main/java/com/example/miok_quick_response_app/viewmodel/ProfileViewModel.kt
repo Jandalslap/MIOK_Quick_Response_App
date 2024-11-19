@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.miok_quick_response_app.database.ProfileDatabase
 import com.example.miok_quick_response_app.model.Profile
 
+// ViewModel class for managing and storing profile-related data for the ProfileFragment
 class ProfileViewModel(application: Application) : AndroidViewModel(application) {
 
     private val dbHelper = ProfileDatabase(application)
@@ -36,6 +37,7 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
         loadProfile()
     }
 
+    // Function to load user profile
     fun loadProfile() {
         val profile = dbHelper.getProfile()
         profile?.let {
@@ -49,6 +51,7 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
+    // Function to update user profile
     fun updateUserProfile(
         newName: String,
         newEmail: String,

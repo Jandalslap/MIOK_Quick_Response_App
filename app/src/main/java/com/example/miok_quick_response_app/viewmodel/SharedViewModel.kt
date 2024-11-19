@@ -1,15 +1,11 @@
 // SharedViewModel.kt
 package com.example.miok_info_app.viewmodel
 
-import android.app.Activity
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
-import com.example.miok_quick_response_app.R
 
+// ViewModel class that is shared across fragments or activities for managing language state changes
 class SharedViewModel : ViewModel() {
     private val _currentLanguage = MutableLiveData<String>("English") // Holds the current language
     val currentLanguage: LiveData<String> get() = _currentLanguage // Publicly accessible current language

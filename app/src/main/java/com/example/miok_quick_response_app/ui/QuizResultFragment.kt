@@ -1,24 +1,19 @@
 package com.example.miok_quick_response_app.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
-import androidx.navigation.fragment.findNavController
 import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.example.miok_quick_response_app.R
-import com.example.miok_quick_response_app.databinding.FragmentHomeBinding
 import com.example.miok_quick_response_app.databinding.FragmentQuizResultBinding
 
+// Fragment responsible for displaying the results of the quiz, showing the user's performance and feedback.
 class QuizResultFragment : Fragment() {
 
     private var _binding: FragmentQuizResultBinding? = null

@@ -7,19 +7,15 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.Switch
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-
+// Main activity that serves as the entry point for the app
 class MainActivity : AppCompatActivity() {
 
     // Access the shared ViewModel scoped to the activity
@@ -140,12 +136,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Handles the up navigation
     override fun onSupportNavigateUp(): Boolean {
         val navController = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         return navController.navController.navigateUp() || super.onSupportNavigateUp()
     }
 
+    // Function to update nav_graph labels. Causes app to refresh - method not in use.
     private fun updateNavGraphLabels(language: String) {
         // Access the NavHostFragment
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment

@@ -11,6 +11,7 @@ import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.example.miok_quick_response_app.R
 import com.example.miok_quick_response_app.databinding.FragmentDisclaimerBinding
 
+// Fragment that displays a disclaimer to the user
 class DisclaimerFragment : Fragment() {
 
     private var _binding: FragmentDisclaimerBinding? = null
@@ -63,6 +64,7 @@ class DisclaimerFragment : Fragment() {
         }
     }
 
+    // Cleans up the binding reference when the view is destroyed to prevent memory leaks
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

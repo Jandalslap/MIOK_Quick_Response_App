@@ -2,7 +2,6 @@ package com.example.miok_quick_response_app.ui
 
 import androidx.fragment.app.Fragment
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +18,7 @@ import com.example.miok_quick_response_app.R
 import com.example.miok_quick_response_app.viewmodel.QuizViewModel
 import com.example.miok_quick_response_app.data.Question
 
+// Fragment that handles the quiz interface, displaying questions and managing user responses.
 class QuizFragment : Fragment(R.layout.fragment_quiz) {
 
     private lateinit var quizViewModel: QuizViewModel
@@ -96,6 +96,7 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         return rootView
     }
 
+    // Function to update quiz progress bar after each question
     private fun updateProgressBar(currentQuestionIndex: Int) {
 
         // Adjust the index to reflect progress after the question is answered
@@ -114,6 +115,7 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         }
     }
 
+    // Function to display questions
     private fun displayCurrentQuestion(questions: List<Question>) {
         if (currentQuestionIndex < questions.size) {
             val question = questions[currentQuestionIndex]
@@ -128,6 +130,7 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         }
     }
 
+    // Function to go to next question
     private fun goToNextQuestion(questions: List<Question>) {
         quizViewModel.collectResponses(questions[currentQuestionIndex])
         currentQuestionIndex++
@@ -143,6 +146,7 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         }
     }
 
+    // Function to update language text
     private fun updateLanguageUI(language: String, questions: List<Question>) {
         // Update TextView text based on language
         if (language == "Māori") {

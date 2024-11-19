@@ -16,6 +16,7 @@ import com.example.miok_quick_response_app.R
 import com.example.miok_quick_response_app.viewmodel.ContactViewModel
 import com.example.miok_quick_response_app.databinding.FragmentEditContactBinding
 
+// Fragment to edit contact information
 class EditContactFragment : Fragment() {
 
     // Access the shared ViewModel scoped to the activity
@@ -62,6 +63,7 @@ class EditContactFragment : Fragment() {
             statusYesButton,
             statusNoButton
         )
+        // Observe the shared view model for language updates
         sharedViewModel.currentLanguage.observe(viewLifecycleOwner) { language ->
             // Update the UI or perform actions based on the new language value
             updateLanguageUI(language, relationshipSpinner, saveContactButton, contactStatus, urgentContactLabel, contactStatusInfo, statusYesButton, statusNoButton)
@@ -96,7 +98,7 @@ class EditContactFragment : Fragment() {
         binding.contactRelationshipSpinner.adapter = adapter
     }
 
-
+    // Function to populate the edit contact form fields
     private fun populateContactFields(contact: Contact) {
         // Populate fields with existing contact data
         binding.contactNameInput.setText(contact.name)
@@ -128,6 +130,7 @@ class EditContactFragment : Fragment() {
         binding.urgentContactCheckbox.isChecked = contact.emerg_contact
     }
 
+    // Function to save contact form
     private fun saveContact() {
         val rawName = binding.contactNameInput.text.toString()
         val name = capitalizeEachWord(rawName)
@@ -151,6 +154,7 @@ class EditContactFragment : Fragment() {
             return
         }
 
+        // Validate if phone number not empty
         if (phoneNumber.isEmpty()) {
             Toast.makeText(requireContext(), "Please enter a phone number", Toast.LENGTH_SHORT).show()
             return
@@ -167,7 +171,6 @@ class EditContactFragment : Fragment() {
             Toast.makeText(requireContext(), "Phone number should be between 8 and 12 numbers", Toast.LENGTH_SHORT).show()
             return
         }
-
 
 
         // Get selected relationship from spinner
@@ -200,10 +203,11 @@ class EditContactFragment : Fragment() {
         contactViewModel.updateContact(updatedContact)
 
         Toast.makeText(requireContext(), "Contact updated successfully.", Toast.LENGTH_SHORT).show()
-
+        // Navigate back to contact page
         findNavController().popBackStack()
     }
 
+    // Maps user-friendly relationship names (both English and Māori) to the corresponding Relationship enum value
     private fun mapToRelationship(userFriendlyName: String): Relationship? {
         return when (userFriendlyName) {
             "Parent/Guardian" -> Relationship.PARENT_GUARDIAN
@@ -286,6 +290,7 @@ class EditContactFragment : Fragment() {
         }
     }
 
+    // Maps a Relationship enum value to its corresponding user-friendly string representation
     private fun mapFromRelationship(relationship: Relationship): String {
         return when (relationship) {
             Relationship.PARENT_GUARDIAN -> "Parent/Guardian"
@@ -299,13 +304,14 @@ class EditContactFragment : Fragment() {
         }
     }
 
+    // Capitalizes the first letter of each word in the input string, and ensures the rest of the letters are lowercase.
     fun capitalizeEachWord(input: String): String {
         return input.trim()
             .split("\\s+".toRegex()) // Split by whitespace
             .joinToString(" ") { word -> word.lowercase().replaceFirstChar { it.uppercase() } }
     }
 
-
+    // Clears the binding reference to avoid memory leaks when the fragment's view is destroyed
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

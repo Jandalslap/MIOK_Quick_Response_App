@@ -14,6 +14,7 @@ import com.example.miok_quick_response_app.R
 import com.example.miok_quick_response_app.database.ProfileDatabase
 import com.example.miok_quick_response_app.databinding.FragmentProfileBinding
 
+// Fragment responsible for displaying and managing the user's profile information
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private val profileViewModel: ProfileViewModel by activityViewModels()
@@ -33,7 +34,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         super.onViewCreated(view, savedInstanceState)
 
         // Load the profile from the database when the fragment is created
-        profileViewModel.loadProfile() // Ensure this is called to load data into the ViewModel
+        profileViewModel.loadProfile()
 
         // Observe current language and update the UI
         sharedViewModel.currentLanguage.observe(viewLifecycleOwner) { language ->
@@ -78,6 +79,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
     }
 
+    // Function to update language text
     private fun updateLanguageUI(language: String) {
         val profileDatabase = ProfileDatabase(requireContext())
 
@@ -108,8 +110,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
     }
 
-
-
+    // Clears the binding reference to avoid memory leaks when the fragment's view is destroyed
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null // Clean up the binding to avoid memory leaks

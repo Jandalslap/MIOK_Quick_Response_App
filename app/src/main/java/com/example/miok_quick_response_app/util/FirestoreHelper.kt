@@ -1,10 +1,8 @@
-package com.example.miok_quick_response_app.miscUtil
+package com.example.miok_quick_response_app.util
 
-import android.content.Context
 import com.example.miok_quick_response_app.model.Profile
-import com.google.firebase.firestore.FirebaseFirestore
 
-
+// Helper class to interact with Firestore for database operations such as reading, writing, and updating data.
 class FirestoreHelper() {
 
     // Will cause crash if this class is intantiated

@@ -4,17 +4,17 @@ import ContactDatabase
 import android.app.Application
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.AndroidViewModel
 import com.example.miok_quick_response_app.data.Question
 import com.example.miok_quick_response_app.data.QuestionDatabase
 import com.example.miok_quick_response_app.database.ProfileDatabase
-import com.example.miok_quick_response_app.miscUtil.SmsHelper
+import com.example.miok_quick_response_app.util.SmsHelper
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 
+// ViewModel class for managing quiz-related data and logic for the QuizFragment.
 class QuizViewModel(application: Application) : AndroidViewModel(application) {
 
     private var questionDb = QuestionDatabase(application)
@@ -33,11 +33,12 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
     var questionsTamariki: List<Question> = emptyList()
     var questionsRangatahi: List<Question> = emptyList()
 
-
+    // Initializes the SmsHelper instance with the application context.
     fun initializeSmsHelper() {
         smsHelper = SmsHelper(getApplication())
     }
 
+    // Retrieves a list of questions based on the user's age range, either Tamariki or Rangatahi, using the stored profile's birth date. If the birth date is invalid or unavailable, it defaults to Tamariki questions.
     fun getAllQuestions(): List<Question> {
         questionsTamariki = questionDb.getAllQuestionsFromTamariki()
         questionsRangatahi = questionDb.getAllQuestionsFromRangatahi()
@@ -63,16 +64,19 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
         return questionsTamariki
     }
 
+    // Checks if the given birth date corresponds to an age greater than or equal to the specified age.
     private fun isOlderThan(birthDate: LocalDate, age: Int): Boolean {
         val currentDate = LocalDate.now()
         val period = Period.between(birthDate, currentDate)
         return period.years >= age
     }
 
+    // Adds the given question to the list of answered questions.
     fun collectResponses(question: Question) {
         questionsAnswered += question
     }
 
+    // Checks if the quiz has been completed by verifying if any questions have been answered, then sends SMS to all contacts and clears the list of answered questions.
     fun quizCompleted() {
         if (questionsAnswered.isEmpty()) {
             // Handle error or notify user that no questions were answered
@@ -83,6 +87,7 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
         questionsAnswered = emptyList() // Clear list after sending messages
     }
 
+    // Prepares and sends a safety survey SMS message to all contacts, including user responses and formatted with specific questions for the age group.
     fun smsMsgAllContact(questions: List<Question>) {
         initializeSmsHelper()
         var contactNumList: MutableList<String> =

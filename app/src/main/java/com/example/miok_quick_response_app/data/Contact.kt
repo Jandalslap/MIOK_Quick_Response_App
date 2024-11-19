@@ -2,6 +2,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
+// Data class representing a contact with relevant details, made Parcelable for passing between components
 @Parcelize
 data class Contact(
     val id: Int,
@@ -28,6 +29,7 @@ data class Contact(
     )
 }
 
+// Enum class representing different types of relationships for a contact
 enum class Relationship {
     PARENT_GUARDIAN,
     CAREGIVER,

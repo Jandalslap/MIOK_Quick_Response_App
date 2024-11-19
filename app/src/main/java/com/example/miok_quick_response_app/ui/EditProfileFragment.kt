@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
 
+// A fragment that provides functionality for editing the user's profile.
 class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
     private val CAMERA_REQUEST_CODE = 1001
@@ -64,7 +65,6 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             openImagePicker()
         }
     }
-
 
     // Handle the permission request result
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -270,6 +270,8 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                 Toast.makeText(requireContext(), "Address cannot be empty", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
+            // Validate address not more than 50 characters
             if (newAddress.length > 50) {
                 Toast.makeText(requireContext(), "Address cannot be more than 50 characters", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -330,6 +332,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         }
     }
 
+    // Displays a dialog allowing the user to choose between selecting a profile picture from the gallery or canceling the action.
     private fun showImagePickerDialog() {
         // Remove "Take Photo" option and just keep "Choose from Gallery"
         val options = arrayOf("Choose from Gallery", "Cancel")
@@ -346,7 +349,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         builder.show()
     }
 
-
+    // Initiates the camera intent to capture an image
     private fun openCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (intent.resolveActivity(requireActivity().packageManager) != null) {
@@ -356,13 +359,14 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         }
     }
 
+    // Opens the device's gallery to allow the user to select an image from storage.
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
         startActivityForResult(intent, GALLERY_REQUEST_CODE)
     }
 
-
+    // Function to update language text
     private fun updateLanguageUI(language: String) {
         if (language == "Māori") {
             // Update TextViews to display Māori text
@@ -419,6 +423,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             .joinToString(" ") { word -> word.lowercase().replaceFirstChar { it.uppercase() } }
     }
 
+    // Clears the binding reference to avoid memory leaks when the fragment's view is destroyed
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

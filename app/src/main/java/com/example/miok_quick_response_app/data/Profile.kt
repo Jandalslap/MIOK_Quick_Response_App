@@ -1,5 +1,6 @@
 package com.example.miok_quick_response_app.model
 
+// Data class representing a user's profile with personal information
 data class Profile(
     val id: Int? = null,
     val name: String,

@@ -6,15 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
-
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.miok_quick_response_app.ui.ContactFragmentDirections
-
 import com.example.miok_quick_response_app.R
 
+// Adapter for displaying a list of Contact objects in a RecyclerView with click listeners for remove, item, call, and message actions
 class ContactAdapter(
     private val onRemoveClick: (Contact) -> Unit, // Modified to pass the actual contact
     private val onItemClick: (Contact) -> Unit, // Modified to pass the actual contact
@@ -65,14 +62,9 @@ class ContactAdapter(
             onItemClick(contact)
         } // Trigger navigation action
 
-        // Handling the swipe to delete or remove contact
-        //holder.itemView.setOnClickListener {
-            // Trigger removal of the contact when item is clicked (could be swipe if needed)
-          //  onRemoveClick(contact)
-        //}
     }
 
-
+    // Returns the number of items in the current list and binds contact data to UI elements with language-specific labels in the ViewHolder.
     override fun getItemCount(): Int = currentList.size
 
     class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

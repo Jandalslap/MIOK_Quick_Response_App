@@ -9,9 +9,9 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-
 import kotlin.concurrent.thread
 
+// ViewModel class for managing and storing UI-related data for the ContactFragment, ensuring data survives configuration changes.
 class ContactViewModel(application: Application) : AndroidViewModel(application) {
 
     private val dbHelper = ContactDatabase(application)

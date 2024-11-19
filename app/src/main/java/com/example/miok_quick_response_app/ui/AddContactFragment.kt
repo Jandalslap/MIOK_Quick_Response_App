@@ -12,6 +12,7 @@ import com.example.miok_quick_response_app.R
 import androidx.fragment.app.activityViewModels
 import com.example.miok_info_app.viewmodel.SharedViewModel
 
+// Fragment class for adding a new contact to the application
 class AddContactFragment : Fragment() {
 
     // Access the shared ViewModel scoped to the activity
@@ -123,6 +124,7 @@ class AddContactFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            // Validate phone number for empty
             if (number.isEmpty()) {
                 Toast.makeText(requireContext(), "Please enter a phone number", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -155,10 +157,13 @@ class AddContactFragment : Fragment() {
 
         return view
     }
+
+    // Generates a unique ID by using the current system time and converting it to an integer within the valid range.
     fun generateId(): Int {
         // Generate a unique ID. For example, you could use the current system time as an ID.
         return (System.currentTimeMillis() % Int.MAX_VALUE).toInt()
     }
+
     // Function to update UI based on the language
     private fun updateLanguageUI(
         language: String?,
@@ -221,6 +226,7 @@ class AddContactFragment : Fragment() {
         }
     }
 
+    // Capitalizes the first letter of each word in the input string, ensuring proper casing and handling of multiple spaces.
     fun capitalizeEachWord(input: String): String {
         return input.trim()
             .split("\\s+".toRegex()) // Split by whitespace

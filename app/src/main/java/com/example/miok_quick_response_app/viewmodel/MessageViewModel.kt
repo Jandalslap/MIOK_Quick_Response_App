@@ -9,6 +9,7 @@ import com.example.miok_quick_response_app.data.MessageContact
 import ContactDatabase
 import kotlin.concurrent.thread
 
+// ViewModel class for managing and storing UI-related data for the MessageFragment, ensuring data survives configuration changes.
 class MessageViewModel(application: Application) : AndroidViewModel(application) {
 
     private val dbHelper = ContactDatabase(application)
@@ -16,10 +17,12 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
     private val _messageContacts = MutableLiveData<List<MessageContact>>()
     val messageContacts: LiveData<List<MessageContact>> get() = _messageContacts
 
+    // Initializes the ViewModel by loading message contacts as soon as the ViewModel is created.
     init {
         loadMessageContacts()
     }
 
+    // Loads the contacts from the database and transforms them into MessageContact objects, updating the LiveData on the main thread.
     private fun loadMessageContacts() {
         thread {
             val contacts = dbHelper.getAllContacts()

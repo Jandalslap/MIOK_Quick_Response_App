@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
+// A class for managing the SQLite database for storing and retrieving contact information.
 class ContactDatabase(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
@@ -31,6 +32,7 @@ class ContactDatabase(context: Context) :
         }
     }
 
+    // Creates the contacts table in the database with the necessary columns when the database is first created.
     override fun onCreate(db: SQLiteDatabase) {
         val createTableSQL = """
             CREATE TABLE $TABLE_CONTACTS (
@@ -45,6 +47,7 @@ class ContactDatabase(context: Context) :
         db.execSQL(createTableSQL)
     }
 
+    // Handles database schema upgrades
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         if (oldVersion < newVersion) {
             //db.execSQL("DROP TABLE IF EXISTS $TABLE_CONTACTS")
@@ -134,6 +137,7 @@ class ContactDatabase(context: Context) :
         db.close()
     }
 
+    // Function to get contact by id
     fun getContactById(id: Int): Contact? {
         val db = readableDatabase
         var contact: Contact? = null
@@ -171,6 +175,7 @@ class ContactDatabase(context: Context) :
         return contact
     }
 
+    // Normalizes the relationship string by converting it to a human-readable format with proper capitalization.
     fun normalizeRelationship(relationship: String): String {
         return Relationship.valueOf(relationship)
             .name
@@ -179,6 +184,7 @@ class ContactDatabase(context: Context) :
             .replaceFirstChar { it.uppercase() }
     }
 
+    // Synchronized method to update an existing contact in the database, ensuring only one update operation happens at a time.
     @Synchronized
     fun updateContact(contact: Contact) {
         val db = writableDatabase
@@ -206,7 +212,7 @@ class ContactDatabase(context: Context) :
         db.close()
     }
 
-
+    // Retrieves the phone number of the emergency contact from the database
     @SuppressLint("Range")
     fun getEmergencyContact(): String? {
         val db = readableDatabase

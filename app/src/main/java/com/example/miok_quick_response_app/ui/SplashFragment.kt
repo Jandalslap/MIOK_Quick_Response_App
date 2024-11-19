@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.miok_quick_response_app.R
 
-
+// Fragment for splash screen
 class SplashFragment : Fragment() {
 
     override fun onCreateView(

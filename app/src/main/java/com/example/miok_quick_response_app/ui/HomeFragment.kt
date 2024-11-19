@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -12,7 +11,7 @@ import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.example.miok_quick_response_app.R
 import com.example.miok_quick_response_app.databinding.FragmentHomeBinding
 
-
+// Fragment that represents the home screen of the app
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null // Binding object for accessing views
     private val binding get() = _binding!! // Safe access to the binding object
@@ -75,6 +74,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+    // Clears the binding reference to avoid memory leaks when the fragment's view is destroyed
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null // Clean up binding

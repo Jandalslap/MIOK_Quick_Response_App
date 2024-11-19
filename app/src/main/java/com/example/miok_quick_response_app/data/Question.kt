@@ -1,5 +1,6 @@
 package com.example.miok_quick_response_app.data
 
+// Data class representing a question with two languages
 class Question(
     var questionTextEng: String = "",
     var questionTextTR: String = "",

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import com.example.miok_quick_response_app.R
 import javax.inject.Singleton
 
+// Singleton class to manage the database for storing questions, inheriting from SQLiteOpenHelper to handle database creation and upgrades
 @Singleton
 class QuestionDatabase(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -28,6 +29,7 @@ class QuestionDatabase(context: Context) :
         private const val COLUMN_IMAGE_RES_ID = "image_res_id"
     }
 
+    // Called when the database is created for the first time; creates two tables (Tamariki and Rangatahi) for storing questions and inserts predefined questions
     override fun onCreate(db: SQLiteDatabase) {
         // Create Tamariki table
         val createTamarikiTable = """
@@ -57,6 +59,7 @@ class QuestionDatabase(context: Context) :
         addQuestionsToDatabase(db)
     }
 
+    // Called when the database is upgraded; drops the existing tables and recreates them
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         // Drop the tables if they exist and create them again
         db.execSQL("DROP TABLE IF EXISTS $TABLE_TAMARIKI")

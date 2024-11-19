@@ -21,6 +21,7 @@ import com.example.miok_quick_response_app.database.ProfileDatabase
 import com.example.miok_quick_response_app.databinding.FragmentMessageBinding
 import com.example.miok_quick_response_app.viewmodel.MessageViewModel
 
+// Fragment that handles the display and interaction with messages in the app
 class MessageFragment : Fragment() {
     private lateinit var binding: FragmentMessageBinding
     private lateinit var messageViewModel: MessageViewModel
@@ -79,7 +80,7 @@ class MessageFragment : Fragment() {
         }
 
 
-// Handle "Message Everyone" button
+        // Handle "Message Everyone" button
         val messageEveryoneButton = view.findViewById<Button>(R.id.btn_message_everyone)
         messageEveryoneButton.setOnClickListener {
             messageViewModel.messageContacts.value?.let { contacts ->
